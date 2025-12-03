@@ -1,0 +1,15 @@
+nav { font-size: .7em }
+
+@page { size: portrait; margin: 1cm }
+@media print {
+    nav { display: none }
+}
+
+.break {
+    page-break-after: always;
+}
+
+.table-report, .table-report-data {
+    border-collapse: collapse;
+    border: 1px solid;
+}

@@ -1,0 +1,183 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+    .disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>
+{% endblock %}
+{% block title %}Notas Credito a Facturas{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Notas Credito a Facturas</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('notascredito.add_notacredito') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nueva Nota Credito</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <!-- Tabla Notas Credito -->
+                <table id="tablaNotasCredito" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="font-size: small; width: 10%;">Fuente</th>
+                            <th scope="col" style="font-size: small; width: 10%;">Nota Credito</th>
+                            <th scope="col" style="font-size: small; width: 10%;">Fte. Factura</th>
+                            <th scope="col" style="font-size: small; width: 10%;">Factura</th>
+                            <th scope="col" style="font-size: small; width: 20%;">UUID</th>
+                            <th scope="col" style="font-size: small; width: 20%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for nota in notas %}
+                        <tr>
+                            <td style="font-size: small; width: 10%;">{{ nota.fuente }}</td>
+                            <td class="nro_notacredito" style="font-size: small; width: 10%;">{{ nota.numero }}</td>
+                            <td style="font-size: small; width: 10%;">{{ nota.fte_factura }}</td>
+                            <td style="font-size: small; width: 10%;">{{ nota.factura }}</td>
+                            <td class="nc_uuid" style="font-size: small; width: 20%">{{ nota.UUID }}</td> 
+                            <td style="font-size: small; width: 20%;">
+                                <a class="enlace_emitir button is-small is-success" style="font-size: xx-small;">
+                                    <span>Emitir N.C.</span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            window.addEventListener("DOMContentLoaded", () => {
+                Swal.fire({
+                    title: "Notificación!",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Consumo de Api para emitir nota credito -->
+<script>
+    const send_notacredito = async (nroNotaCredito) => {
+        Swal.fire({
+            title: "Procesando...",
+            html: `<p>Enviando Nota Credito No. ${nroNotaCredito}. Por favor, espera.</p>`,
+            allowOutsideClick: false,
+            didOpen: () => Swal.showLoading()
+        });
+
+        const successes = [];
+        const failures = [];
+
+        try {
+            const response = await fetch("/send_notacredito", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({"nro_notacredito": nroNotaCredito})
+            })
+
+            if(!response.ok){
+                throw new Error(`Error ${response.status}: ${response.statusText}`)
+            }
+
+            const data = await response.json();
+            successes.push(nroNotaCredito)
+            console.log("Respuesta del servidor:", data);
+            
+
+        } catch (error) {
+            console.error("Error al emitir nota de crédito:", error);
+            failures.push(`Nota Credito ${nroNotaCredito}: ${error.message}`);
+        }
+        
+        let finalTitle = "";
+        let finalIcon = "";
+        let finalText = `<p><b>${successes.length} Nota Credito enviada con éxito.</b></p>`;
+
+        if (failures.length > 0) {
+            finalTitle = "Proceso completado con errores";
+            finalIcon = "warning";
+            finalText += `<p><b>${failures.length} Nota Credito falló:</b></p><ul>${failures.map(f => `<li>${f}</li>`).join('')}</ul>`;
+        } else {
+            finalTitle = "¡Proceso completado!";
+            finalIcon = "success";
+        }
+
+        Swal.fire({
+            title: finalTitle,
+            html: finalText,
+            icon: finalIcon
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                window.location.href = "{{ url_for('notascredito.notas_credito') }}"
+            }
+        });
+    }
+
+    function disableEmitLink($link, label = 'Emitido') {
+        $link
+            .addClass('disabled')       // para estilos
+            .removeAttr('href')         // elimina el target del enlace
+            .off('click')               // quita cualquier handler
+            .text(label);               // opcional: cambia el texto
+    }
+
+    /* Jquery para tomar el numero de nota credito para emitir */
+    $(document).ready(function(){
+        //Declarar datatable
+        const tabla = $('#tablaNotasCredito').DataTable();
+
+        function aplicarDesactivacion() {
+             // Recorremos cada fila y deshabilitamos según columna no vacía
+            $('#tablaNotasCredito tbody tr').each(function() {
+                // Ejemplo: columna con clase (ajusta según tu HTML)
+                const valorCol = $.trim($(this).find('.nc_uuid').text());
+                if (valorCol !== 'None') {
+                    const $link = $(this).find('.enlace_emitir');
+                    disableEmitLink($link);
+                }
+            });
+        }
+
+        aplicarDesactivacion();
+        tabla.on('draw', function(){
+            aplicarDesactivacion();
+        })
+
+        $('#tablaNotasCredito').on('click', '.enlace_emitir:not(.disabled)', function(e){
+            e.preventDefault();
+            const $link = $(this);
+            const fila = $(this).closest('tr');
+            resultado = fila.find('.nro_notacredito').text();
+            // Llamas al metodo y esperas el resultado
+            send_notacredito(resultado);
+        });
+    });
+</script>
+{% endblock %}

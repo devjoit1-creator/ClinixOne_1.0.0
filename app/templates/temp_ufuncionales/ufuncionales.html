@@ -1,0 +1,102 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Unidades Funcionales{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Unidades Funcionales</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('ufuncionales.add_ufuncional') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nueva Und. Funcional</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <table id="tablaUnidadesFuncionales" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;" scope="col">Codigo</th>
+                            <th style="width: 50%"  scope="col">Unidad Funcional</th>
+                            <th style="width: 25%;" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in ufunc %}
+                        <tr>
+                            <td class="valor_ufuncional" style="width: 25%;">{{ u.cod_ufuncional }}</td>
+                            <td style="width: 50%;">{{ u.nom_ufuncional }}</td>
+                            <td style="width: 25%;">
+                                <a href="{{ url_for('ufuncionales.edit_ufuncional', cod = u.cod_ufuncional) }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a class="enlace_eliminar button is-small is-danger has-tooltip-bottom" data-tooltip="Eliminar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    Swal.fire({
+                        title: "Notificación",
+                        text: "{{ message }}",
+                        icon: "{{ category }}"
+                    });
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script>
+    /* Script de Confirmación para eliminar */
+    const confirmacion = (cod_ufuncional) => {
+        Swal.fire({
+            title: "Esta Seguro(a)?",
+            text: "Esta acción no se puede revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/drop_ufuncional/${cod_ufuncional}`
+            }
+         });
+    }
+
+    $(document).ready(function(){
+        $('#tablaUnidadesFuncionales').off('click', '.enlace_eliminar').on('click', '.enlace_eliminar', function(event){
+            event.preventDefault();
+            const fila = $(this).closest('tr')
+            let cod_ufuncional = fila.find('.valor_ufuncional').text();
+            confirmacion(cod_ufuncional);
+        })
+    })
+</script>
+{% endblock %}

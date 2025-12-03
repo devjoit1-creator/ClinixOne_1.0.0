@@ -1,0 +1,141 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Nuevo Servicio y/o Proced.{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nuevo Servicio y/o Procedimiento</h5>
+<div class="container">
+    <form id="form_addservicios" action="{{ url_for('servicios.f_addServicio') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Ingrese la información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="cod_servicio" class="label is-small">Codigo <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="cod_servicio" id="cod_servicio" required>
+                            </div>
+                            <div class="field">
+                                <label for="nom_servicio" class="label is-small">Nombre <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="nom_servicio" id="nom_servicio" required>
+                            </div>
+                            <div class="field">
+                                <label for="valor" class="label is-small">Precio <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="number" name="valor" id="valor" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="tarifa" class="label is-small">Pertenece a Tarifa <strong style="color: red;">*</strong></label>
+                                <span class="select is-small">
+                                    <select name="tarifa" id="tarifa" required>
+                                        <option value=""></option>
+                                        {% for tarf in tarfs %}
+                                        <option value="{{ tarf.id_tarifa }}">{{ tarf.nom_tarifa }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="grupo" class="label is-small">Grupo de Servicios <strong style="color: red;">*</strong></label>
+                                <div class="field-body">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <input type="text" name="grupo" id="grupo" class="input is-small" readonly required>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input type="text" name="nomGrupo" id="nomGrupo" class="input is-small" readonly required>
+                                        </p>
+                                        <p class="control">
+                                            <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Grupo" data-target="modal-grupos">
+                                                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                        <button type="submit" class="button is-success">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                            <span>Guardar</span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <a onclick="confirmacion()" class="button is-danger">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                            <span>Cancelar</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal Grupos -->
+<div class="modal" id="modal-grupos" >
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Grupos de Servicios</h5>
+            <table id="tablaBusquedaGrupos" class="table is-hoverable" style="width: 100%; font-size: small;">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;" scope="col">Codigo</th>
+                        <th style="width: 75%;" scope="col">Grupo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grserv in grservs %}
+                    <tr>
+                        <td style="width: 25%;">{{ grserv.cod_grupo_servicio }}</td>
+                        <td style="width: 75%;">{{ grserv.nom_grupo_servicio }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/servicios/add_servicios.js') }}"></script>
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardaran.",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                window.location.href = "{{ url_for('servicios.servicios') }}"
+            }
+        })
+    }
+</script>
+{% endblock %}

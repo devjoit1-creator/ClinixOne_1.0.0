@@ -1,0 +1,435 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.enlace-desactivado {
+  pointer-events: none; /* Evita que se pueda hacer clic */
+  cursor: not-allowed;  /* Muestra el cursor de "no permitido" */
+  opacity: 0.5;         /* Lo hace semitransparente */
+}
+</style>
+{% endblock %}
+{% block title %}Ingreso a Hospitalización{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Ingreso a Hospitalización</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('hospitalizacion.add_hospitalizacion') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nuevo Ingreso Hosp.</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros Activos</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <table id="tablaHospitalizacion" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 3%; font-size: small;" scope="col">Atención</th>
+                            <th style="width: 10%; font-size: small;" scope="col">Fecha Ing.</th>
+                            <th style="width: 10%; font-size: small;" scope="col">Hora Ing.</th>
+                            <th style="width: 10%; font-size: small;" scope="col">Documento</th>
+                            <th style="width: 30%; font-size: small;" scope="col">Paciente</th>
+                            <th style="width: 10%; font-size: small;" scope="col">Fecha Sal.</th>
+                            <th style="width: 10%; font-size: small;" scope="col">Hora Sal.</th>
+                            <th style="width: 8%; font-size: small;" scope="col">No. Aut.</th>
+                            <th style="width: 8%; font-size: small;" scope="col">No. Fact.</th>
+                            <th style="width: 15%; font-size: small;" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for hospitalizacion in hospitalizaciones %}
+                        <tr>
+                            <td class="valor_atencion" style="width: 3%; font-size: small;">{{ hospitalizacion.atencion }}</td>
+                            <td style="width: 10%; font-size: small;">{{ hospitalizacion.fecha_ingreso }}</td>
+                            <td style="width: 10%; font-size: small;">{{ hospitalizacion.hora_ingreso }}</td>
+                            <td class="valor_codigo" style="width: 10%; font-size: small;">{{ hospitalizacion.codigo }}</td>
+                            <td class="valor_paciente" style="width: 30%; font-size: small;">{{ hospitalizacion.paciente }}</td>
+                            <td class="valor_egreso" style="width: 10%; font-size: small;">{{ hospitalizacion.fecha_salida }}</td>
+                            <td style="width: 10%; font-size: small;">{{ hospitalizacion.hora_salida }}</td>
+                            <td class="valor_aut" style="width: 8%; font-size: small;">{{ hospitalizacion.aut }}</td>
+                            <td class="valor_factura" style="width: 8%; font-size: small;">{{ hospitalizacion.numero_fact }}</td>
+                            <td style="width: 15%;">
+                                <a class="enlace_anular_hosp button is-small has-tooltip-bottom" data-tooltip="Anular Atención" style="padding: 0em 1.0em;">
+                                    <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png')}}" alt="icon"></i></span>
+                                </a>
+                                <a class="enlace_opciones button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Opciones" data-target="modal-opcionesHospitalizacion" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/menu.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th style="width: 5%;" scope="col">Filtrar por Atención</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Anexos Ordenes Hospitalizacion -->
+<div class="modal" id="modal-opcionesHospitalizacion">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Menú de Opciones</h5>
+            <div class="field is-horizontal">
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <label for="atencion" class="label is-small">Atención</label>
+                            <input type="text" name="atencion" id="atencion" class="input is-small" readonly required>
+                        </p>
+                        <p class="control">
+                            <label for="codigo" class="label is-small">Paciente</label>
+                            <input type="text" name="codigo" id="codigo" class="input is-small" readonly required>
+                        </p>
+                        <p class="control is-expanded">
+                            <label for="paciente" class="label is-small" style="color: white;">.</label>
+                            <input type="text" name="paciente" id="paciente" class="input is-small" readonly required>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="field is-horizontal">
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <label for="fecha_egreso" class="label is-small">Fecha Salida</label>
+                            <input type="text" name="fecha_egreso" id="fecha_egreso" class="input is-small" readonly required>
+                        </p>
+                        <p class="control">
+                            <label for="nro_autorizacion" class="label is-small">Autorización</label>
+                            <input type="text" name="nro_autorizacion" id="nro_autorizacion" class="input is-small" readonly required>
+                        </p>
+                        <p class="control">
+                            <label for="nro_factura" class="label is-small">Factura</label>
+                            <input type="text" name="nro_factura" id="nro_factura" class="input is-small" readonly required>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <h6 class="title is-6">Seleccione</h6>
+            <!-- Tarjeta opciones Salida paciente -->
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-header-title">Salida de Paciente</p>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <a id="generar_salida_link" class="enlace_generar_salida button is-small is-danger">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/egreso.png') }}" alt="icon"></i></span>
+                                    <span>Generar Salida</span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a id="anular_salida_link" class="enlace_anular_salida button is-small is-danger">
+                                    <span class="icon is-small"><i class="fa fa-ban" aria-hidden="true"></i></span>
+                                    <span>Anular Salida</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta opciones Cargue Servicios y Facturar Hosp -->
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-header-title">Cargue y Facturación Serv. Medicos</p>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <a id="cargar_servicios_link" class="enlace_cargar_servicios button is-small is-success">
+                                    <span class="icon is-small"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
+                                    <span>Cargar Autorización y Serv. Medicos</span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a id="generar_factura_link" class="enlace_generar_factura button is-small is-success">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/factura.png') }}" alt="icon"></i></span>
+                                    <span>Generar Factura</span>
+                                </a>
+                                <script>
+                                    
+                                </script>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta opciones ordenes -->
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-header-title">Imprimir Ordenes</p>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <a id="orden_ingreso_link" class="button is-small">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/pdf.png') }}" alt="icon"></i></span>
+                                    <span>Orden de Admisión / Ingreso</span>
+                                </a>
+                                <script>
+                                    let orden_ingreso_link = document.getElementById("orden_ingreso_link");
+                                    orden_ingreso_link.addEventListener('click', (e) => {
+                                        e.preventDefault();
+                                        let atencion = document.getElementById("atencion").value;
+                                        window.open(
+                                            orden_ingreso_link.href = `/orden_ingreso/${atencion}`,
+                                            'mywin',
+                                            'left=450%,top=60,position=fixed,width=600,height=600,toolbar=1,resizable=0, centerscreen=yes'
+                                        );
+                                        return false;
+                                    })
+                                </script>
+                            </p>
+                            <p class="control">
+                                <a id="orden_egreso_link" class="button is-small">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/pdf.png') }}" alt="icon"></i></span>
+                                    <span>Orden de Salida / Egreso</span>
+                                </a>
+                                <script>
+                                    let orden_egreso_link = document.getElementById("orden_egreso_link");
+                                    orden_egreso_link.addEventListener('click', (e) => {
+                                        e.preventDefault();
+                                        let atencion = document.getElementById("atencion").value;
+                                        window.open(
+                                            orden_egreso_link.href = `/orden_egreso/${atencion}`,
+                                            'mywin',
+                                            'left=450%,top=60,position=fixed,width=600,height=600,toolbar=1,resizable=0, centerscreen=yes'
+                                        )
+                                        return false;
+                                    })
+                                </script>
+                            </p>
+                        </div>
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <a id="hoja_admision_link" class="button is-small">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/pdf.png') }}" alt="icon"></i></span>
+                                    <span>Hoja de Admisión con Finalidad</span>
+                                </a>
+                                <script>
+                                    let hoja_admision_link = document.getElementById("hoja_admision_link");
+                                    hoja_admision_link.addEventListener('click', (e) => {
+                                        e.preventDefault();
+                                        let atencion = document.getElementById("atencion").value;
+                                        window.open(
+                                            hoja_admision_link.href = `/hoja_admision/${atencion}`,
+                                            'mywin',
+                                            'left=450%,top=60,position=fixed,width=600,height=600,toolbar=1,resizable=0,centerscreen=yes'
+                                        )
+                                        return false;
+                                    })
+                                </script>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    title: "Notificación!",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Obtener los valores de la celda atención y paciente para consultar los anexos -->
+<script>
+    /* Funcion para anular/eliminar atencion */
+    const anular_ingreso = (atencion) => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Esta acción no se puede revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                window.location.href = `/drop_hospitalizacion/${atencion}`
+            }
+        })
+    };
+
+    /* Función para desactivar link de anular/eliminar atención */
+    function desactivarlinkAnular($linkAnular){
+        $linkAnular
+            .addClass('enlace-desactivado')
+            .removeAttr('href')
+            .off('click')
+    }
+
+    const $atencion = document.getElementById("atencion");
+    const $codigo = document.getElementById("codigo");
+    const $paciente = document.getElementById("paciente");
+    const $fecha_egreso = document.getElementById("fecha_egreso")
+    const $nro_autorizacion = document.getElementById("nro_autorizacion");
+    const $nro_factura = document.getElementById("nro_factura");
+    
+    $(document).ready(function(){
+        /* Declarar DataTable */
+        const tabla = $('#tablaHospitalizacion').DataTable();
+
+        function aplicarDesactivacion(){
+            $('#tablaHospitalizacion tbody tr').each(function(){
+                const valorColFactura = $.trim($(this).find('.valor_factura').text());
+                const valorColAut = $.trim($(this).find('.valor_aut').text());
+                if(valorColFactura !== 'None' || valorColAut !== 'None'){
+                    const $linkAnular = $(this).find('.enlace_anular_hosp');
+                    desactivarlinkAnular($linkAnular)
+                }
+            });
+        }
+
+        aplicarDesactivacion();
+
+        tabla.on('draw', function(){
+            aplicarDesactivacion();
+        })
+
+        /* Enlaces Activos */
+        $('#tablaHospitalizacion').off('click', '.enlace_anular_hosp').on('click', '.enlace_anular_hosp:not(.enlace-desactivado)', function (event){
+            event.preventDefault();
+            const fila = $(this).closest('tr');
+            let atencion = fila.find('.valor_atencion').text();
+            anular_ingreso(atencion);
+        })
+
+        $('#tablaHospitalizacion').on('click', '.enlace_opciones', function(event) {
+            event.preventDefault();
+            const fila = $(this).closest('tr');
+            $('#atencion').val(fila.find('.valor_atencion').text());
+            $('#codigo').val(fila.find('.valor_codigo').text());
+            $('#paciente').val(fila.find('.valor_paciente').text());
+            $('#fecha_egreso').val(fila.find('.valor_egreso').text());
+            $('#nro_autorizacion').val(fila.find('.valor_aut').text());
+            $('#nro_factura').val(fila.find('.valor_factura').text());
+
+            const fecha_egreso = $('#fecha_egreso').val().trim();
+            const nro_autorizacion = $('#nro_autorizacion').val().trim();
+            const nro_factura = $('#nro_factura').val().trim();
+            const enlace_generar_salida = $('.enlace_generar_salida');
+            const enlace_anular_salida = $('.enlace_anular_salida');
+            const enlace_cargar_servicios = $('.enlace_cargar_servicios');
+            const enlace_generar_factura = $('.enlace_generar_factura');
+            if(fecha_egreso !== 'None'){
+                enlace_generar_salida.addClass('enlace-desactivado');
+                enlace_anular_salida.removeClass('enlace-desactivado');
+            }else {
+                enlace_generar_salida.removeClass('enlace-desactivado');
+                enlace_anular_salida.addClass('enlace-desactivado');
+            }
+
+            if(nro_autorizacion !== 'None'){
+                enlace_anular_salida.addClass('enlace-desactivado');
+                enlace_cargar_servicios.addClass('enlace-desactivado');
+                enlace_generar_factura.removeClass('enlace-desactivado');
+            }else{
+                enlace_anular_salida.removeClass('enlace-desactivado');
+                enlace_cargar_servicios.removeClass('enlace-desactivado');
+                enlace_generar_factura.addClass('enlace-desactivado');
+            }
+
+            // Mostrar el modal (si usas Bulma, activa la clase 'is-active')
+            $('#modal-opcionesHospitalizacion').addClass('is-active');
+        });
+        // Cerrar el modal
+        $('.modal-close').on('click', function() {
+            $('#modal-opcionesHospitalizacion').removeClass('is-active');
+        });
+    });
+
+   
+   //Función Egresar Paciente 
+   const generar_salida_link = document.getElementById("generar_salida_link");
+   const generar_salida = () => {
+        window.location.href = `/add_egreso_hosp/${$atencion.value}`;
+   };
+   generar_salida_link.addEventListener("click", (event) => {
+        event.preventDefault();
+        generar_salida();
+    });
+
+   //Función Cargue Servicios
+   const cargar_servicios_link = document.getElementById("cargar_servicios_link");
+   const cargar_servicios = () => {
+        window.location.href = `/cargue_servicios_hosp/${$atencion.value}`;
+   };
+   cargar_servicios_link.addEventListener("click", (event) => {
+        event.preventDefault();
+        cargar_servicios();
+    });
+
+   //Función Facturar Hospitalización
+   const generar_factura_link = document.getElementById("generar_factura_link");
+   const generar_factura = () => {
+        window.location.href = `/generar_factura_hosp/${$atencion.value}`;
+   };
+   generar_factura_link.addEventListener("click", (event) => {
+        event.preventDefault();
+        generar_factura();
+    });
+
+   //Función Anular Egreso Paciente
+   const anular_salida_link = document.getElementById("anular_salida_link");
+   const confirmacion_anular_egreso = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Esta acción no se puede deshacer!",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if(result.isConfirmed){
+                window.location.href = `/anular_egreso_hosp/${$atencion.value}`
+            }
+        })
+    };
+    anular_salida_link.addEventListener("click", (event) => {
+        event.preventDefault();
+        confirmacion_anular_egreso();
+    })
+</script>
+{% endblock %}

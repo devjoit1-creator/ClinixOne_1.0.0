@@ -1,0 +1,280 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.inter-scrollable-section {
+    max-height: 515px;
+    overflow-y: auto;
+    padding: 0rem 0rem;
+}
+</style>
+{% endblock %}
+{% block title %}Orden de Salida / Egreso de Paciente{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Orden de Salida / Egreso de Paciente</h5>
+<div class="container">
+    <form id="form_addegresohosp" action="{{ url_for('hospitalizacion.f_addEgresoHosp') }}" method="post">
+        <section class="inter-scrollable-section">
+            <input type="text" name="usuario" id="usuario" value="{{ session['name'] }}" hidden>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Atención(Hospitalización)</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <p class="control">
+                                        <label for="atencion" class="label is-small">Atención</label>
+                                        <input type="text" name="atencion" id="atencion" class="input is-small" value="{{ registro.1 }}" readonly required>
+                                    </p>
+                                </div>
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="tipo" class="label is-small">Paciente</label>
+                                        <input type="text" name="tipo" id="tipo" class="input is-small" value="{{ paciente.0 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="codigo" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="codigo" id="codigo" class="input is-small" value="{{ paciente.1 }}" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="paciente" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="paciente" id="paciente" class="input is-small" value="{{ paciente.2 }}" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="cod_admin" class="label is-small">Entidad Administradora Responsable</label>
+                                        <input type="text" name="cod_admin" id="cod_admin" class="input is-small" value="{{ administradora.0 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="nit_admin" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="nit_admin" id="nit_admin" class="input is-small" value="{{ administradora.1 }}" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="nom_admin" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="nom_admin" id="nom_admin" class="input is-small" value="{{ administradora.4 }}" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label for="fecha_ingreso" class="label is-small">Fecha de Ingreso</label>
+                                        <input type="date" name="fecha_ingreso" id="fecha_ingreso" class="input is-small" value="{{ registro.3 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="hora_ingreso" class="label is-small">Hora de Ingreso</label>
+                                        <input type="time" name="hora_ingreso" id="hora_ingreso" class="input is-small" value="{{ registro.4 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="und_funcional" class="label is-small">Und. Funcional</label>
+                                        <input type="text" name="und_funcional" id="und_funcional" class="input is-small" value="{{ unidad.1 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="habitacion" class="label is-small">Habitación</label>
+                                        <input type="text" name="habitacion" id="habitacion" class="input is-small" value="{{ registro.15 }}" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="cod_diag1" class="label is-small">Diagnostico Principal de Ingreso</label>
+                                        <input type="text" name="cod_diag1" id="cod_diag1" class="input is-small" value="{{ registro.16 }}" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="nom_diag1" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="nom_diag1" id="nom_diag1" class="input is-small" value="{{ registro.17 }}" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Salida</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="fecha_salida" class="label is-small">Fecha de Salida <strong style="color: red;">*</strong></label>
+                                    <input type="date" name="fecha_salida" id="fecha_salida" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="hora_salida" class="label is-small">Hora de Salida <strong style="color: red;">*</strong></label>
+                                    <input type="time" name="hora_salida" id="hora_salida" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="und_funcional_salida" class="label is-small">Egresa de <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small is-expanded">
+                                        <select name="und_funcional_salida" id="und_funcional_salida" required>
+                                            <option value=""></option>
+                                            {% for unidad in unidades %}
+                                            <option value="{{ unidad.cod_ufuncional }}">{{ unidad.nom_ufuncional }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="field">
+                                    <label for="dias_estancia" class="label is-small">Días de Estancia <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="dias_estancia" id="dias_estancia" class="input is-small" readonly required>
+                                </div>
+                                <div class="field">
+                                    <label for="estado_salida" class="label is-small">Estado a la Salida <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="estado_salida" id="estado_salida" required>
+                                            <option value=""></option>
+                                            <option value="01">PACIENTE CON DESTINO A SU DOMICILIO</option>
+                                            <option value="02">PACIENTE MUERTO</option>
+                                            <option value="03">PACIENTE DERIVADO A OTRO SERVICIO</option>
+                                            <option value="04">REFERIDO A OTRA INSTITUCIÓN</option>
+                                            <option value="05">CONTRA REFERIDO A OTRA INSTITUCIÓN</option>
+                                            <option value="06">DERIVADO O REFERIDO A HOSPITALIZACION DOMICILIARIA</option>
+                                            <option value="07">DERIVADO A SERVICIO SOCIAL</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="field">
+                                    <label for="" class="label is-small" style="color: white;">.</label>
+                                    <button id="btn_corregir" class="button is-small is-primary">
+                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                        <span>Corregir Diagnosticos</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="cod_diag_salida" class="label is-small">Diagnostico Principal de Salida <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="cod_diag_salida" id="cod_diag_salida" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="nom_diag_salida" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="nom_diag_salida" id="nom_diag_salida" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal-BusquedaDiagnosticosEgresoHosp">
+                                            ...
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="diag_muerte" class="field is-horizontal" style="display: none;">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="cod_diag_muerte" class="label is-small">Diagnostico de Muerte <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="cod_diag_muerte" id="cod_diag_muerte" class="input is-small">
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="nom_diag_muerte" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="nom_diag_muerte" id="nom_diag_muerte" class="input is-small">
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal-BusquedaDiagnosticosEgresoHosp">
+                                            ...
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="remite_a" class="field is-horizontal" style="display: none;">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="remitido_salida" class="label is-small">Remite a <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="remitido_salida" id="remitido_salida" class="input is-small">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button class="button is-small is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/egreso.png') }}" alt="icon"></i></span>
+                    <span>Generar Salida de Paciente</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-small is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Busqueda Diagnosticos -->
+<div class="modal" id="modal-BusquedaDiagnosticosEgresoHosp">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Diagnostico</h5>
+            <table id="tablaBusquedaDiagnosticosEgresoHosp" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;" scope="col">Codigo</th>
+                        <th style="width: 75%;" scope="col">Diagnostico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for diagnostico in diagnosticos %}
+                    <tr>
+                        <td style="width: 25%;">{{ diagnostico.codigo }}</td>
+                        <td style="width: 75%;">{{ diagnostico.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/hospitalizacion/egreso_hospitalizacion.js') }}"></script>
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardarán!",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if(result.isConfirmed){
+                window.location.href = "{{ url_for('hospitalizacion.hospitalizacion') }}"
+            }
+        })
+    }
+</script>
+{% endblock %}

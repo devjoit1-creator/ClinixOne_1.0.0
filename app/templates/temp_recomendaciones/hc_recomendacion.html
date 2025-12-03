@@ -1,0 +1,55 @@
+{% extends 'base_reporte.html' %}
+{% block css %}
+{% endblock %}
+
+{% block title %}H.C. Receta Medica{% endblock %}
+{% block report %}
+<!-- Datos de Paciente -->
+<hr>
+<table style="height: 82px; float: left; width: 640px;">
+    <tbody>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small"><strong>No. Documento:</strong>{{ paciente.0 }}-{{ paciente.1 }}</td>
+            <td style="width: 541px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small" colspan="2"><strong>Nombre Completo:</strong> {{ paciente.2 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Fecha Nac.:</strong> {{ paciente.3 }}</td>
+            <td style="width: 238.34px;; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Estado Civil:</strong> {{ paciente.4 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Acompañante:</strong> {{ paciente.5 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Sexo:</strong> {{ paciente.6 }}</td>
+            <td style="width: 238.34px;; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Ocupación:</strong> {{ paciente.7 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Tel. Acompañante:</strong> {{ paciente.8 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Dirección:</strong> {{ paciente.9 }}</td>
+            <td style="width: 238.34px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Telefono:</strong> {{ paciente.10 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Responsable:</strong> {{ paciente.11 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Municipio:</strong> {{ paciente.12 }}</td>
+            <td style="width: 238.34px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Parentesco Acom.:</strong> {{ paciente.13 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Tel. Responsable:</strong> {{ paciente.14 }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<hr>
+<p style="text-align: right; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Fecha:</strong> {{ recomendacion.1 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Hora:</strong> {{ recomendacion.2 }}</p>
+<p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>RECETA MEDICA</strong></p>
+<p style="font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ recomendacion.5 }}</p>
+<br>
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,{{ firma }}" alt="firma-medico" style="width: 180px; height: 64px;">
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>{{ medico.1 }}</strong></p>
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>{{ medico.2 }}</strong></p>
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Doc.: {{ medico.3 }}, R.M.: {{ medico.4 }}</strong></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

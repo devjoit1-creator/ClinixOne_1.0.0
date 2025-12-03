@@ -1,0 +1,160 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Ing. Consulta Externa{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Ingreso a Consulta Externa</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('consultas.add_consulta') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nuevo Ingreso C.E.</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <!-- Tabla Principal de Consultas -->
+                <table id="tablaConsultas" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 3%; font-size: small;" scope="col">Atención</th>
+                            <th style="width: 9%; font-size: small;" scope="col">Fecha</th>
+                            <th style="width: 3%; font-size: small;" scope="col">Hora</th>
+                            <th style="width: 25%; font-size: small;" scope="col">Paciente</th>
+                            <th style="width: 25%; font-size: small;" scope="col">Medico Tratante</th>
+                            <th style="width: 10%; font-size: small;" scope="col">Autorización</th>
+                            <th style="width: 10%; font-size: small;" scope="col">Factura</th>
+                            <th style="width: 20%; font-size: small;" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for consulta in consultas %}
+                        <tr>
+                            <td class="valor_atencion" style="width: 3%; font-size: small;">{{ consulta.id }}</td>
+                            <td style="width: 9%; font-size: small;">{{ consulta.fecha }}</td>
+                            <td style="width: 3%; font-size: small;">{{ consulta.hora }}</td>
+                            <td style="width: 25%; font-size: small;">{{ consulta.paciente }}</td>
+                            <td style="width: 25%; font-size: small;">{{ consulta.medico }}</td>
+                            <td class="valor_aut" style="width: 10%; font-size: small;">{{ consulta.aut }}</td>
+                            <td class="valor_factura" style="width: 10%; font-size: small;">{{ consulta.numero_fact }}</td>
+                            <td style="width: 22%;">
+                                <a class="enlace_anular_consulta button is-small is-danger has-tooltip-bottom" data-tooltip="Anular" style="padding: 0em 1.0em;">
+                                    <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a href="/generar_factura_consulta/{{ consulta.id }}" class="enlace_factura button is-small is-primary has-tooltip-bottom" data-tooltip="Generar Factura" style="padding: 0em 1.0em;">
+                                    <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/factura.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                Swal.fire({
+                    title: "Notificación",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                });
+            })
+        </script>
+        {% endfor %}
+    {% endif%}
+{% endwith %}
+
+<!-- Script para habilitar/deshabilitar acceso a generación de factura de consulta -->
+<script type="text/javascript">
+    /* Swal para anular/eliminar atención por consulta externa */
+    const confirmacion = (atencion) => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Esta acción no se puede revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                window.location.href = `/drop_consulta/${atencion}`
+            }
+        })
+    };
+
+    /* Deshabilitar Enlace Anular */
+    function desactivarLinkAnular($linkAnular){
+        $linkAnular
+            .addClass('disabled')
+            .removeAttr('href')
+            .off('click')
+    };
+
+    /* Deshabilitar Enlace Facturar */
+    function desactivarLinkFactura($linkFactura){
+        $linkFactura
+            .addClass('disabled')
+            .removeAttr('href')
+            .off('click')
+    };
+
+    $(document).ready(function(){
+        $('#tablaConsultas tbody tr').each(function(){
+            const valorColFactura = $.trim($(this).find('.valor_factura').text());
+            if(valorColFactura !== 'None'){
+                const $linkAnular = $(this).find('.enlace_anular_consulta');
+                const $linkFactura = $(this).find('.enlace_factura');
+                desactivarLinkAnular($linkAnular);
+                desactivarLinkFactura($linkFactura);
+            }
+        });
+
+        $('#tablaConsultas').off('click', '.enlace_anular_consulta').on('click', '.enlace_anular_consulta:not(.disabled)', function (event){
+            event.preventDefault();
+            const fila = $(this).closest('tr');
+            let atencion = fila.find('.valor_atencion').text();
+            confirmacion(atencion)
+        });
+    })
+    //const $celdas = document.querySelectorAll('.celda_factura');
+    //$celdas.forEach((celda, index) => {
+        /* const valorCelda = parseInt(celda.textContent);
+        const enlace_factura = document.querySelectorAll('.enlace_factura')[index];
+        const enlace_anular_consulta = document.querySelectorAll('.enlace_anular_consulta')[index]; */
+
+        /* if(valorCelda > 0){
+            enlace_factura.style.pointerEvents = 'none';
+            enlace_factura.style.color = 'red';
+            enlace_anular_consulta.style.pointerEvents = 'none';
+            enlace_anular_consulta.style.color = 'red';
+        }else{ */
+            /* enlace_factura.style.pointerEvents = 'auto';
+            enlace_factura.style.color = '';
+            enlace_anular_consulta.style.pointerEvents = 'none';
+            enlace_anular_consulta.style.color = 'red';
+        } */
+    //})
+</script>
+
+{% endblock %}

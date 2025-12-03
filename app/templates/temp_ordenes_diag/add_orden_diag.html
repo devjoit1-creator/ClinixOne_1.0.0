@@ -1,0 +1,264 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Nueva Orden de Servicios{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva Orden de Servicios</h5>
+<div class="container">
+    <form id="form_addordendiag" action="{{ url_for('ordenes_diag.f_addOrdenDiag') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos de Atención</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                    <input type="text" name="id_orden" id="id_orden" value="{{ consecutivo.0 }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="atencion" class="label is-small">Atención</label>
+                                    <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ atencion }}" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="codigo" class="label is-small">Paciente</label>
+                                    <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ paciente }}" readonly required>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" readonly required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="fecha" class="label is-small">Fecha <strong style="color: red;">*</strong></label>
+                                    <input type="date" name="fecha" id="fecha" class="input is-small" required>
+                                </p>
+                                <p class="control">
+                                    <label for="hora" class="label is-small">Hora <strong style="color: red;">*</strong></label>
+                                    <input type="time" name="hora" id="hora" class="input is-small" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+             <header class="card-header">
+                <p class="card-header-title">Datos de Servicios y/o Procedimientos</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <label class="label is-small">Servicio <strong style="color: red;">*</strong></label>
+                                            <input type="text" name="cod_servicio" id="cod_servicio" class="input is-small" readonly required>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <label class="label is-small" style="color: white;">.</label>
+                                            <input type="text" name="nom_servicio" id="nom_servicio" class="input is-small" readonly required>
+                                        </p>
+                                        <p class="control">
+                                            <label class="label is-small" style="color: white;">.</label>
+                                            <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Serv./Procd." data-target="modal-ProcedimientosCups">
+                                                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field has-addons">
+                                        <p class="control is-expanded">
+                                            <label for="justificacion" class="label is-small">Motivo/Justificación <strong style="color: red;">*</strong></label>
+                                            <input type="text" name="justificacion" id="justificacion" class="input is-small">
+                                        </p>
+                                        <p class="control">
+                                            <label class="label is-small" style="color: white;">.</label>
+                                            <a onclick="agregarFila()" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Agregar">
+                                                <span class="icon is small"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                            </a>
+                                        </p>
+                                        <p class="control">
+                                            <label class="label is-small" style="color: white;">.</label>
+                                            <a onclick="eliminarFila()" class="button is-small is-danger has-tooltip-bottom" data-tooltip="Remover">
+                                                <span class="icon is-small"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="data" name="data">
+                    <table id="tablaProcedimientosCups" class="table is-striped" style="width: 100%;">
+                        <tr>
+                            <th scope="col" style="width: 10%; font-size: x-small;">Codigo</th>
+                            <th scope="col" style="width: 40%; font-size: x-small;">Servicio / Procedimiento</th>
+                            <th scope="col" style="width: 50%; font-size: x-small;">Justificación</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="submit" class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Procedimientos CUPS -->
+<div class="modal" id="modal-ProcedimientosCups">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h6 class="title is-6">Busqueda de Servicios / Procedimientos</h6>
+            <table id="tablaBusquedaProcedimientosCups" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 20%;">Codigo</th>
+                        <th scope="col" style="width: 80%;">Servicio / Procedimiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cup in cups %}
+                    <tr>
+                        <td style="width: 20%;">{{ cup.id }}</td>
+                        <td style="width: 80%;">{{ cup.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/ordenes_diag/add_ordenesdiag.js') }}"></script>
+<!-- Modo Cancelar -->
+<script>
+const confirmacion = () => {
+    Swal.fire({
+        title: "Estas Seguro(a)?",
+        text: "Los cambios no se guardarán!",
+        icon: "question",
+        confirmButtonText: "Si, Cancelar!",
+        confirmButtonColor: "#48c78e",
+        cancelButtonText: "No, Continuar",
+        cancelButtonColor: "#f14668",
+        showCancelButton: true,
+        allowOutsideClick: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let atencion = document.getElementById("atencion").value;
+            let paciente = document.getElementById("codigo").value;
+            window.location.href = `/ordenes_diag/${atencion}/${paciente}`
+        }
+    });
+};
+</script>
+<!-- Cargar Servicios -->
+<script>
+const agregarFila = () => {
+    let $cod_servicio = document.getElementById("cod_servicio");
+    let $nom_servicio = document.getElementById("nom_servicio");
+    let $justificacion = document.getElementById("justificacion");
+    if($cod_servicio.value === "" && $nom_servicio.value === "" && $justificacion.value == ""){
+        Swal.fire({
+            title: "Notificación!",
+            text: "Debe seleccionar un procedimiento y diligenciar su justificación",
+            icon: "warning"
+        })
+    }else{
+        document.getElementById("tablaProcedimientosCups").insertRow(-1).innerHTML = 
+        `<td>${$cod_servicio.value}</td><td>${$nom_servicio.value}</td><td>${$justificacion.value}</td>`;
+    
+        $cod_servicio.value =""
+        $nom_servicio.value =""
+        $justificacion.value=""
+    }
+}
+</script>
+<!-- Eliminar Servicios -->
+<script>
+const eliminarFila = () => {
+    let table = document.getElementById("tablaProcedimientosCups");
+    let rowCount = table.rows.length;
+
+    if (rowCount <= 1) {
+        Swal.fire({
+            title: "Notificación!",
+            text: "No hay servicios cargados",
+            icon: "warning"
+        })
+    }else{
+        table.deleteRow(rowCount - 1);
+    }
+}
+</script>
+<!-- Enviar Datos de orden diag Validación -->
+<script>
+const $form_addordendiag = document.getElementById("form_addordendiag");
+$form_addordendiag.addEventListener("submit", (e) => {
+    /* Servicios Cargados */
+    const tabla = document.getElementById('tablaProcedimientosCups');
+    let rowCount = tabla.rows.length;
+    if(rowCount <= 1){
+        e.preventDefault();
+        Swal.fire({
+            title: "Notificación!",
+            text: "Debe al menos cargar un servicio/procedimiento en la orden.",
+            icon: "warning"
+        });
+        return;
+    }
+
+    let data = ''; 
+    for (let i = 1; i < tabla.rows.length; i++) { 
+        const celdas = tabla.rows[i].cells;
+        if(celdas.length >= 3){
+            data += celdas[0].textContent + '-' + celdas[1].textContent + '-' + celdas[2].textContent +';'; 
+        }
+    };
+    document.getElementById('data').value = data;
+
+    /* Loading */
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+});
+</script>
+{% endblock %}

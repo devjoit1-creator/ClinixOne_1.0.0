@@ -1,0 +1,147 @@
+{% extends 'base_reporte.html' %}
+{% block css %}
+{% endblock %}
+
+{% block title %}Orden de Salida / Egreso{% endblock %}
+{% block report %}
+<hr>
+<p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>ORDEN DE SALIDA DE PACIENTES</strong></p>
+<p style="text-align: right; font-family: Arial, Helvetica, sans-serif; font-size: small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>Atención:</strong> {{ registro.0 }}</p>
+<table style="width: 690px;">
+    <tbody>
+        <tr>
+            <td style="width: 90px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; background-color: gainsboro;" colspan="6"><strong>DATOS DEL PACIENTE</strong></td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Paciente:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.1 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Documento:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.2 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Dirección:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.3 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Telefono:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.4 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Nacimiento:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.5 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Edad:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.6 }} AÑOS</td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Municipio:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.7 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Barrio:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.8 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Sexo:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.9 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Ocupación:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.10 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Regimen:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.11 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"></td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Acompañante:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.12 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Parentesco:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.13 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Contacto:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.14 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Responsable:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.15 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Parentesco:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.16 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Contacto:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.17 }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<table style="width: 690px;">
+    <tbody>
+        <tr>
+            <td style="width: 90px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; background-color: gainsboro;" colspan="6"><strong>DATOS DE ENTIDAD ADMINISTRADORA RESPONSABLE</strong></td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>NIT EAPB:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.18 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Codigo EAPB:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.19 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Nombre EAPB:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.20 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Dirección:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.21 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Teléfono:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.22 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Convenio:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.23 }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<table style="width: 690px;">
+    <tbody>
+        <tr>
+            <td style="width: 90px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; background-color: gainsboro;" colspan="6"><strong>DATOS DE SALIDA</strong></td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Fecha Salida:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.24 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Hora Salida:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.25 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Servicio Salida:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.26 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Días Estancia:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.27 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Estado Salida:</strong></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.28 }}</td>
+            <td style="width: 90px; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"></td>
+            <td style="width: 140px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"></td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Diagnosticos</strong></p>
+<table style="width: 100%;">
+    <tbody>
+        <tr>
+            <td style="width: 905.875px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico de Salida:</strong> {{ registro.29 }} - {{ registro.30 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 905.875px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico de Muerte:</strong> {{ registro.31 }} - {{ registro.32 }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Remitido a (Si aplica):</strong> {{ registro.33 }}</p>
+<br><br><br><br><br>
+<table style="float: left;">
+    <tbody>
+        <tr>
+            <td>
+                <p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>________________________________</strong></p>
+                <p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Firma de Portería</strong></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table style="float: right;">
+    <tbody>
+        <tr>
+            <td>
+                <p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>______________<u>{{ registro.34 }}_____________</u></strong></p>
+                <p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>Firma Autorizada</strong></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

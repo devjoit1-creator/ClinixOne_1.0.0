@@ -1,0 +1,112 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+
+{% endblock %}
+{% block title %}Terceros{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Terceros (Proveedores)</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('terceros.add_tercero') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nuevo Tercero</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <table id="tablaTerceros" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 4%; font-size: small;">ID</th>
+                            <th scope="col" style="width: 4%; font-size: small;">Tipo idf.</th>
+                            <th scope="col" style="width: 10%; font-size: small;">Identificación</th>
+                            <th scope="col" style="width: 20%; font-size: small;">Nombre</th>
+                            <th scope="col" style="width: 20%; font-size: small;">Dirección</th>
+                            <th scope="col" style="width: 10%; font-size: small;">Telefono</th>
+                            <th scope="col" style="width: 20%; font-size: small;">Correo</th>
+                            <th scope="col" style="width: 5%; font-size: small;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tercero in terceros %}
+                        <tr>
+                            <td class="valor_idtercero" style="width: 4%; font-size: small;">{{ tercero.id_tercero }}</td>
+                            <td style="width: 4%; font-size: small;">{{ tercero.tipo_idf }}</td>
+                            <td style="width: 10%; font-size: small;">{{ tercero.identificacion }}</td>
+                            <td style="width: 20%; font-size: small;">{{ tercero.nom_tercero }}</td>
+                            <td style="width: 20%; font-size: small;">{{ tercero.dir_tercero }}</td>
+                            <td style="width: 10%; font-size: small;">{{ tercero.tel_tercero}}</td>
+                            <td style="width: 20%; font-size: small;">{{ tercero.correo }}</td>
+                            <td>
+                                <a href="/edit_tercero/{{ tercero.id_tercero }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a class="enlace_eliminar button is-small is-danger has-tooltip-bottom" data-tooltip="Eliminar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                Swal.fire({
+                    title: "Notificación!",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script>
+    const confirmacion = (id_tercero) => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardarán!",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/drop_tercero/${id_tercero}`
+            }
+        })
+    }
+
+    $(document).ready(function(){
+        $('#tablaTerceros').off('click', '.enlace_eliminar').on('click', '.enlace_eliminar', function(event){
+            event.preventDefault();
+            const fila = $(this).closest('tr')
+            let id_tercero = fila.find('.valor_idtercero').text();
+            confirmacion(id_tercero);
+        })
+    });
+</script>
+{% endblock %}

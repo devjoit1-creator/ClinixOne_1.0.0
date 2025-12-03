@@ -1,0 +1,14 @@
+<thead>
+    <tr>
+        <th style="width: 30%;" scope="col">Codigo</th>
+        <th style="width: 70%;" scope="col">Habitación</th>
+    </tr
+</thead>
+<tbody>
+    {% for habitacion in habitaciones %}
+    <tr>
+        <td style="width: 30%;">{{ habitacion.codigo }}</td>
+        <td style="width: 70%;">{{ habitacion.nombre }}</td>
+    </tr>
+    {% endfor%}
+</tbody>

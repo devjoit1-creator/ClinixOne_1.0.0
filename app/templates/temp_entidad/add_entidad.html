@@ -1,0 +1,172 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Datos de Entidad{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Datos de Entidad</h5>
+<div class="container">
+    <form action="{{ url_for('entidad.f_addEntidad') }}" method="post" enctype="multipart/form-data">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Ingrese la información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="field-body">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <label for="nit_entidad" class="label is-small">NIT <strong style="color: red;">*</strong></label>
+                                            <input class="input is-small" type="text" name="nit_entidad" id="nit_entidad" required>
+                                        </p>
+                                        <p class="control">
+                                            <label for="digito_nit" class="label is-small">Digito Verf. <strong style="color: red;">*</strong></label>
+                                            <input class="input is-small" type="number" name="digito_nit" id="digito_nit" required>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <label for="nom_entidad" class="label is-small">Razón Social <strong style="color: red;">*</strong></label>
+                                            <input class="input is-small" type="text" name="nom_entidad" id="nom_entidad" required>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="dir_entidad" class="label is-small">Dirección Ppal. <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="dir_entidad" id="dir_entidad" required>
+                            </div>
+                            <div class="field">
+                                <label for="tel_entidad" class="label is-small">Telefono(s) <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="tel_entidad" id="tel_entidad" required>
+                            </div>
+                            <div class="field">
+                                <label for="correo_entidad" class="label is-small">Correo Electronico <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="email" name="correo_entidad" id="correo_entidad" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="pais_entidad" class="label is-small">País <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="pais_entidad" id="pais_entidad" required>
+                            </div>
+                            <div class="field">
+                                <label for="depto_entidad" class="label is-small">Departamento <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="depto_entidad" id="depto_entidad" required>
+                            </div>
+                            <div class="field">
+                                <label for="mun_entidad" class="label is-small">Distrito/Municipio <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="mun_entidad" id="mun_entidad" required>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field">
+                                        <label for="cod_habilitacion" class="label is-small">Codigo Habilitación <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="cod_habilitacion" id="cod_habilitacion" required>
+                                    </div>
+                                    <div class="field">
+                                        <label for="gerente" class="label is-small">Gerente <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="gerente" id="gerente" required>
+                                    </div>
+                                    <div class="field">
+                                        <label for="revisor" class="label is-small">Revisor Fiscal <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="revisor" id="revisor" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field">
+                                        <label for="resolucion_dian" class="label is-small">Resolución DIAN Facturación <strong style="color: red;">*</strong></label>
+                                        <p class="control">
+                                            <textarea class="textarea is-small" name="resolucion_dian" id="resolucion_dian" required></textarea>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field">
+                                        <label for="logo_entidad" class="label is-small">Logo HC-Reportes <strong style="color: red;">*</strong></label>
+                                        <div class="file is-small has-name">
+                                            <label class="file-label">
+                                            <input class="file-input" type="file" name="logo_entidad" id="logo_entidad" accept="image/*" required/>
+                                            <span class="file-cta">
+                                                <span class="file-icon"><i class="fa fa-upload"></i></span>
+                                                <span class="file-label">Cargar Logo</span>
+                                            </span>
+                                            <span class="file-name"> Screen Shot 2017-07-29 at 15.54.25.png </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field">
+                                        <label class="label is-small">Visualizar Logo</label>
+                                        <img id="imgPreview" src="" alt="Vista previa de la imagen" style="max-width: 300px; display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                        <button class="button is-success">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                            <span>Guardar</span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <a onclick="confirmacion()" class="button is-danger">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                            <span>Cancelar</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/entidad/entidad.js') }}"></script>
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardaran.",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                window.location.href = "{{ url_for('entidad.entidad') }}"
+            }
+        })
+    }
+</script>
+{% endblock %}

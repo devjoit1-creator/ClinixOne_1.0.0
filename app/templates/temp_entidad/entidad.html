@@ -1,0 +1,69 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Entidad{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Entidad</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('entidad.add_entidad') }}" class="button is-small is-info">
+                <span class="icon is-smalll"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png')}}" alt="icon"></i></span>
+                <span>Datos de Entidad</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <table class="table is-striped" style="width: 99%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 33%;" scope="col">NIT</th>
+                            <th style="width: 33%;" scope="col">Razón Social</th>
+                            <th style="width: 33%;" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in ent %}
+                        <tr>
+                            <td style="width: 33%;">{{ e.nit }}</td>
+                            <td style="width: 33%;">{{ e.nombre }}</td>
+                            <td style="width: 33%;">
+                               <a href="{{ url_for('entidad.edit_entidad', nit = e.nit) }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+       {% for category, message in messages %}
+       <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            Swal.fire({
+                title: "Notificación!",
+                text: "{{ message }}",
+                icon: "{{ category }}"
+             });
+        })
+       </script>
+       {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% endblock %}

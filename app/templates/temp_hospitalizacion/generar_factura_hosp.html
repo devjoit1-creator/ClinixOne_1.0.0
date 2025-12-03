@@ -1,0 +1,355 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.inter-scrollable-section {
+    max-height: 515px;
+    overflow-y: auto;
+    padding: 0rem 0rem;
+}
+</style>
+{% endblock %}
+{% block title %}Generar Factura Hospitalización{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Generar Factura Hospitalización</h5>
+<div class="container">
+    <form id="form_facturahospitalizacion" action="{{ url_for('facturas.f_addFacturaHosp') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos Iniciales de Factura</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="usuario" id="usuario" value="{{ session['name'] }}" hidden>
+                    <input type="text" name="ambito_factura" id="ambito_factura" value="HOSPITALIZACION" hidden>
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <label for="cod_fuente" class="label is-small">Fuente</label>
+                            <span class="select is-small">
+                                <select name="cod_fuente" id="cod_fuente" required>
+                                    {% for fuente in fuentes %}
+                                    <option value="{{ fuente.cod_fuente }}">{{ fuente.prefijo }}</option>
+                                    {% endfor %}
+                                </select>
+                            </span>
+                        </p>
+                        <p class="control">
+                            <label for="nro_factura" class="label is-small">Nro. Factura</label>
+                            <input type="number" name="nro_factura" id="nro_factura" class="input is-small" value="{{ consecutivo.0 }}" readonly required>
+                        </p>
+                        <p class="control">
+                            <label for="fecha" class="label is-small">Fecha Factura</label>
+                            <input type="date" name="fecha" id="fecha" class="input is-small" readonly>
+                        </p>
+                        <p class="control">
+                            <label for="hora" class="label is-small">Hora Factura</label>
+                            <input type="time" name="hora" id="hora" class="input is-small" readonly>
+                        </p>
+                        <p class="control">
+                            <label class="label is-small" style="color: white;">.</label>
+                            <button type="submit" class="button is-small is-success">
+                                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/factura.png') }}" alt="icon"></i></span>
+                                <span>Generar Factura</span>
+                            </button>
+                        </p>
+                        <p class="control">
+                            <label class="label is-small" style="color: white;">.</label>
+                            <a onclick="confirmacion()" class="button is-small is-danger">
+                                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/salida.png') }}" alt="icon"></i></span>
+                                <span>Regresar</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="inter-scrollable-section">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos Detalle de Factura</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <label for="atencion" class="label is-small">Atención</label>
+                                <input type="text" name="atencion" id="atencion" class="input is-small" value="{{ atencion.1 }}" readonly required>
+                            </p>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="" class="label is-small">Tercero / Cliente</label>
+                                        <input type="text" name="tipo" id="tipo" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="codigo" id="codigo" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="nombre" id="nombre" class="input is-small" readonly required>
+                                    </p>
+                                </div>
+                                <div class="field is-grouped">
+                                    <p class="control is-expanded">
+                                        <label for="" class="label is-small">Dirección</label>
+                                        <input type="text" name="direccion" id="direccion" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small">Telefono</label>
+                                        <input type="text" name="telefono" id="telefono" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="" class="label is-small">Correo</label>
+                                        <input type="text" name="correo" id="correo" class="input is-small" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="" class="label is-small">Datos del Paciente</label>
+                                        <input class="input is-small" type="text" name="tipo_doc" id="tipo_doc" value="{{ dato_pac.0 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <input class="input is-small" type="text" name="cod_paciente" id="cod_paciente" value="{{ atencion.2 }}" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="nombre" class="label is-small" style="color: white;">.</label>
+                                        <input class="input is-small" type="text" name="nom_paciente" id="nom_paciente" value="{{ dato_pac.2 }}" readonly required>
+                                    </p>
+                                </div>
+                                <div class="field is-grouped">
+                                    <p class="control is-expanded">
+                                        <label for="direccion" class="label is-small">Dirección</label>
+                                        <input type="text" name="dir_paciente" id="dir_paciente" class="input is-small" value="{{ dato_pac.9 }}" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="telefono" class="label is-small">Telefono</label>
+                                        <input type="text" name="tel_paciente" id="tel_paciente" class="input is-small" value="{{ dato_pac.10 }}" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="" class="label is-small">Empresa Administradora</label>
+                                        <input class="input is-small" type="text" name="cod_admin" id="cod_admin" value="{{ atencion.7 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <input class="input is-small" type="text" name="nit_admin" id="nit_admin" value="{{ atencion.8 }}" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <input class="input is-small" type="text" name="nom_admin" id="nom_admin" value="{{ administradora.4 }}" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="data" name="data">
+                        <label class="label is-small">Servicios/Proced. Cargados</label>
+                        <table id="tablaServiciosHospFact" class="table is-striped" style="width: 100%;" aria-disabled="true">
+                            <thead>
+                                <tr>
+                                    <th style="width: 12%; font-size: x-small;">Und. Func.</th>
+                                    <th style="width: 13%; font-size: x-small;">Codigo</th>
+                                    <th style="width: 40%; font-size: x-small;">Procedimiento</th>
+                                    <th style="width: 12%; font-size: x-small;">Valor</th>
+                                    <th style="width: 13%; font-size: x-small;">Cantidad</th>
+                                    <th style="width: 13%; font-size: x-small;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for servicio in servicios %}
+                                <tr>
+                                    <td style="width: 12%; font-size: x-small;">{{ servicio.und_funcional }}</td>
+                                    <td style="width: 13%; font-size: x-small;">{{ servicio.cod_serv }}</td>
+                                    <td style="width: 40%; font-size: x-small;">{{ servicio.nom_serv }}</td>
+                                    <td style="width: 12%; font-size: x-small;">{{ servicio.valor_serv }}</td>
+                                    <td style="width: 13%; font-size: x-small;">{{ servicio.cantidad }}</td>
+                                    <td style="width: 13%; font-size: x-small;">{{ servicio.total }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <label class="label is-small">Observación</label>
+                        <div class="field">
+                            <p class="control">
+                                <textarea name="observacion" id="observacion" class="textarea is-small"></textarea>
+                            </p>
+                        </div>
+                        <div class="columns">
+                            <div class="column is-two-thirds"></div>
+                            <div class="column">
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="label is-small">Vlr. Bruto:</td>
+                                            <td colspan="2">
+                                                <input class="input is-small" type="number" name="valor_bruto" id="valor_bruto" readonly required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label is-small">% Desc.:</td>
+                                            <td>
+                                                <input type="number" min="0" name="percent_desc" id="percent_desc" class="input is-small" value="0">
+                                            </td>
+                                            <td>
+                                                <input class="input is-small" type="number" name="descuento" id="descuento" value="0" readonly required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label is-small">Copago:</td>
+                                            <td colspan="2">
+                                                <input type="number" min="0" name="copago" id="copago" class="input is-small" value="0" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label is-small">Subtotal:</td>
+                                            <td colspan="2">
+                                                <input type="number" name="subtotal_factura" id="subtotal_factura" class="input is-small" readonly required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label is-small">% IVA:</td>
+                                            <td>
+                                                <input type="number" min="0" max="19" name="percent_iva" id="percent_iva" class="input is-small" value="0" +>
+                                            </td>
+                                            <td>
+                                                <input type="number" name="iva" id="iva" class="input is-small" value="0" readonly required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label is-small">Vlr. Neto:</td>
+                                            <td colspan="2">
+                                                <input type="number" name="valor_neto" id="valor_neto" class="input is-small" readonly required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <a id="limpiarDescuentos" class="button is-small is-fullwidth">
+                                                    <span class="icon is-small"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                                    <span>Desc. Y Copago en 0</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/hospitalizacion/fact_hospitalizacion.js') }}"></script>
+<!-- Modo Cancelar -->
+<script>
+const confirmacion = () => {
+    Swal.fire({
+    title: "Estas Seguro(a)?",
+    text: "Los cambios no se guardarán!",
+    icon: "question",
+    confirmButtonText: "Si, Cancelar!",
+    confirmButtonColor: "#48c78e",
+    cancelButtonText: "No, Continuar",
+    cancelButtonColor: "#f14668",
+    showCancelButton: true,
+    allowOutsideClick: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "{{ url_for('hospitalizacion.hospitalizacion') }}"
+        }
+    })
+};
+</script>
+<!-- Datos de Tercero -->
+<script type="text/javascript">
+const fetch_terceros = () => {
+    let valor = document.getElementById("nit_admin").value;
+    fetch("/get_tercero", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"nit_admin": valor})
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("tipo").value = data[1];
+        document.getElementById("codigo").value = data[2];
+        document.getElementById("nombre").value = data[4];
+        document.getElementById("direccion").value = data[5];
+        document.getElementById("telefono").value = data[6];
+        document.getElementById("correo").value = data[8];
+    })
+    .catch(error => console.error("error: ", error))
+};
+
+const fetch_pacientes = () => {
+    let valor = document.getElementById("cod_paciente").value;
+    fetch("/get_paciente", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({"cod_paciente": valor})
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("tipo").value = data[0];
+        document.getElementById("codigo").value = data[1];
+        document.getElementById("nombre").value = data[2];
+        document.getElementById("direccion").value = data[9];
+        document.getElementById("telefono").value = data[10];
+        document.getElementById("correo").value = data[15];
+    })
+    .catch(error => console.error("error: ", error))
+};
+</script>
+<!-- Traer datos tercero -->
+<script type="text/javascript">
+    const $cod_admin = document.getElementById("cod_admin");
+    if($cod_admin.value === "PART"){
+        fetch_pacientes();
+    }else{
+        fetch_terceros();
+    }
+</script>
+<!-- Enviar datos de servicios detalle factura hospitalización-->
+<script>
+    const $form_facturahospitalizacion = document.getElementById("form_facturahospitalizacion");
+    $form_facturahospitalizacion.addEventListener("submit", (e) => {
+        const tabla = document.getElementById('tablaServiciosHospFact'); 
+        let data = ''; 
+        for (let i = 1; i < tabla.rows.length; i++) { 
+            const celdas = tabla.rows[i].cells; 
+            data += celdas[0].textContent + '-' + celdas[1].textContent + '-' + celdas[2].textContent + '-' + celdas[3].textContent + '-' + celdas[4].textContent + '-' + celdas[5].textContent +';'; 
+        } 
+        document.getElementById('data').value = data;
+
+        /* Loading */
+        Swal.fire({
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base_reporte.html' %}
+{% block css %}
+{% endblock %}
+
+{% block title %}H.C. Incapacidad{% endblock %}
+{% block report %}
+<!-- Datos de Paciente -->
+<hr>
+<table style="height: 82px; float: left; width: 640px;">
+    <tbody>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small"><strong>No. Documento:</strong>{{ paciente.0 }}-{{ paciente.1 }}</td>
+            <td style="width: 541px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small" colspan="2"><strong>Nombre Completo:</strong> {{ paciente.2 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Fecha Nac.:</strong> {{ paciente.3 }}</td>
+            <td style="width: 238.34px;; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Estado Civil:</strong> {{ paciente.4 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Acompañante:</strong> {{ paciente.5 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Sexo:</strong> {{ paciente.6 }}</td>
+            <td style="width: 238.34px;; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Ocupación:</strong> {{ paciente.7 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Tel. Acompañante:</strong> {{ paciente.8 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Dirección:</strong> {{ paciente.9 }}</td>
+            <td style="width: 238.34px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Telefono:</strong> {{ paciente.10 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Responsable:</strong> {{ paciente.11 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Municipio:</strong> {{ paciente.12 }}</td>
+            <td style="width: 238.34px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Parentesco Acom.:</strong> {{ paciente.13 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Tel. Responsable:</strong> {{ paciente.14 }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<hr>
+<p style="text-align: right; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Fecha:</strong> {{ incapacidad.3 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Hora:</strong> {{ incapacidad.4 }}</p>
+<p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>INCAPACIDADES</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Grupo de Servicios:</strong> {{ incapacidad.5 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Origen:</strong> {{ incapacidad.6 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico Principal:</strong> {{ incapacidad.7 }} - {{ incapacidad.8 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico Relacionado:</strong> {{ incapacidad.9 }} - {{ incapacidad.10 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Inicio:</strong> {{ incapacidad.11 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Terminación:</strong> {{ incapacidad.12 }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>Días:</strong> {{ incapacidad.13 }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>Tipo:</strong> {{ incapacidad.14 }}</p>
+{% if incapacidad.15 == 1 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Modalidad de la prestación del servicio:</strong> {{ incapacidad.13 }} - Intramural</p>
+{% elif incapacidad.15 == 2 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Modalidad de la prestación del servicio:</strong> {{ incapacidad.13 }} - Extramural unidad movil</p>
+{% elif incapacidad.15 == 3 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Modalidad de la prestación del servicio:</strong> {{ incapacidad.13 }} - Extramural domiciliaria</p>
+{% elif incapacidad.15 == 4 %} 
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Modalidad de la prestación del servicio:</strong> {{ incapacidad.13 }} - Extramural jornada de salud</p>
+{% elif incapacidad.15 == 6 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Modalidad de la prestación del servicio:</strong> {{ incapacidad.13 }} - Telemedicina interactiva</p>
+{% elif incapacidad.15 == 7 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Modalidad de la prestación del servicio:</strong> {{ incapacidad.13 }} - Telemedicina no interactiva</p>
+{% elif incapacidad.15 == 8 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Modalidad de la prestación del servicio:</strong> {{ incapacidad.13 }} - Telemedicina telexperticia</p>
+{% else %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Modalidad de la prestación del servicio:</strong> {{ incapacidad.13 }} - Telemedicina telemonitoreo</p>
+{% endif %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Incapacidad retroactiva</strong></p>
+{% if incapacidad.16 == 1 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ incapacidad.16 }} - Urgencias o internación del paciente</p>
+{% elif incapacidad.16 == 2 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ incapacidad.16 }} - Trastorno de memoria, confusión mental, desorientación en persona tiempo y lugar, otras alteraciones de
+de la esfera psiquica, orgánica o funcional según criterio medico u odontologico</p>
+{% elif incapacidad.16 == 3 %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ incapacidad.16 }} - Evento catastrofico o terrorista</p>
+{% else %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ incapacidad.16 }} - No Aplica</p>
+{% endif %}
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Causa que motiva la atención</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ incapacidad.17 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Observación</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ incapacidad.18 }}</p>
+<br>
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,{{ firma }}" alt="firma-medico" style="width: 180px; height: 64px;">
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>{{ medico.1 }}</strong></p>
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>{{ medico.2 }}</strong></p>
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Doc.: {{ medico.3 }}, R.M.: {{ medico.4 }}</strong></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

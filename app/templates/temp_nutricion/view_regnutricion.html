@@ -1,0 +1,902 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.inter-scrollable-section{
+    max-height: 415px;
+    overflow-y: auto;
+    padding: 0rem 0rem;
+}
+</style>
+{% endblock %}
+{% block title %}Ver H.C. de Nutrición{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Ver H.C. de Nutrición</h5>
+<div class="container">
+    <form id="form_verregnutricion" action="#" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos de Atención</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                    <input type="text" name="id_registro" id="id_registro" value="{{ registro.0 }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="atencion" class="label is-small">Atención</label>
+                                    <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ registro.99 }}" disabled>
+                                </p>
+                                <p class="control">
+                                    <label for="codigo" class="label is-small">Paciente</label>
+                                    <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ registro.1 }}" disabled>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" disabled>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="fecha" class="label is-small">Fecha</label>
+                                    <input type="date" name="fecha" id="fecha" class="input is-small" value="{{ registro.3 }}" disabled>
+                                </p>
+                                <p class="control">
+                                    <label for="hora" class="label is-small">Hora</label>
+                                    <input type="time" name="hora" id="hora" class="input is-small" value="{{ registro.4 }}" disabled>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="inter-scrollable-section">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Historia Clinica</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label for="motivo_consulta" class="label is-small">Motivo de Consulta</label>
+                                    <p class="control">
+                                        <textarea name="motivo_consulta" id="motivo_consulta" class="textarea is-small" disabled>{{ registro.5 }}</textarea>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label for="enf_actual" class="label is-small">Enfermedad Actual</label>
+                                    <p class="control">
+                                        <textarea name="enf_actual" id="enf_actual" class="textarea is-small" disabled>{{ registro.6 }}</textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="columns">
+                            <div class="column">
+                                <label class="label is-small">Antecedentes de Salud Personales</label>
+                                <div class="field is-horizontal">
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <table class="table" style="width: 40%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 20%;">Diarrea:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_diarrea" id="antper_diarrea" disabled>
+                                                                    <option value="{{ registro.7 }}">{{ registro.7 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                        <td style="width: 20%;">Estreñimiento:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_estrenimiento" id="antper_estrenimiento" disabled>
+                                                                    <option value="{{ registro.8 }}">{{ registro.8 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                        <td style="width: 20%;">Gastritis:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_gastritis" id="antper_gastritis" disabled>
+                                                                    <option value="{{ registro.9 }}">{{ registro.9 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 20%;">Úlcera:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_ulcera" id="antper_ulcera" disabled>
+                                                                    <option value="{{ registro.10 }}">{{ registro.10 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                        <td style="width: 20%;">Náuseas:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_nausea" id="antper_nausea" disabled>
+                                                                    <option value="{{ registro.11 }}">{{ registro.11 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                        <td style="width: 20%;">Pirosis:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_pirosis" id="antper_pirosis" disabled>
+                                                                    <option value="{{ registro.12 }}">{{ registro.12 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 20%;">Vomito:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_vomito" id="antper_vomito" disabled>
+                                                                    <option value="{{ registro.13 }}">{{ registro.13 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                        <td style="width: 20%;">Colitis:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_colitis" id="antper_colitis" disabled>
+                                                                    <option value="{{ registro.14 }}">{{ registro.14 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 20%;">Otro:</td>
+                                                        <td>
+                                                            <span class="select is-small">
+                                                                <select name="antper_otro" id="antper_otro" disabled>
+                                                                    <option value="{{ registro.15 }}">{{ registro.15 }}</option>
+                                                                </select>
+                                                            </span>
+                                                        </td>
+                                                        <td style="width: 20%;">Cual ?:</td>
+                                                        <td colspan="3">
+                                                            <input type="text" name="antper_otro_cual" id="antper_otro_cual" class="input is-small" value="{{ registro.16 }}"  disabled>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <label class="label is-small" style="color: white;">.</label>
+                                <field class="is-horizontal">
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <table class="table" style="width: 40%;">
+                                                <tr>
+                                                    <td style="width: 20%;">Dentadura:</td>
+                                                    <td>
+                                                        <span class="select is-small">
+                                                            <select name="antper_dentadura" id="antper_dentadura" disabled>
+                                                                <option value="{{ registro.17 }}">{{ registro.17 }}</option>
+                                                            </select>
+                                                        </span>
+                                                    </td>
+                                                    <td style="width: 20%;">Protesis:</td>
+                                                    <td>
+                                                        <span class="select is-small">
+                                                            <select name="antper_protesis" id="antper_protesis" disabled>
+                                                                <option value="{{ registro.18 }}">{{ registro.18 }}</option>
+                                                            </select>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div class="field">
+                                                <p class="control">
+                                                    <label for="antper_observaciones" class="field-label is-small">Observaciones de Ant. Personales</label>
+                                                    <textarea name="antper_observaciones" id="antper_observaciones" class="textarea is-small" style="height: 100px;" disabled>{{ registro.19 }}</textarea>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </field>
+                            </div>
+                        </div>
+                        <table class="table" style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 20%;">
+                                        Padece enfermedad diagnosticada ?:
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <span class="select is-small">
+                                            <select name="padece_enf" id="padece_enf" disabled>
+                                                <option value="{{ registro.20 }}">{{ registro.20 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Cual?:</label>
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" name="padece_enf_cual" id="padece_enf_cual" class="input is-small" value="{{ registro.21 }}" disabled>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%;">
+                                        Ha padecido una enfermedad importante ?:
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <span class="select is-small">
+                                            <select name="enf_importante" id="enf_importante" disabled>
+                                                <option value="{{ registro.22 }}">{{ registro.22 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Cual?:</label>
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" name="enf_importante_cual" id="enf_importante_cual" class="input is-small" value="{{ registro.23 }}" disabled>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%;">
+                                        Toma algún medicamento ?:
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <span class="select is-small">
+                                            <select name="toma_medicamento" id="toma_medicamento" disabled>
+                                                <option value="{{ registro.24 }}">{{ registro.24 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Cual?:</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="toma_medicamento_cual" id="toma_medicamento_cual" class="input is-small" value="{{ registro.25 }}" disabled>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Dosis:</label>
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" name="toma_medicamento_dosis" id="toma_medicamento_dosis" class="input is-small" value="{{ registro.26 }}" disabled>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table" style="width: 100%;">
+                            <tr>
+                                <td>
+                                    <div class="field is-grouped">
+                                        <p class="control">
+                                            <label for="" class="field-label is-normal">Toma Laxantes?:</label>
+                                        </p>
+                                        <p class="control">
+                                            <span class="select is-small">
+                                                <select name="toma_laxantes" id="toma_laxantes" disabled>
+                                                    <option value="{{ registro.27 }}">{{ registro.27 }}</option>
+                                                </select>
+                                            </span>
+                                        </p>
+                                        <p class="control">
+                                            <label for="" class="field-label is-normal">Toma Diuréticos?:</label>
+                                        </p>
+                                        <p class="control">
+                                            <span class="select is-small">
+                                                 <select name="toma_diureticos" id="toma_diureticos" disabled>
+                                                    <option value="{{ registro.28 }}">{{ registro.28 }}</option>
+                                                </select>
+                                            </span>
+                                        </p>
+                                        <p class="control">
+                                            <label for="" class="field-label is-normal">Toma Antiacidos?:</label>
+                                        </p>
+                                        <p class="control">
+                                            <span class="select is-small">
+                                                <select name="toma_antiacidos" id="toma_antiacidos" disabled>
+                                                    <option value="{{ registro.29 }}">{{ registro.29 }}</option>
+                                                </select>
+                                            </span>
+                                        </p>
+                                        <p class="control">
+                                            <label for="" class="field-label is-normal">Toma Analgésicos?:</label>
+                                        </p>
+                                        <p class="control">
+                                            <span class="select is-small">
+                                                <select name="toma_analgesicos" id="toma_analgesicos" disabled>
+                                                    <option value="{{ registro.30 }}">{{ registro.30 }}</option>
+                                                </select>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table" style="width: 100%;">
+                            <tr>
+                                <td style="width: 20%;">
+                                    Le han practicado alguna cirugia?:
+                                </td>
+                                <td style="width: 5%;">
+                                    <span class="select is-small">
+                                        <select name="practica_cirugia" id="practica_cirugia" disabled>
+                                            <option value="{{ registro.31 }}">{{ registro.31 }}</option>
+                                        </select>
+                                    </span>
+                                </td>
+                                <td style="width: 5%;">
+                                    <label for="practica_cirugia_cual" class="field-label is-small">Cual?:</label>
+                                </td>
+                                <td colspan="3">
+                                    <input type="text" name="practica_cirugia_cual" id="practica_cirugia_cual" class="input is-small" value="{{ registro.32 }}" disabled>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <div class="columns">
+                            <div class="column">
+                                <label class="label is-small">Antecedentes Familiares</label>
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 5%;">Obesidad:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_obesidad" id="antfam_obesidad" disabled>
+                                                        <option value="{{ registro.33 }}">{{ registro.33 }}</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_obesidad_parent" id="antfam_obesidad_parent" class="input is-small" value="{{ registro.34 }}" disabled> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Diabetes:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_diabetes" id="antfam_diabetes" disabled>
+                                                        <option value="{{ registro.35 }}">{{ registro.35 }}</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_diabetes_parent" id="antfam_diabetes_parent" class="input is-small" value="{{ registro.36 }}" disabled> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Cancer:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_cancer" id="antfam_cancer" disabled>
+                                                        <option value="{{ registro.37 }}">{{ registro.37 }}</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_cancer_parent" id="antfam_cancer_parent" class="input is-small" value="{{ registro.38 }}" disabled> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">HTA:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_hta" id="antfam_hta" disabled>
+                                                        <option value="{{ registro.39 }}">{{ registro.39 }}</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_hta_parent" id="antfam_hta_parent" class="input is-small" value="{{ registro.40 }}" disabled> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="column">
+                                <label class="field-label is-small" style="color: white;">.</label>
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 5%;">Hipercolesterolemia:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_hipercolesterolemia" id="antfam_hipercolesterolemia" disabled>
+                                                        <option value="{{ registro.41 }}">{{ registro.41 }}</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_hipercolesterolemia_parent" id="antfam_hipercolesterolemia_parent" class="input is-small" value="{{ registro.42 }}" disabled> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Hipertrigliceridemia:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_hipertrigliceridemia" id="antfam_hipertrigliceridemia" disabled>
+                                                        <option value="{{ registro.43 }}">{{ registro.43 }}</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_hipertrigliceridemia_parent" id="antfam_hipertrigliceridemia_parent" class="input is-small" value="{{ registro.44 }}" disabled> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Habitos / Estilo de vida</label>
+                        <label class="field-label is-small">Anamnesis Alimentaria</label>
+                        <table class="table" style="width: 100%">
+                            <tbody>
+                                <tr>
+                                    <td style="align-content: center;">Desayuno</td>
+                                    <td>
+                                        <p class="control">
+                                            <label class="field-label is-small">Alimentos</label>
+                                            <textarea name="desayuno_alimentos" id="desayuno_alimentos" class="textarea is-small" disabled>{{ registro.45 }}</textarea>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="control">
+                                            <label class="field-label is-small">Tiempo de Comida y Cantidad</label>
+                                            <textarea name="desayuno_tiempo" id="desayuno_tiempo" class="textarea is-small" disabled>{{ registro.46 }}</textarea>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="align-content: center;">Media Mañana</td>
+                                    <td>
+                                        <p class="control">
+                                            <textarea name="mediamanana_alimentos" id="mediamanana_alimentos" class="textarea is-small" disabled>{{ registro.47 }}</textarea>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="control">
+                                            <textarea name="mediamanana_tiempo" id="mediamanana_tiempo" class="textarea is-small" disabled>{{ registro.48 }}</textarea>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="align-content: center;">Almuerzo</td>
+                                    <td>
+                                        <p class="control">
+                                            <textarea name="almuerzo_alimentos" id="almuerzo_alimentos" class="textarea is-small" disabled>{{ registro.49 }}</textarea>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="control">
+                                            <textarea name="almuerzo_tiempo" id="almuerzo_tiempo" class="textarea is-small" disabled>{{ registro.50 }}</textarea>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="align-content: center;">Media Tarde</td>
+                                    <td>
+                                        <p class="control">
+                                            <textarea name="mediatarde_alimentos" id="mediatarde_alimentos" class="textarea is-small" disabled>{{ registro.51 }}</textarea>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="control">
+                                            <textarea name="mediatarde_tiempo" id="mediatarde_tiempo" class="textarea is-small" disabled>{{ registro.52 }}</textarea>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="align-content: center;">Cena</td>
+                                    <td>
+                                        <p class="control">
+                                            <textarea name="cena_alimentos" id="cena_alimentos" class="textarea is-small" disabled>{{ registro.53 }}</textarea>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="control">
+                                            <textarea name="cena_tiempo" id="cena_tiempo" class="textarea is-small" disabled>{{ registro.54 }}</textarea>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <label class="field-label is-small">Ejercicios</label>
+                        <table class="table" style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 5%; align-content: center;">Aerobicos:</td>
+                                    <td>
+                                        <span class="select is-small">
+                                            <select name="aerobicos" id="aerobicos" disabled>
+                                                <option value="{{ registro.55 }}">{{ registro.55 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Frecuencia:</td>
+                                    <td>
+                                        <input type="text" name="aerobicos_frecuencia" id="aerobicos_frecuencia" class="input is-small" value="{{ registro.56 }}" disabled>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Duración:</td>
+                                    <td>
+                                        <input type="text" name="aerobicos_duracion" id="aerobicos_duracion" class="input is-small" value="{{ registro.57 }}" disabled>
+                                    </td>  
+                                </tr>
+                                <tr>
+                                    <td style="width: 5%; align-content: center;">Anaerobicos:</td>
+                                    <td>
+                                        <span class="select is-small">
+                                            <select name="anaerobicos" id="anaerobicos" disabled>
+                                                <option value="{{ registro.58 }}">{{ registro.58 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Frecuencia:</td>
+                                    <td>
+                                        <input type="text" name="anaerobicos_frecuencia" id="anaerobicos_frecuencia" class="input is-small" value="{{ registro.59 }}" disabled>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Duración:</td>
+                                    <td>
+                                        <input type="text" name="anaerobicos_duracion" id="anaerobicos_duracion" class="input is-small" value="{{ registro.60 }}" disabled>
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td style="width: 5%; align-content: center;">Musculatura:</td>
+                                    <td>
+                                        <span class="select is-small">
+                                            <select name="musculatura" id="musculatura" disabled>
+                                                <option value="{{ registro.61 }}">{{ registro.61 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Frecuencia:</td>
+                                    <td>
+                                        <input type="text" name="musculatura_frecuencia" id="musculatura_frecuencia" class="input is-small" value="{{ registro.62 }}" disabled>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Duración:</td>
+                                    <td>
+                                        <input type="text" name="musculatura_duracion" id="musculatura_duracion" class="input is-small" value="{{ registro.63 }}" disabled>
+                                    </td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                        <label class="field-label is-small">Consumo</label>
+                        <table class="table" style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 5%; align-content: center;">Alcohol:</td>
+                                    <td>
+                                        <span class="select is-small">
+                                            <select name="alcohol" id="alcohol" disabled>
+                                                <option value="{{ registro.64 }}">{{ registro.64 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Frecuencia:</td>
+                                    <td>
+                                        <input type="text" name="alcohol_frecuencia" id="alcohol_frecuencia" class="input is-small" value="{{ registro.65 }}" disabled>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Cantidad:</td>
+                                    <td>
+                                        <input type="text" name="alcohol_cantidad" id="alcohol_cantidad" class="input is-small" value="{{ registro.66 }}" disabled>
+                                    </td>  
+                                </tr>
+                                <tr>
+                                    <td style="width: 5%; align-content: center;">Tabaco:</td>
+                                    <td>
+                                        <span class="select is-small">
+                                            <select name="tabaco" id="tabaco" disabled>
+                                                <option value="{{ registro.67 }}">{{ registro.67 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Frecuencia:</td>
+                                    <td>
+                                        <input type="text" name="tabaco_frecuencia" id="tabaco_frecuencia" class="input is-small" value="{{ registro.68 }}" disabled>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Cantidad:</td>
+                                    <td>
+                                        <input type="text" name="tabaco_cantidad" id="tabaco_cantidad" class="input is-small" value="{{ registro.69 }}" disabled>
+                                    </td>  
+                                </tr>
+                                <tr>
+                                    <td style="width: 5%; align-content: center;">Cafe:</td>
+                                    <td>
+                                        <span class="select is-small">
+                                            <select name="cafe" id="cafe" disabled>
+                                                <option value="{{ registro.70 }}">{{ registro.70 }}</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Frecuencia:</td>
+                                    <td>
+                                        <input type="text" name="cafe_frecuencia" id="cafe_frecuencia" class="input is-small" value="{{ registro.71 }}" disabled>
+                                    </td>
+                                    <td class="field-label is-small" style="width: 5%;">Cantidad:</td>
+                                    <td>
+                                        <input type="text" name="cafe_cantidad" id="cafe_cantidad" class="input is-small" value="{{ registro.72 }}" disabled>
+                                    </td>  
+                                </tr>
+                            </tbody>
+                        </table>
+                        <label class="field-label is-small">Signos Clinicos</label>
+                        <div class="columns">
+                            <div class="column">
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 5%;">Cabello:</td>
+                                            <td>
+                                                <input type="text" name="signo_cabello" id="signo_cabello" class="input is-small" value="{{ registro.73 }}" disabled>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Ojos:</td>
+                                            <td>
+                                                <input type="text" name="signo_ojos" id="signo_ojos" class="input is-small" value="{{ registro.74 }}" disabled>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Piel:</td>
+                                            <td>
+                                                <input type="text" name="signo_piel" id="signo_piel" class="input is-small" value="{{ registro.75 }}" disabled>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="column">
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 5%;">Uñas:</td>
+                                            <td>
+                                                <input type="text" name="signo_unas" id="signo_unas" class="input is-small" value="{{ registro.76 }}" disabled>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Labios:</td>
+                                            <td>
+                                                <input type="text" name="signo_labios" id="signo_labios" class="input is-small" value="{{ registro.77 }}" disabled>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Encías:</td>
+                                            <td>
+                                                <input type="text" name="signo_encias" id="signo_encias" class="input is-small" value="{{ registro.78 }}" disabled>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Alimentación Complementaria</label>
+                        <div class="columns">
+                            <div class="column">
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 5%; align-content: center;">Alimentos Preferidos:</td>
+                                            <td>
+                                                <p class="control">
+                                                    <textarea name="alimentos_preferidos" id="alimentos_preferidos" class="textarea is-small" disabled>{{ registro.79 }}</textarea>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%; align-content: center;">Alimentos que no le agradan:</td>
+                                            <td>
+                                                <p class="control">
+                                                    <textarea name="alimentos_noagradan" id="alimentos_noagradan" class="textarea is-small" disabled>{{ registro.80 }}</textarea>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="column">
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 5%; align-content: center;">Alimentos que le causan malestar:</td>
+                                            <td>
+                                                <p class="control">
+                                                    <textarea name="alimentos_malestar" id="alimentos_malestar" class="textarea is-small" disabled>{{ registro.81 }}</textarea>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%; align-content: center;">Alergico o intolerante a algún alimento ?:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="alergico" id="alergico" disabled>
+                                                        <option value="{{ registro.82 }}">{{ registro.82 }}</option>
+                                                    </select>
+                                                </span>
+                                                <br>
+                                                <label class="field-label is-small">Cual ?</label>
+                                                <textarea name="alergico_cual" id="alergico_cual" class="textarea is-small" style="height: 100px;" disabled>{{ registro.83 }}</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Medidas Antropometricas</label>
+                        <div class="columns">
+                            <div class="column">
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 12%;">Peso Habitual:</td>
+                                            <td style="width: 15%;">
+                                                <input type="number" name="peso_habitual" id="peso_habitual" class="input is-small" value="{{ registro.84 }}" disabled>
+                                            </td>
+                                            <td style="width: 5%; align-content: center;" class="field-label is-small">KG.</td>
+                                            <td style="width: 12%;">Peso Actual:</td>
+                                            <td style="width: 15%;">
+                                                <input type="number" name="peso_actual" id="peso_actual" class="input is-small" value="{{ registro.85 }}" disabled>
+                                            </td>
+                                            <td style="width: 5%; align-content: center;" class="field-label is-small">KG.</td>
+                                            <td style="width: 5%;">Estatura:</td>
+                                            <td style="width: 15%;">
+                                                <input type="number" step="0.01" min="0" max="5" name="estatura" id="estatura" class="input is-small" value="{{ registro.86 }}" disabled>
+                                            </td>
+                                            <td style="width: 5%; align-content: center;" class="field-label is-small">Mts.</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">IMC:</td>
+                                            <td style="width: 15%;">
+                                                <input type="number" name="imc" id="imc" class="input is-small" value="{{ registro.87 }}" disabled>
+                                                <label id="estado_imc" class="field-label is-small"></label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Circuf. Brazo:</td>
+                                            <td style="width: 15%;">
+                                                <input type="number" name="circunferencia_brazo" id="circunferencia_brazo" class="input is-small" value="{{ registro.88 }}" disabled>
+                                            </td>
+                                            <td style="width: 5%; align-content: center;" class="field-label is-small">Cms.</td>
+                                            <td style="width: 5%;">Circuf. Cintura:</td>
+                                            <td style="width: 15%;">
+                                                <input type="number" name="circunferencia_cintura" id="circunferencia_cintura" class="input is-small" value="{{ registro.89 }}" disabled>
+                                            </td>
+                                            <td style="width: 5%; align-content: center;" class="field-label is-small">Cms.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Diagnosticos</label>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label for="" class="label is-small">Diagnostico Principal:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input is-small" type="text" name="cod_diag1" id="cod_diag1" value="{{ registro.90 }}" disabled>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input class="input is-small" type="text" name="nom_diag1" id="nom_diag1" value="{{ registro.91 }}" disabled>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label for="" class="label is-small">Diag. Relacionado 1:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input is-small" type="text" name="cod_diag2" id="cod_diag2" value="{{ registro.92 }}" disabled>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input class="input is-small" type="text" name="nom_diag2" id="nom_diag2" value="{{ registro.93 }}" disabled>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label for="" class="label is-small">Diag. Relacionado 2:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input is-small" type="text" name="cod_diag3" id="cod_diag3" value="{{ registro.94 }}" disabled>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input class="input is-small" type="text" name="nom_diag3" id="nom_diag3" value="{{ registro.95 }}" disabled>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label for="" class="label is-small">Diag. Relacionado 3:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input is-small" type="text" name="cod_diag4" id="cod_diag4" value="{{ registro.96 }}" disabled>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input class="input is-small" type="text" name="nom_diag4" id="nom_diag4" value="{{ registro.97 }}" disabled>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="field">
+                            <label for="plan_trata" class="label is-small">Plan de Tratamiento</label>
+                            <p class="control">
+                                <textarea class="textarea is-small" name="plan_trata" id="plan_trata" style="height: 130px;" disabled>{{ registro.98 }}</textarea>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <a onclick="confirmacion()" class="button button is-info">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/regresar.png') }}" alt="icon"></i></span>
+                    <span>Regresar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Modo Regresar -->
+<script>
+const confirmacion = () => {
+    let atencion = document.getElementById("atencion").value;
+    let paciente = document.getElementById("codigo").value;
+    window.location.href = `/nutricion/${atencion}/${paciente}`
+};
+</script>
+{% endblock %}

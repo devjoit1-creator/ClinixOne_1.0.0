@@ -1,0 +1,215 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+
+{% endblock %}
+{% block title %}Editar Tercero{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Editar Tercero</h5>
+<div class="container">
+    <form id="form_updatetercero" action="{{ url_for('terceros.f_updateTercero') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Modificar información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="id_tercero" id="id_tercero" value="{{ tercero[0] }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="tipo_idf" class="label is-small">Tipo Identificación: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <span class="select is-small">
+                                    <select name="tipo_idf" id="tipo_idf" required>
+                                        <option value="NIT" {% if tercero[1] == 'NIT' %} selected {% endif %}>NIT</option>
+                                        <option value="AS" {% if tercero[1] == 'AS' %} selected {% endif %}>AS</option>
+                                        <option value="CC" {% if tercero[1] == 'CC' %} selected {% endif %}>CC</option>
+                                        <option value="CD" {% if tercero[1] == 'CD' %} selected {% endif %}>CD</option>
+                                        <option value="CE" {% if tercero[1] == 'CE' %} selected {% endif %}>CE</option>
+                                        <option value="MS" {% if tercero[1] == 'MS' %} selected {% endif %}>MS</option>
+                                        <option value="PA" {% if tercero[1] == 'PA' %} selected {% endif %}>PA</option>
+                                        <option value="PE" {% if tercero[1] == 'PE' %} selected {% endif %}>PE</option>
+                                        <option value="PT" {% if tercero[1] == 'PT' %} selected {% endif %}>PT</option>
+                                        <option value="RC" {% if tercero[1] == 'RC' %} selected {% endif %}>RC</option>
+                                        <option value="TI" {% if tercero[1] == 'TI' %} selected {% endif %}>TI</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="identificacion" class="label is-small">Identifación: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="text" name="identificacion" id="identificacion" class="input is-small" value="{{ tercero[2] }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="digito_verf" class="label is-small">Digito de Verf.:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control" style="width: fit-content;">
+                                    <input type="number" name="digito_verf" id="digito_verf" class="input is-small" value="{{ tercero[3] }}" style="display: none;" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="nom_tercero" class="label is-small">Nombre o Razón Social: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="text" name="nom_tercero" id="nom_tercero" class="input is-small" value="{{ tercero[4] }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="dir_tercero" class="label is-small">Dirección: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="text" name="dir_tercero" id="dir_tercero" class="input is-small" value="{{ tercero[5] }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="tel_tercero" class="label is-small">Telefono: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="text" name="tel_tercero" id="tel_tercero" class="input is-small" value="{{ tercero[6] }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="tipo_tercero" class="label is-small">Tipo: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <span class="select is-small">
+                                    <select name="tipo_tercero" id="tipo_tercero" required>
+                                        <option value="PERSONA_NATURAL" {% if tercero[7] == 'PERSONA_NATURAL' %} selected {% endif %}>PERSONA NATURAL</option>
+                                        <option value="PERSONA_JURIDICA" {% if tercero[7] == 'PERSONA_JURIDICA' %} selected {% endif %}>PERSONA JURIDICA</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="correo" class="label is-small">E-Mail: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="email" name="correo" id="correo" class="input is-small" value="{{ tercero[8] }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="cod_depto_tercero" class="label is-small">Departamento: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <span class="select is-small">
+                                        <select name="cod_depto_tercero" id="cod_depto_tercero" required>
+                                            <option value=""></option>
+                                            {% for depto in deptos %}
+                                            <option value="{{ depto.id_depto }}" {% if depto.id_depto == tercero[9] %} selected {% endif %}>{{ depto.nom_depto }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </span>
+                                </p>
+                                <p class="control is-expanded" hidden>
+                                    <input type="text" name="nom_depto_tercero" id="nom_depto_tercero" class="input is-small" value="{{ tercero[10] }}" readonly hidden>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label" style="font-size: small;">
+                            <label for="cod_munic_tercero" class="label is-small">Municipio: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <span class="select is-small">
+                                        <select name="cod_munic_tercero" id="cod_munic_tercero" required>
+                                            <option value="{{ tercero[11] }}">{{ tercero[12] }}</option>
+                                        </select>
+                                    </span>
+                                </p>
+                                <p class="control is-expanded" hidden>
+                                    <input type="text" name="nom_munic_tercero" id="nom_munic_tercero" class="input is-small" value="{{ tercero[12] }}" readonly hidden>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/actualizar.png') }}" alt="icon"></i></span>
+                    <span>Actualizar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/terceros/edit_terceros.js') }}"></script>
+<!-- Modo Cancelar -->
+<script>
+const confirmacion = () => {
+    Swal.fire({
+        title: "Estas Seguro(a)?",
+        text: "Los cambios no se guardarán!",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Si, Cancelar!",
+        confirmButtonColor: "#48c78e",
+        cancelButtonText: "No, Continuar",
+        cancelButtonColor: "#f14668",
+        showCancelButton: true,
+        allowOutsideClick: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `{{ url_for('terceros.terceros') }}`
+        }
+    })
+}
+</script>
+{% endblock %}

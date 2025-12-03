@@ -1,0 +1,166 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.inter-scrollable-section {
+    max-height: 515px;
+    overflow-y: auto;
+    padding: 0rem 0rem;
+}
+</style>
+{% endblock %}
+{% block title %}Nueva Interconsulta{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva Interconsulta</h5>
+<div class="container">
+    <form id="form_addinterconsulta" action="{{ url_for('interconsultas.f_addInterconsulta') }}" method="post">
+        <section class="inter-scrollable-section">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Atención</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="atencion" class="label is-small">Atención</label>
+                                        <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ atencion }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="codigo" class="label is-small">Paciente</label>
+                                        <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ paciente }}" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="fecha" class="label is-small">Fecha <strong style="color: red;">*</strong></label>
+                                        <input type="date" name="fecha" id="fecha" class="input is-small" required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="hora" class="label is-small">Hora <strong style="color: red;">*</strong></label>
+                                        <input type="time" name="hora" id="hora" class="input is-small" required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Interconsulta</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label class="label is-small">Especialidad <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="cod_especialidad" id="cod_especialidad" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="nom_especialidad" id="nom_especialidad" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Especialidad" data-target="modal-Especialidades">
+                                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="detalle" class="label is-small">Detalle de Interconsulta <strong style="color: red;">*</strong></label>
+                            <p class="control">
+                                <textarea name="detalle" id="detalle" class="textarea is-small" style="height: 150px;" required></textarea>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="submit" class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Especialidades -->
+<div class="modal" id="modal-Especialidades">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h6 class="title is-6">Busqueda de Especialidades</h6>
+            <table id="tablaBusquedaEspecialidadesInter" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 20%;">Codigo</th>
+                        <th scope="col" style="width: 80%;">Especialidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for especialidad in especialidades %}
+                    <tr>
+                        <td style="width: 20%;">{{ especialidad.codigo }}</td>
+                        <td style="width: 80%;">{{ especialidad.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/interconsultas/add_interconsultas.js') }}"></script>
+<!-- Modo Cancelar -->
+<script>
+const confirmacion = () => {
+    Swal.fire({
+        title: "Estas Seguro(a)?",
+        text: "Los cambios no se guardarán!",
+        icon: "question",
+        confirmButtonText: "Si, Cancelar!",
+        confirmButtonColor: "#48c78e",
+        cancelButtonText: "No, Continuar",
+        cancelButtonColor: "#f14668",
+        showCancelButton: true,
+        allowOutsideClick: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let atencion = document.getElementById("atencion").value;
+            let paciente = document.getElementById("codigo").value;
+            window.location.href = `/interconsultas/${atencion}/${paciente}`
+        }
+    })
+};
+</script>
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Editar Medico{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Editar Medico</h5>
+<div class="container">
+    <form id="form_editmedicos" action="{{ url_for('medicos.f_updateMedico') }}" method="post" enctype="multipart/form-data">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Modificar información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="idMedico" id="idMedico" value="{{ med.0 }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="tipo_doc" class="label is-small">Tipo y Nro. Documento <strong style="color: red;">*</strong></label>
+                                <div class="field-body">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <span class="select is-small">
+                                                <select name="tipo_doc" id="tipo_doc" required>
+                                                    <option value="CC" {% if med.1 == 'CC' %} selected {% endif %}>CC</option>
+                                                    <option value="CE" {% if med.1 == 'CE' %} selected {% endif %}>CE</option>
+                                                    <option value="NI" {% if med.1 == 'NI' %} selected {% endif %}>NI</option>
+                                                </select>
+                                            </span>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input class="input is-small" type="text" name="num_doc" id="num_doc" value="{{ med.2 }}" required>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="p_nombre" class="label is-small">Nombre <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="p_nombre" id="p_nombre" value="{{ med.3 }}" required>
+                            </div>
+                            <div class="field">
+                                <label for="s_nombre" class="label is-small">2do. Nombre</label>
+                                <input class="input is-small" type="text" name="s_nombre" id="s_nombre" value="{{ med.4 }}">
+                            </div>
+                            <div class="field">
+                                <label for="p_apellido" class="label is-small">Apellido <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="p_apellido" id="p_apellido" value="{{ med.5 }}" required>
+                            </div>
+                            <div class="field">
+                                <label for="s_apellido" class="label is-small">2do. Apellido <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="s_apellido" id="s_apellido" value="{{ med.6 }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="nombre_completo" class="label is-small">Nombre Completo <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="nombre_completo" id="nombre_completo" value="{{ med.7 }}" readonly required>
+                            </div>
+                            <div class="field">
+                                <label for="dir_medico" class="label is-small">Dirección <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="dir_medico" id="dir_medico" value="{{ med.8 }}" required>
+                            </div>
+                            <div class="field">
+                                <label for="tel_medico" class="label is-small">Teléfono(s) <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="tel_medico" id="tel_medico" value="{{ med.9 }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label class="label is-small">Cargo Asistencial <strong style="color: red;">*</strong></label>
+                                <div class="field-body">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <input class="input is-small" type="text" name="id_cargo_asis" id="id_cargo_asis" value="{{ med.10 }}" readonly required>
+                                        </p>
+                                        <p class="control is-expanded">
+                                            <input class="input is-small" type="text" name="cargo_asis" id="cargo_asis" class="input is-small" value="{{ med.11 }}" readonly required>
+                                        </p>
+                                        <p class="control">
+                                            <a class="button is-primary is-small has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Cargo" data-target="modal-especialidades">
+                                                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="registro_medico" class="label is-small">Registro Medico/Tarjeta Profesional <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="registro_medico" id="registro_medico" value="{{ med.12 }}" required>
+                            </div>
+                            <div class="field">
+                                <label for="consultorio" class="label is-small">Consultorio/Sucursal <strong style="color: red;">*</strong></label>
+                                <input class="input is-small" type="text" name="consultorio" id="consultorio" value="{{ med.13 }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="firma_medico" class="label is-small">Firma <strong style="color: red;">*</strong></label>
+                                <div class="file is-small has-name">
+                                    <label class="file-label">
+                                    <input class="file-input" type="file" name="firma_medico" id="firma_medico" accept="image/*"/>
+                                    <span class="file-cta">
+                                        <span class="file-icon"><i class="fa fa-upload"></i></span>
+                                        <span class="file-label"> Cargar Firma </span>
+                                    </span>
+                                    <span class="file-name"> Screen Shot 2017-07-29 at 15.54.25.png </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label is-small">Visualizar Firma</label>
+                                <img id="imgPreview" src="data:image/png;base64,{{ firma }}" alt="Vista previa de la imagen" style="max-width: 300px; display: block;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                        <button class="button is-success">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/actualizar.png') }}" alt="icon"></i></span>
+                            <span>Actualizar</span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <a onclick="confirmacion()" class="button is-danger">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                            <span>Cancelar</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal de Busqueda de Cargos Asistenciales REPS -->
+<div class="modal" id="modal-especialidades">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Cargos Asistenciales</h5>
+            <!-- Tabla Cargos Asistenciales -->
+             <table id="tablaCargosAsistenciales" class="table is-hoverable" style="width: 100%; font-size: small; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 25%">Codigo</th>
+                        <th scope="col" style="width: 75%;">Cargo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in cargos %}
+                    <tr>
+                        <td style="width: 25%;">{{ c.id_cargo_asistencial }}</td>
+                        <td style="width: 75%;">{{ c.nom_cargo_asistencial }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+             </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/medicos/edit_medicos.js') }}"></script>
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardaran.",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                window.location.href = "{{ url_for('medicos.medicos') }}"
+            }
+        })
+    }
+</script>
+{% endblock %}

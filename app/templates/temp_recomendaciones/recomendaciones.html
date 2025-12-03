@@ -1,0 +1,127 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Receta Medica (Recomendaciones){% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Receta Medica (Recomendaciones)</h5>
+<div class="container">
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Atención Activa</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <label for="atencion" class="label is-small">Atención</label>
+                                <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ atencion }}" readonly required>
+                            </p>
+                            <p class="control">
+                                <label for="codigo" class="label is-small">Paciente</label>
+                                <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ paciente }}" readonly required>
+                            </p>
+                            <p class="control is-expanded">
+                                <label class="label is-small" style="color: white;">.</label>
+                                <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" readonly required>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <p class="control">
+                        <a onclick="receta_medica_link()" class="button is-small is-info">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                            <span>Nueva Receta Medica</span>
+                        </a>
+                        <script>
+                            const receta_medica_link = () =>{
+                                let atencion = document.getElementById("atencion").value;
+                                let paciente = document.getElementById("codigo").value;
+                                window.location.href = `/add_recomendacion/${atencion}/${paciente}`
+                            }
+                        </script>
+                    </p>
+                    <p class="control">
+                        <a href="{{ url_for('atenciones.atenciones', medico = session['document']) }}" class="button is-small is-info">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/regresar.png') }}" alt="icon"></i></span>
+                            <span>Regresar a Atenciones C. E.</span>
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a href="{{ url_for('atenciones.atenciones_hosp') }}" class="button is-small is-info">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/regresar.png') }}" alt="icon"></i></span>
+                            <span>Regresar a Atenciones HOSP.</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros Anteriores</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <table id="tablaRecomendaciones" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 5%;">Registro</th>
+                            <th scope="col" style="width: 10%;">Fecha</th>
+                            <th scope="col" style="width: 10%;">Hora</th>
+                            <th scope="col" style="width: 10%;">Documento</th>
+                            <th scope="col" style="width: 30%;">Paciente</th>
+                            <th scope="col" style="width: 20%;">Atención Asoc.</th>
+                            <th scope="col" style="width: 10%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for recomendacion in recomendaciones %}
+                        <tr>
+                            <td style="width: 5%;">{{ recomendacion.id }}</td>
+                            <td style="width: 10%;">{{ recomendacion.fecha }}</td>
+                            <td style="width: 10%;">{{ recomendacion.hora }}</td>
+                            <td style="width: 10%;">{{ recomendacion.codigo }}</td>
+                            <td style="width: 30%;">{{ recomendacion.paciente }}</td>
+                            <td style="width: 20%;">{{ recomendacion.atencion }}</td>
+                            <td style="width: 10%;">
+                                <a href="/view_recomendacion/{{ recomendacion.id }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Ver" style="padding: 0em 1.0em;">
+                                    <span class="icon"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/vista.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a href="/hc_recomendacion/{{ recomendacion.codigo }}/{{ recomendacion.id }}/{{ session['document'] }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Generar Receta" style="padding: 0em 1.0em;"
+                                onclick="window.open(this.href,'mywin','left=500,top=60,position=fixed,width=600,height=600,toolbar=1,resizable=0, centerscreen=yes');return false;">
+                                    <span class="icon"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/pdf.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                Swal.fire({
+                    title: "Notificación!",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            })
+        </script>
+        {% endfor %}
+    {% endif%}
+{% endwith %}
+
+{% endblock %}

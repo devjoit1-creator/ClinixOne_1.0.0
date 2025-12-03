@@ -1,0 +1,965 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.inter-scrollable-section{
+    max-height: 415px;
+    overflow-y: auto;
+    padding: 0rem 0rem;
+}
+</style>
+{% endblock %}
+{% block title %}Nueva H.C. de Psicología{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva H.C. de Psicología</h5>
+<div class="container">
+    <form id="form_addregpsicologia" action="{{ url_for('psicologia.f_addRegPsicologia') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos de Atención</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="atencion" class="label is-small">Atención</label>
+                                    <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ atencion }}" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="codigo" class="label is-small">Paciente</label>
+                                    <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ paciente }}" readonly required>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" readonly required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="fecha" class="label is-small">Fecha <strong style="color: red;">*</strong></label>
+                                    <input type="date" name="fecha" id="fecha" class="input is-small" required>
+                                </p>
+                                <p class="control">
+                                    <label for="hora" class="label is-small">Hora <strong style="color: red;">*</strong></label>
+                                    <input type="time" name="hora" id="hora" class="input is-small" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="inter-scrollable-section">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Historia Clinica</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label for="motivo_consulta" class="label is-small">Motivo de Consulta <strong style="color: red;">*</strong></label>
+                                    <p class="control">
+                                        <textarea name="motivo_consulta" id="motivo_consulta" class="textarea is-small" required></textarea>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label for="enf_actual" class="label is-small">Enfermedad Actual <strong style="color: red;">*</strong></label>
+                                    <p class="control">
+                                        <textarea name="enf_actual" id="enf_actual" class="textarea is-small" required></textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Antecedentes de Salud Personales</label>
+                        <div class="columns">
+                            <div class="column">
+                                <table class="table" style="width: 40%">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 20%;">Diabetes:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="antper_diabetes" id="antper_diabetes" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 20%;">HTA.:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="antper_hta" id="antper_hta" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 20%;">Dislipidemia:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="antper_dislipidemia" id="antper_dislipidemia" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 20%;">Cancer:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="antper_cancer" id="antper_cancer" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 20%;">Asma:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="antper_asma" id="antper_asma" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 20%;">Epilepsia:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="antper_epilepsia" id="antper_epilepsia" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 20%;">Tuberculosis:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="antper_tuberculosis" id="antper_tuberculosis" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 20%;">Violencia IntraFam.:</td>
+                                            <td colspan="3">
+                                                <span class="select is-small">
+                                                    <select name="antper_violencia" id="antper_violencia" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 20%;">Otro:</td>
+                                            <td>
+                                                <span class="select is-small">
+                                                    <select name="antper_otro" id="antper_otro" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 20%;">Cual ?:</td>
+                                            <td colspan="3">
+                                                <input type="text" name="antper_otro_cual" id="antper_otro_cual" class="input is-small" style="display: none;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="column">
+                                <div class="field is-horizontal">
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <p class="control">
+                                                <label for="antper_observaciones" class="field-label is-small">Observaciones Ant. Personales</label>
+                                                <textarea name="antper_observaciones" id="antper_observaciones" class="textarea is-small" style="height: 174px;"></textarea>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table" style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 20%;">
+                                        Le han practicado alguna cirugia?:
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <span class="select is-small">
+                                            <select name="practica_cirugia" id="practica_cirugia" required>
+                                                <option value="NO">NO</option>
+                                                <option value="SÍ">SÍ</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Cual?:</label>
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" name="practica_cirugia_cual" id="practica_cirugia_cual" class="input is-small" style="display: none;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%;">
+                                        Padece enfermedad mental ?:
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <span class="select is-small">
+                                            <select name="padece_enf" id="padece_enf" required>
+                                                <option value="NO">NO</option>
+                                                <option value="SÍ">SÍ</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Cual?:</label>
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" name="padece_enf_cual" id="padece_enf_cual" class="input is-small" style="display: none;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%;">
+                                        Esta realizando algún tratamiento ?:
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <span class="select is-small">
+                                            <select name="practica_tratamiento" id="practica_tratamiento" required>
+                                                <option value="NO">NO</option>
+                                                <option value="SÍ">SÍ</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Cual?:</label>
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" name="practica_tratamiento_cual" id="practica_tratamiento_cual" class="input is-small" style="display: none;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%;">
+                                        Toma algún medicamento ?:
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <span class="select is-small">
+                                            <select name="toma_medicamento" id="toma_medicamento" required>
+                                                <option value="NO">NO</option>
+                                                <option value="SÍ">SÍ</option>
+                                            </select>
+                                        </span>
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Cual?:</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="toma_medicamento_cual" id="toma_medicamento_cual" class="input is-small" style="display: none;">
+                                    </td>
+                                    <td style="width: 5%;">
+                                        <label class="field-label is-small">Dosis:</label>
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" name="toma_medicamento_dosis" id="toma_medicamento_dosis" class="input is-small" style="display: none;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <label class="label is-small">Antecedentes de Salud Familiares</label>
+                        <div class="columns">
+                            <div class="column">
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 5%;">Alergias:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_alergia" id="antfam_alergia" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_alergia_parent" id="antfam_alergia_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Diabetes:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_diabetes" id="antfam_diabetes" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_diabetes_parent" id="antfam_diabetes_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Cancer:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_cancer" id="antfam_cancer" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_cancer_parent" id="antfam_cancer_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">HTA:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_hta" id="antfam_hta" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_hta_parent" id="antfam_hta_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Enf. Respiratoria:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_respiratoria" id="antfam_respiratoria" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_respiratoria_parent" id="antfam_respiratoria_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Asma:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_asma" id="antfam_asma" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_asma_parent" id="antfam_asma_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Epilepsia:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_epilepsia" id="antfam_epilepsia" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_epilepsia_parent" id="antfam_epilepsia_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="column">
+                                <table class="table" style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 5%;">Ceguera:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_ceguera" id="antfam_ceguera" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_ceguera_parent" id="antfam_ceguera_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Dislipidemia:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_dislipidemia" id="antfam_dislipidemia" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_dislipidemia_parent" id="antfam_dislipidemia_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Alcoholismo:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_alcoholismo" id="antfam_alcoholismo" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_alcoholismo_parent" id="antfam_alcoholismo_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Tabaquismo:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_tabaquismo" id="antfam_tabaquismo" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_tabaquismo_parent" id="antfam_tabaquismo_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Drogadicción:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_drogadiccion" id="antfam_drogadiccion" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_drogadiccion_parent" id="antfam_drogadiccion_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Tuberculosis:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_tuberculosis" id="antfam_tuberculosis" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_tuberculosis_parent" id="antfam_tuberculosis_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 5%;">Violencia IntraFam:</td>
+                                            <td style="width: 5%;">
+                                                <span class="select is-small">
+                                                    <select name="antfam_violencia" id="antfam_violencia" required>
+                                                        <option value="NO">NO</option>
+                                                        <option value="SÍ">SÍ</option>
+                                                    </select>
+                                                </span>
+                                            </td>
+                                            <td style="width: 5%;">
+                                                <label for="" class="field-label is-small">Parentesco:</label>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="antfam_violencia_parent" id="antfam_violencia_parent" class="input is-small" style="display: none;"> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Aspectos / Historia Familiar</label>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="aspfam_vive" class="field-label is-small">1. Con quien vive ? (Indique Nombre, Parentesco, Ocupación, etc.) <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="aspfam_vive" id="aspfam_vive" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="aspfam_relacion" class="field-label is-small">2. Como es su relación familiar ? <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="aspfam_relacion" id="aspfam_relacion" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="aspfam_hecho" class="field-label is-small">3. Existe algún hecho significativo y/o relevante ? <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="aspfam_hecho" id="aspfam_hecho" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column"></div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Aspectos / Historia Personal</label>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="aspper_estudio" class="field-label is-small">1. Actividad de estudio y/o laboral <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="aspper_estudio" id="aspper_estudio" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="aspper_social" class="field-label is-small">2. Aspecto Social <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="aspper_social" id="aspper_social" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="aspper_orientacion" class="field-label is-small">3. Orientación Sexual <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="aspper_orientacion" id="aspper_orientacion" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="aspper_conducta" class="field-label is-small">4. Conducta de Riesgo <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="aspper_conducta" id="aspper_conducta" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Examen Mental y Fisico</label>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="estado_sueno" class="field-label is-small">1. Patron de Sueño <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_sueno" id="check_sueno">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_sueno" id="estado_sueno" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="estado_concentracion" class="field-label is-small">2. Concentración y/o Atención <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_concentracion" id="check_concentracion">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_concentracion" id="estado_concentracion" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="estado_juicio" class="field-label is-small">3. Juicio y Raciocinio <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_juicio" id="check_juicio">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_juicio" id="estado_juicio" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="estado_intelectual" class="field-label is-small">4. Función Intelectual <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_intelectual" id="check_intelectual">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_intelectual" id="estado_intelectual" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="estado_orientacion" class="field-label is-small">5. Estado de Orientación <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_orientacion" id="check_orientacion">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_orientacion" id="estado_orientacion" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="estado_sensopercepcion" class="field-label is-small">6. SensoPercepción <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_sensopercepcion" id="check_sensopercepcion">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_sensopercepcion" id="estado_sensopercepcion" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="estado_conciencia" class="field-label is-small">7. Conciencia de Enfermedad <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_conciencia" id="check_conciencia">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_conciencia" id="estado_conciencia" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="estado_memoria" class="field-label is-small">8. Memoria de Evocación <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_memoria" id="check_memoria">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_memoria" id="estado_memoria" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="estado_pensamiento" class="field-label is-small">9. Estado de Pensamiento <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_pensamiento" id="check_pensamiento">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_pensamiento" id="estado_pensamiento" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="estado_afecto" class="field-label is-small">10. Estado de Afecto <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_afecto" id="check_afecto">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_afecto" id="estado_afecto" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="estado_higiene" class="field-label is-small">11. Higiene Corporal <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_higiene" id="check_higiene">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_higiene" id="estado_higiene" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="estado_postura" class="field-label is-small">12. Postura <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_postura" id="check_postura">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_postura" id="estado_postura" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label for="estado_expresion" class="field-label is-small">13. Expresión Facial <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_expresion" id="check_expresion">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_expresion" id="estado_expresion" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="estado_alimentacion" class="field-label is-small">14. Alimentación <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <label class="checkbox field-label is-small">
+                                        <input type="checkbox" name="check_alimentacion" id="check_alimentacion">
+                                        Normal
+                                    </label>
+                                </p>
+                                <p class="control">
+                                    <textarea name="estado_alimentacion" id="estado_alimentacion" class="textarea is-small" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <label class="label is-small">Diagnosticos</label>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label class="label is-small">Diagnostico Principal: <strong style="color: red;">*</strong></label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input is-small" type="text" name="cod_diag1" id="cod_diag1" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input class="input is-small" type="text" name="nom_diag1" id="nom_diag1" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal-BusquedaDiagnosticosPsicologia">
+                                            ...
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label class="label is-small">Diag. Relacionado 1:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input is-small" type="text" name="cod_diag2" id="cod_diag2" readonly>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input class="input is-small" type="text" name="nom_diag2" id="nom_diag2" readonly>
+                                    </p>
+                                    <p class="control">
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal-BusquedaDiagnosticosPsicologia">
+                                            ...
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label class="label is-small">Diag. Relacionado 2:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input is-small" type="text" name="cod_diag3" id="cod_diag3" readonly>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input class="input is-small" type="text" name="nom_diag3" id="nom_diag3" readonly>
+                                    </p>
+                                    <p class="control">
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal-BusquedaDiagnosticosPsicologia">
+                                            ...
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label class="label is-small">Diag. Relacionado 3:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input is-small" type="text" name="cod_diag4" id="cod_diag4" readonly>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input class="input is-small" type="text" name="nom_diag4" id="nom_diag4" readonly>
+                                    </p>
+                                    <p class="control">
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal-BusquedaDiagnosticosPsicologia">
+                                            ...
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label for="tipo_diag" class="label is-small">Tipo de Diagnostico <strong style="color: red;">*</strong></label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <span class="select is-small">
+                                            <select name="tipo_diag" id="tipo_diag" required>
+                                                <option value=""></option>
+                                                <option value="01">Impresiones Diagnosticas</option>
+                                                <option value="02">Confirmado Nuevo</option>
+                                                <option value="03">Confirmado Repetido</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <button id="btn_corregir" class="button is-small is-primary">
+                                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                            <span>Corregir Diagnosticos</span>
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="field">
+                            <label for="plan_trata" class="label is-small">Plan de Tratamiento <strong style="color: red;">*</strong></label>
+                            <p class="control">
+                                <textarea class="textarea is-small" name="plan_trata" id="plan_trata" style="height: 130px;" required></textarea>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="submit" class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Diagnosticos -->
+<div class="modal" id="modal-BusquedaDiagnosticosPsicologia">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Diagnostico</h5>
+            <table id="tablaBusquedaDiagnosticosPsicologia" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;" scope="col">Codigo</th>
+                        <th style="width: 75%;" scope="col">Diagnostico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for diagnostico in diagnosticos %}
+                    <tr>
+                        <td style="width: 25%;">{{ diagnostico.codigo }}</td>
+                        <td style="width: 75%;">{{ diagnostico.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/hc_psicologia/add_regpsicologia.js') }}"></script>
+<!-- Modo Cancelar -->
+<script>
+const confirmacion = () => {
+    Swal.fire({
+    title: "Estas Seguro(a)?",
+    text: "Los cambios no se guardarán!",
+    icon: "question",
+    confirmButtonText: "Si, Cancelar!",
+    confirmButtonColor: "#48c78e",
+    cancelButtonText: "No, Continuar",
+    cancelButtonColor: "#f14668",
+    showCancelButton: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let atencion = document.getElementById("atencion").value;
+            let paciente = document.getElementById("codigo").value;
+            window.location.href = `/psicologia/${atencion}/${paciente}`
+        }
+    })
+};
+</script>
+{% endblock %}

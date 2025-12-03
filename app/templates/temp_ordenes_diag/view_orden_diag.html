@@ -1,0 +1,101 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Ver Orden de Servicios{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Ver Orden de Servicios</h5>
+<div class="container">
+    <form id="form_verordendiag" action="#" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos de Atención</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="atencion" class="label is-small">Atención</label>
+                                    <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ orden_diag.5 }}" disabled>
+                                </p>
+                                <p class="control">
+                                    <label for="codigo" class="label is-small">Paciente</label>
+                                    <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ orden_diag.1 }}" disabled>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" disabled>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="fecha" class="label is-small">Fecha</label>
+                                    <input type="date" name="fecha" id="fecha" class="input is-small" value="{{ orden_diag.3 }}" disabled>
+                                </p>
+                                <p class="control">
+                                    <label for="hora" class="label is-small">Hora</label>
+                                    <input type="text" name="hora" id="hora" class="input is-small" value="{{ orden_diag.4 }}" disabled>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+             <header class="card-header">
+                <p class="card-header-title">Datos de Servicios y/o Procedimientos</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <table id="tablaProcedimientosCups" class="table is-striped" style="width: 100%;" aria-disabled="true">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 10%; font-size: x-small;">Codigo</th>
+                                <th scope="col" style="width: 40%; font-size: x-small;">Servicio / Procedimiento</th>
+                                <th scope="col" style="width: 50%; font-size: x-small;">Justificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for det in detalle %}
+                            <tr>
+                                <td style="width: 10%;">{{ det.cod_servicio }}</td>
+                                <td style="width: 40%;">{{ det.servicio }}</td>
+                                <td style="width: 50%;">{{ det.justificacion }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-info">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/regresar.png') }}" alt="icon"></i></span>
+                    <span>Regresar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Modo Regresar -->
+<script>
+const confirmacion = () => {
+    let atencion = document.getElementById("atencion").value;
+    let paciente = document.getElementById("codigo").value;
+    window.location.href = `/ordenes_diag/${atencion}/${paciente}`
+};
+</script>
+{% endblock %}

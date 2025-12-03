@@ -1,0 +1,122 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Nueva Nota Credito{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva Nota Credito</h5>
+<div class="container">
+    <form id="form_addnotacredito" action="{{ url_for('notascredito.f_addNotaCredito') }}" method="post">
+        <div class="card">
+            <div class="card-header">
+                <p class="card-header-title">Ingrese la información</p>
+            </div>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <label for="cod_fuente" class="label is-normal">Fte. Nota Cre. <strong style="color: red;">*</strong></label>
+                            <span class="select is-normal">
+                                <select name="cod_fuente" id="cod_fuente" required>
+                                    {% for fuente in fuentes %}
+                                    <option value="{{ fuente.cod_fuente }}" selected>{{ fuente.prefijo }}</option>
+                                    {% endfor %}
+                                </select>
+                            </span>
+                        </p>
+                        <p class="control">
+                            <label for="nro_notacredito" class="label is-normal">Nro. Nota Cre. <strong style="color: red;">*</strong></label>
+                            <input type="text" name="nro_notacredito" id="nro_notacredito" class="input is-normal" value="{{ consecutivo.0 }}" readonly required>
+                        </p>
+                        <p class="control">
+                            <label for="fecha" class="label is-normal">Fecha Nota Cre. <strong style="color: red;">*</strong></label>
+                            <input type="date" name="fecha" id="fecha" class="input is-normal" readonly required>
+                        </p>
+                        <p class="control">
+                            <label for="hora" class="label is-normal">Hora Nota Cre. <strong style="color: red;">*</strong></label>
+                            <input type="time" name="hora" id="hora" class="input is-normal" readonly required>
+                        </p>
+                    </div>
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <label for="cod_fte_factura" class="label is-normal">Fte. Factura <strong style="color: red;">*</strong></label>
+                            <input type="text" name="cod_fte_factura" id="cod_fte_factura" class="input is-normal" readonly required>
+                        </p>
+                        <p class="control">
+                            <label for="nro_factura" class="label is-normal">Nro. Factura <strong style="color: red;">*</strong></label>
+                            <input type="text" name="nro_factura" id="nro_factura" class="input is-normal" required>
+                        </p>
+                        <p class="control is-expanded">
+                            <label for="fe_uuid" class="label is-normal">ID_FE</label>
+                            <input type="text" name="fe_uuid" id="fe_uuid" class="input is-normal" readonly required>
+                        </p>
+                        <p class="control">
+                            <label class="label is-normal" style="color: white;">.</label>
+                            <a id="buscar_factura" class="button is-normal is-primary">
+                                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                                <span>Buscar Factura</span>
+                            </a>
+                        </p>
+                    </div>
+                    <hr>
+                    <label for="motivo_notacredito" class="label is-normal">Motivo de Nota Credito <strong style="color: red;">*</strong></label>
+                    <p class="control">
+                        <textarea name="motivo_notacredito" id="motivo_notacredito" class="textarea is-normal" required></textarea>
+                    </p>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="liberar_atencion" class="label is-normal">Marque si desea liberar la atención asociada</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="checkbox" name="liberar_atencion" id="liberar_atencion" class="checkbox" disabled>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/notascredito/notascredito.js') }}"></script>
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardaran!",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                window.location.href = "{{ url_for('notascredito.notas_credito') }}"
+            }
+        })
+    }
+</script>
+{% endblock %}

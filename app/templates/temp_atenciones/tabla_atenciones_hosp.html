@@ -1,0 +1,22 @@
+<thead>
+    <tr>
+        <th scope="col" style="width: auto;">Atencíon</th>
+        <th scope="col" style="width: auto;">Fecha</th>
+        <th scope="col" style="width: auto;">Documento</th>
+        <th scope="col" style="width: auto;">Paciente</th>
+        <th scope="col" style="width: auto;">Habitación</th>
+        <th scope="col" style="width: auto;">Administradora</th>
+    </tr>
+</thead>
+<tbody>
+    {% for atencion in atenciones %}
+    <tr>
+        <td style="width: auto;">{{ atencion.atencion }}</td>
+        <td style="width: auto;">{{ atencion.fecha }}</td>
+        <td style="width: auto;">{{ atencion.codigo }}</td>
+        <td style="width: auto;">{{ atencion.paciente }}</td>
+        <td style="width: auto;">{{ atencion.habitacion }}</td>
+        <td style="width: auto;">{{ atencion.administradora }}</td>
+    </tr>
+    {% endfor %} 
+</tbody>

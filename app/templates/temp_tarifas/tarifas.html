@@ -1,0 +1,103 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Tarifas{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Tarifas</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('tarifas.add_tarifa') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="" srcset=""></i></span>
+                <span>Nueva Tarifa</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <table id="tablaTarifas" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;" scope="col">ID</th>
+                            <th style="width: 25%;" scope="col">Tarifa</th>
+                            <th style="width: 25%;" scope="col">Base/Tipo</th>
+                            <th style="width: 25%;" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tarf in tarfs %}
+                        <tr>
+                            <td class="valor_idtarifa">{{ tarf.id_tarifa }}</td>
+                            <td>{{ tarf.nom_tarifa }}</td>
+                            <td>{{ tarf.base }}</td>
+                            <td>
+                                <a href="{{ url_for('tarifas.edit_tarifa', id = tarf.id_tarifa) }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a class="enlace_eliminar button is-small is-danger has-tooltip-bottom" data-tooltip="Eliminar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    title: "Notificación!",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                });
+            });
+        </script>
+        {% endfor %}
+    {% endif%}
+{% endwith %}
+
+<script>
+    const confirmacion = (id_tarifa) => {
+        Swal.fire({
+            title: "Esta Seguro(a)?",
+            text: "Esta acción no se puede revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/drop_tarifa/${id_tarifa}`
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $('#tablaTarifas').off('click', '.enlace_eliminar').on('click', '.enlace_eliminar', function(event){
+            event.preventDefault();
+            const fila = $(this).closest('tr')
+            let id_tarifa = fila.find('.valor_idtarifa').text();
+            confirmacion(id_tarifa);
+        })
+    })
+</script>
+{% endblock %}

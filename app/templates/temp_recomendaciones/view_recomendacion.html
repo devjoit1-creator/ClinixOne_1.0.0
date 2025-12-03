@@ -1,0 +1,90 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Ver Receta Medica{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Ver Receta Medica</h5>
+<div class="container">
+    <form action="#" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos de Atención</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="atencion" class="label is-small">Atención</label>
+                                    <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ recomendacion.6 }}" disabled>
+                                </p>
+                                <p class="control">
+                                    <label for="codigo" class="label is-small">Paciente</label>
+                                    <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ recomendacion.3 }}" disabled>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" disabled>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="fecha" class="label is-small">Fecha</label>
+                                    <input type="date" name="fecha" id="fecha" class="input is-small" value="{{ recomendacion.1 }}" disabled>
+                                </p>
+                                <p class="control">
+                                    <label for="hora" class="label is-small">Hora</label>
+                                    <input type="text" name="hora" id="hora" class="input is-small" value="{{ recomendacion.2 }}" disabled>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos de la Receta</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field">
+                        <label for="detalle" class="label is-small">Detalle</label>
+                        <p class="control">
+                            <textarea name="detalle" id="detalle" class="textarea" disabled>{{ recomendacion.5 }}</textarea>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-info">
+                    <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/regresar.png') }}" alt="icon"></i></span>
+                    <span>Regresar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sweetalert2.all.min.js') }}"></script>
+<!-- Modo Regresar -->
+<script>
+    const confirmacion = () => {
+        let atencion = document.getElementById("atencion").value;
+        let paciente = document.getElementById("codigo").value;
+        window.location.href = `/recomendaciones/${atencion}/${paciente}`
+    };
+</script>
+{% endblock %}

@@ -1,0 +1,278 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Autorización y Servicios Medicos{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Autorización y Servicios Medicos(Hospitalización)</h5>
+<div class="container">
+    <form id="form_cargueservicioshosp" action="{{ url_for('hospitalizacion.f_cargueServiciosHosp') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Ingrese la información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <label for="atencion" class="label is-small">Atención</label>
+                            <input type="text" name="atencion" id="atencion" class="input is-small" value="{{ atencion.1 }}" readonly required>
+                        </p>
+                        <p class="control is-expanded">
+                            <label for="nro_autorizacion" class="label is-small">No. Autorización <strong style="color: red;">*</strong></label>
+                            <input type="text" name="nro_autorizacion" id="nro_autorizacion" class="input is-small" required>
+                        </p>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="undf_serv" class="label is-small">Und. Func.</label>
+                                    <input type="text" name="undf_serv" id="undf_serv" class="input is-small" value="{{ atencion.14 }}" readonly>
+                                </p>
+                                <p class="control">
+                                    <label for="cod_serv" class="label is-small">Codigo</label>
+                                    <input type="text" name="cod_serv" id="cod_serv" class="input is-small" readonly>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="nom_serv" class="label is-small">Procedimiento</label>
+                                    <input type="text" name="nom_serv" id="nom_serv" class="input is-small" readonly>
+                                </p>
+                                <p class="control">
+                                    <label for="valor_serv" class="label is-small">Valor</label>
+                                    <input type="text" name="valor_serv" id="valor_serv" class="input is-small" readonly>
+                                </p>
+                                <p class="control">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <a class="button is-small is-primary has-tool has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Serv./Procd." data-target="modal-BusquedaServiciosHosp">
+                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                                    </a>
+                                </p>
+                                <p class="control">
+                                    <label for="cantidad" class="label is-small">Cantidad</label>
+                                    <input type="number" name="cantidad" id="cantidad" class="input is-small">
+                                </p>
+                                <p class="control">
+                                    <label for="subtotal" class="label is-small">Subtotal</label>
+                                    <input type="number" name="subtotal" id="subtotal" class="input is-small">
+                                </p>
+                                <p class="control">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <button type="button" onclick="agregarFila()" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Agregar">
+                                        <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    </button>
+                                    
+                                </p>
+                                <p class="control">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <button type="button" onclick="eliminarFila()" class="button is-small is-danger has-tooltip-bottom" data-tooltip="Remover">
+                                        <span class="icon is-small"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                    </button>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="data" name="data">
+                    <table id="tablaServiciosHosp" class="table is-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%; font-size: small;">U. F.</th>
+                                <th style="width: 5%; font-size: small;">Codigo</th>
+                                <th style="width: 40%; font-size: small;">Procedimiento</th>
+                                <th style="width: 12%; font-size: small;">Valor</th>
+                                <th style="width: 13%; font-size: small;">Cantidad</th>
+                                <th style="width: 13%; font-size: small;">SubTotal</th>
+                                <th style="width: 13%; font-size: small;">Nro. Aut.</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="columns">
+                        <div class="column"></div>
+                        <div class="column">
+                            <div class="field is-horizontal">
+                                <div class="field label">
+                                    <label for="total" class="label">Total Liquidado: </label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field">
+                                        <input class="input is-small" type="number" name="total_servicios" id="total_servicios" readonly required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="submit" class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Busqueda de Servicios -->
+<div id="modal-BusquedaServiciosHosp" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Servicios/Proceds.</h5>
+            <table id="tablaBusquedaServiciosHosp" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;" scope="col">Codigo</th>
+                        <th style="width: 60%;" scope="col">Servicio/Proced.</th>
+                        <th style="width: 20%;" scope="col">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for servicio in servicios %}
+                    <tr>
+                        <td style="width: 20%;">{{ servicio.cod_servicio }}</td>
+                        <td style="width: 60%;">{{ servicio.nom_servicio }}</td>
+                        <td style="width: 20%;">{{ servicio.valor }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/hospitalizacion/cargue_servicios_hospitalizacion.js') }}"></script>
+<!-- Modo Cancelar -->
+<script>
+const confirmacion = () => {
+    Swal.fire({
+        title: "Estas Seguro(a)?",
+        text: "Los cambios no se guardarán!",
+        icon: "question",
+        confirmButtonText: "Si, Cancelar!",
+        confirmButtonColor: "#48c78e",
+        cancelButtonText: "No, Continuar",
+        cancelButtonColor: "#f14668",
+        showCancelButton: true,
+        allowOutsideClick: false
+    }).then((result) => {
+        if(result.isConfirmed){
+            window.location.href = "{{ url_for('hospitalizacion.hospitalizacion') }}"
+        }
+    })
+}
+</script>
+<!-- Cargar Servicios en la tabla -->
+<script>
+const agregarFila = () => {
+    let $undf_serv = document.getElementById("undf_serv");
+    let $cod_serv = document.getElementById("cod_serv");
+    let $nom_serv = document.getElementById("nom_serv");
+    let $valor_serv = document.getElementById("valor_serv");
+    let $cantidad = document.getElementById("cantidad");
+    let $subtotal = document.getElementById("subtotal");
+    let $nro_autorizacion = document.getElementById("nro_autorizacion");
+
+    if($cod_serv.value === "" && $nom_serv.value === "" && $valor_serv.value === ""){
+        Swal.fire({
+            title: "Notificación!",
+            text: "Debe seleccionar un procedimiento",
+            icon: "warning"
+        })
+    }else{
+        document.getElementById("tablaServiciosHosp").insertRow(-1).innerHTML = 
+        `<td>${$undf_serv.value}</td><td>${$cod_serv.value}</td><td>${$nom_serv.value}</td><td>${$valor_serv.value}</td><td>${$cantidad.value}</td><td>${$subtotal.value}</td><td>${$nro_autorizacion.value}</td>`;
+    
+        calcularTotalServicios()
+        $cod_serv.value =""
+        $nom_serv.value =""
+        $valor_serv.value=""
+        $cantidad.value=""
+        $subtotal.value=""
+    }
+}
+</script>
+<!-- Eliminar Servicios Cargados -->
+<script>
+const eliminarFila = () => {
+    let table = document.getElementById("tablaServiciosHosp");
+    let rowCount = table.rows.length;
+
+    if (rowCount <= 1) {
+        Swal.fire({
+            title: "Notificación!",
+            text: "No hay servicios cargados",
+            icon: "warning"
+        })
+    }else{
+        table.deleteRow(rowCount - 1);
+        calcularTotalServicios();
+    }
+}
+</script>
+<!-- Calcular el total de los servicios -->
+<script>  
+const $tablaServiciosHosp = document.getElementById("tablaServiciosHosp");
+const $total_servicios = document.getElementById("total_servicios");
+
+const calcularTotalServicios = () => {
+    let total = 0;
+    for (let i = 1; i < $tablaServiciosHosp.rows.length; i++){
+        /* console.log($tablaServiciosConsulta.rows[i].cells[5].innerHTML); */
+        let rowValue = $tablaServiciosHosp.rows[i].cells[5].innerHTML;
+        total = total + Number(rowValue);       
+    }
+    $total_servicios.value = total;
+};
+</script>
+<!-- Enviar datos de servicios Validación -->
+<script>
+const $form_cargueservicioshosp = document.getElementById("form_cargueservicioshosp");
+$form_cargueservicioshosp.addEventListener("submit", (e) => {
+    const tabla = document.getElementById('tablaServiciosHosp'); 
+    let rowCount = tabla.rows.length;
+    if(rowCount <= 1){
+        e.preventDefault();
+        Swal.fire({
+            title: "Notificación!",
+            text: "Debe al menos cargar un servicio a la atención.",
+            icon: "warning"
+        });
+        return;
+    }
+
+    let data = ''; 
+    for (let i = 1; i < tabla.rows.length; i++) { 
+        const celdas = tabla.rows[i].cells; 
+        if(celdas.length >= 7){
+            data += celdas[0].textContent + '-' + celdas[1].textContent + '-' + celdas[2].textContent + '-' + celdas[3].textContent + '-' + celdas[4].textContent + '-' + celdas[5].textContent + '-' + celdas[6].textContent +';'; 
+        };
+    };
+    document.getElementById('data').value = data;
+
+    /* Loading */
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+});
+</script>
+{% endblock %}

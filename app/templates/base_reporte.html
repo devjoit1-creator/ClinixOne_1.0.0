@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/report_style.css') }}">
+{% block css %}
+{% endblock %}
+<title>{% block title %}{% endblock %}</title>
+<!-- Encabezado -->
+ <table style="height: 100px; width: 639.188px;">
+    <tbody>
+        <tr>
+            <td style="width: 150px;" rowspan="5"><img style="font-size: 14px; float: left; display: block" src="data:image/png;base64,{{ logo }}" alt="vista_previa_logo" width="150" height="64"/></td>
+        </tr>
+        <tr>
+            <td style="width: 20px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: large" colspan="2"><strong>{{ entidad.1 }}</strong></td>
+        </tr>
+        <tr>
+            <td style="width: 20px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: small" colspan="2"><strong>NIT:</strong> {{ entidad.0 }} <strong>Codigo Habilitación:</strong> {{ entidad.5 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 20px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: small" colspan="2"><strong>Dirección:</strong> {{ entidad.2 }} - <strong>Telefonos:</strong> {{ entidad.3 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 20px; text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: small" colspan="2"><strong>Email:</strong><a href="mailto:{{ entidad.4 }}"> {{ entidad.4 }}</a></td>
+        </tr>
+    </tbody>
+</table>
+<!-- Contenido -->
+{% block report %}
+{% endblock %} 
+
+
+{% block scripts %}
+{% endblock %}
+</html>

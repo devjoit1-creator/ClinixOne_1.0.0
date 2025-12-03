@@ -1,0 +1,649 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<!-- CSS DataTables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/dataTables.bulma.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css">
+<style>
+    .scrollable-section{
+        max-height: 400px;
+        overflow-y: auto;
+    }
+</style>
+{% endblock %}
+{% block title %}Editar Ingreso C.E.{% endblock %}
+
+{% block content %}
+<form action="#" method="post">
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Editar Ingreso C. Externa</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <div class="tabs is-boxed">
+                    <ul>
+                      <li id="dconsulta-tab" class="is-active">
+                        <a onClick="switchToDconsulta()">
+                        <span class="icon is-small"><i class="fa fa-user"></i></span>
+                        <span>Datos de Ingreso a Consulta</span>
+                      </a>
+                      </li>
+                      <li id="dfactconsulta-tab">
+                        <a onClick="switchToDfactConsulta()">
+                        <span class="icon is-small"><i class="fa fa-user-plus"></i></span>
+                        <span>Datos Fact. Consulta</span>
+                      </a>
+                      </li>
+                    </ul>
+                    <!--/tabs is-centered-->
+                </div>
+
+                <div class="container">
+                    <div id="dconsulta-tab-content">
+                        <input type="text" name="usuario" id="usuario" value="{{ session['name'] }}" hidden>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field">
+                                        <label for="" class="label is-small">Paciente</label>
+                                        <div class="field-body">
+                                            <div class="field has-addons">
+                                                <p class="control">
+                                                    <a class="button is-small is-primary js-modal-trigger" data-target="modal-BusquedaPacientesConsultas">
+                                                        <span class="icon is-small"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                                    </a>
+                                                </p>
+                                                <p class="control">
+                                                    <input class="input is-small" type="text" name="tipo" id="tipo" value="{{ dato_pac.0 }}" readonly required>
+                                                </p>
+                                                <p class="control">
+                                                    <input class="input is-small" type="text" name="codigo" id="codigo" value="{{ consulta.1 }}" readonly required>
+                                                </p>
+                                                <p class="control is-expanded">
+                                                    <input class="input is-small" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" readonly required>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="field-body">
+                                            <div class="field has-addons">
+                                                <p class="control">
+                                                    <label class="label is-small">Fecha y Hora de Atención</label>
+                                                    <input class="input is-small" type="date" name="fecha_atencion" id="fecha_atencion" value="{{ consulta.2 }}" required>
+                                                </p>
+                                                <p class="control">
+                                                    <label class="label is-small" style="color: white;">.</label>
+                                                    <input class="input is-small" type="time" name="hora_atencion" id="hora_atencion" value="{{ consulta.3 }}" required>
+                                                </p>
+                                                <p class="control">
+                                                    <label class="label is-small">Fecha y Hora Salida</label>
+                                                    <input class="input is-small" type="date" name="fecha_salida" id="fecha_salida" disabled>
+                                                </p>
+                                                <p class="control">
+                                                    <label class="label is-small" style="color: white;">.</label>
+                                                    <input class="input is-small" type="text" name="hora_salida" id="hora_salida" disabled>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label class="label is-small">Empresa Administradora</label>
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <input class="input is-small" type="text" name="cod_admin" id="cod_admin" value="{{ consulta.6 }}" readonly required>
+                                            </p>
+                                            <p class="control">
+                                                <input class="input is-small" type="text" name="nit_admin" id="nit_admin" value="{{ consulta.7 }}" readonly required>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <input class="input is-small" type="text" name="nom_admin" id="nom_admin" readonly required>
+                                            </p>
+                                            <p class="control">
+                                                <a class="button is-small is-primary js-modal-trigger" data-target="modal-BusquedaAdminsConsultas">
+                                                    <span>...</span>
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="via_ingreso" class="label is-small">Vía de Ingreso</label>
+                                    <span class="select is-small">
+                                        <select name="via_ingreso" id="via_ingreso">
+                                            {% if consulta.8 == 1 %}
+                                            <option value="{{ consulta.8 }}">Urgencias</option>
+                                            {% elif consulta.8 == 2 %}
+                                            <option value="{{ consulta.8 }}">Consulta Externa o Programada</option>
+                                            {% elif consulta.8 == 3 %}
+                                            <option value="{{ consulta.8 }}">Remitido</option>
+                                            {% else %}
+                                            <option value="{{ consulta.8 }}">Nacido en la Institución</option>
+                                            {% endif %}
+                                            <option value="1">Urgencias</option>
+                                            <option value="2">Consulta Externa o Programada</option>
+                                            <option value="3">Remitido</option>
+                                            <option value="4">Nacido en la Institución</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <label for="causa_externa" class="label is-small">Causa Externa de Atención</label>
+                                                <span class="select is-small">
+                                                    <select name="causa_externa" id="causa_externa">
+                                                        {% for causa in causas %}
+                                                        <option value="{{ causa.codigo }}">{{ causa.nombre }}</option>
+                                                        {% if causa.codigo == consulta.9 %}
+                                                        <option value="{{ causa.codigo }}" selected>{{ causa.nombre }}</option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </span>
+                                            </p>
+                                            <p class="control">
+                                                <label for="clase_consulta" class="label is-small">Clase de Consulta</label>
+                                                <span class="select is-small">
+                                                    <select name="clase_consulta" id="clase_consulta">
+                                                        {% if consulta.10 == '1. En Urgencias' %}
+                                                        <option value="{{ consulta.10 }}">1. En Urgencias</option>
+                                                        {% elif consulta.10 == '2. Ambulatoria' %}
+                                                        <option value="{{ consulta.10 }}">2. Ambulatoria</option>
+                                                        {% else %}
+                                                        <option value="{{ consulta.10 }}">3. En Hospitalización</option>
+                                                        {% endif %}
+                                                        <option value="1. En Urgencias">1. En Urgencias</option>
+                                                        <option value="2. Ambulatoria">2. Ambulatoria</option>
+                                                        <option value="3. En Hospitalización">3. En Hospitalización</option>
+                                                    </select>
+                                                </span>
+                                            </p>
+                                            <p class="control">
+                                                <label for="medico" class="label is-small">Medico Tratante</label>
+                                                <span class="select is-small">
+                                                    <select name="medico" id="medico">
+                                                        {% for medico in medicos %}
+                                                        <option value="{{ medico.num_documento }}">{{ medico.nombre_completo }}</option>
+                                                        {% if medico.num_documento == consulta.11 %}
+                                                        <option value="{{ medico.num_documento }}" selected>{{ medico.nombre_completo }}</option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </span>
+                                            </p>
+                                            <p class="control">
+                                                <label for="und_funcional" class="label is-small">Unidad Funcional</label>
+                                                <span class="select is-small">
+                                                    <select name="und_funcional" id="und_funcional">
+                                                        {% for unidad in unidades %}
+                                                        <option value="{{ unidad.cod_ufuncional }}">{{ unidad.nom_ufuncional }}</option>
+                                                        {% if unidad.cod_ufuncional == consulta.12 %}
+                                                        <option value="{{ unidad.cod_ufuncional }}" selected>{{ unidad.nom_ufuncional }}</option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label for="" class="label is-small">Diagnostico Principal</label>
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <input class="input is-small" type="text" name="cod_diag1" id="cod_diag1" value="{{ consulta.13 }}" readonly required>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <input class="input is-small" type="text" name="nom_diag1" id="nom_diag1" value="{{ consulta.14 }}" readonly required>
+                                            </p>
+                                            <p class="control">
+                                                <a class="button is-small is-info js-modal-trigger" data-target="modal-BusquedaDiagnosticosConsultas">...</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="" class="label is-small">Diagnostico Rel. 2</label>
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <input class="input is-small" type="text" name="cod_diag2" id="cod_diag2" value="{{ consulta.15 }}" readonly>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <input class="input is-small" type="text" name="nom_diag2" id="nom_diag2" value="{{ consulta.16 }}" readonly>
+                                            </p>
+                                            <p class="control">
+                                                <a class="button is-small is-info js-modal-trigger" data-target="modal-BusquedaDiagnosticosConsultas">...</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="" class="label is-small">Diagnostico Rel. 3</label>
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <input class="input is-small" type="text" name="cod_diag3" id="cod_diag3" value="{{ consulta.17 }}" readonly>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <input class="input is-small" type="text" name="nom_diag3" id="nom_diag3" value="{{ consulta.18 }}" readonly>
+                                            </p>
+                                            <p class="control">
+                                                <a class="button is-small is-info js-modal-trigger" data-target="modal-BusquedaDiagnosticosConsultas">...</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label for="" class="label is-small">Diagnostico Rel. 4</label>
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <input class="input is-small" type="text" name="cod_diag4" id="cod_diag4" value="{{ consulta.19 }}" readonly>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <input class="input is-small" type="text" name="nom_diag4" id="nom_diag4" value="{{ consulta.20 }}" readonly>
+                                            </p>
+                                            <p class="control">
+                                                <a class="button is-small is-info js-modal-trigger" data-target="modal-BusquedaDiagnosticosConsultas">...</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <p class="control">
+                                        <button id="btn_corregir" class="button is-small is-info">
+                                            <span class="icon is-small"><i class="fa fa-trash"></i></span>
+                                            <span>Corregir Diagnosticos</span>
+                                        </button>
+                                    </p>
+                                </div>
+                                <div class="field is-horizontal">
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <div class="field-body">
+                                                <div class="field has-addons">
+                                                    <p class="control">
+                                                        <label for="tipo_diag" class="label is-small">Tipo de Diagnostico</label>
+                                                        <span class="select is-small">
+                                                            <select name="tipo_diag" id="tipo_diag" required>
+                                                                {% if consulta.21 == 1 %}
+                                                                <option value="{{ consulta.21 }}">Impresiones Diagnosticas</option>
+                                                                {% elif consulta.21 == 2 %}
+                                                                <option value="{{ consulta.21 }}">Confirmado Nuevo</option>
+                                                                {% else %}
+                                                                <option value="{{ consulta.21}}">Confirmado Repetido</option>
+                                                                {% endif %}
+                                                                <option value="1">Impresiones Diagnosticas</option>
+                                                                <option value="2">Confirmado Nuevo</option>
+                                                                <option value="3">Confirmado Repetido</option>
+                                                            </select>
+                                                        </span>
+                                                    </p>
+                                                    <p class="control">
+                                                        <label for="nro_autorizacion" class="label is-small">No. Autorización</label>
+                                                        <input class="input is-small" type="text" name="nro_autorizacion" id="nro_autorizacion" required>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="is-hidden" id="dfactconsulta-tab-content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <label for="" class="label is-small">Und. Func.</label>
+                                                <input class="input is-small" type="text" name="" id="" value="CE" readonly>
+                                            </p>
+                                            <p class="control">
+                                                <label for="cod_serv" class="label is-small">Codigo</label>
+                                                <input class="input is-small" type="text" name="cod_serv" id="cod_serv" readonly>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <label for="nom_serv" class="label is-small">Procedimiento</label>
+                                                <input class="input is-small" type="text" name="nom_serv" id="nom_serv" readonly>
+                                            </p>
+                                            <p class="control">
+                                                <label for="valor_serv" class="label is-small">Valor</label>
+                                                <input class="input is-small" type="text" name="valor_serv" id="valor_serv" readonly>
+                                            </p>
+                                            <p class="control">
+                                                <label for="" class="label is-small" style="color: white;">.</label>
+                                                <a href="#" class="button is-small is-primary js-modal-trigger" data-target="modal-BusquedaServiciosConsultas">
+                                                    <span class="icon is-small"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                </a>
+                                            </p>
+                                            <p class="control">
+                                                <label for="cantidad" class="label is-small">Cantidad</label>
+                                                <input class="input is-small" type="number" name="cantidad" id="cantidad">
+                                            </p>
+                                            <p class="control">
+                                                <label for="" class="label is-small">Subtotal</label>
+                                                <input class="input is-small" type="number" name="subtotal" id="subtotal" readonly>
+                                            </p>
+                                            <p class="control">
+                                                <label for="" class="label is-small" style="color: white;">.</label>
+                                                <button type="button" onclick="agregarFila()" class="button is-small is-primary">
+                                                    <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                                </button>
+                                                <script>
+                                                    const agregarFila = () => {
+                                                        let $cod_serv = document.getElementById("cod_serv");
+                                                        let $nom_serv = document.getElementById("nom_serv");
+                                                        let $valor_serv = document.getElementById("valor_serv");
+                                                        let $cantidad = document.getElementById("cantidad");
+                                                        let $subtotal = document.getElementById("subtotal");
+
+                                                        if($cod_serv.value === "" && $nom_serv.value === "" && $valor_serv.value === ""){
+                                                            Swal.fire({
+                                                                title: "Notificación!",
+                                                                text: "Debe seleccionar un procedimiento",
+                                                                icon: "warning"
+                                                            })
+                                                        }else{
+                                                            document.getElementById("tablaServiciosConsulta").insertRow(-1).innerHTML = 
+                                                            `<td></td><td>${$cod_serv.value}</td><td>${$nom_serv.value}</td><td>${$valor_serv.value}</td><td>${$cantidad.value}</td><td>${$subtotal.value}</td>`;
+                                                        
+                                                            calcularTotalServicios()
+                                                            $cod_serv.value =""
+                                                            $nom_serv.value =""
+                                                            $valor_serv.value=""
+                                                            $cantidad.value=""
+                                                            $subtotal.value=""
+                                                        }
+                                                    }
+                                                </script>
+                                            </p>
+                                            <p class="control">
+                                                <label for="" class="label is-small" style="color: white;">.</label>
+                                                <button type="button" onclick="eliminarFila()" class="button is-small is-danger">
+                                                    <span class="icon is-small"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                </button>
+                                                <script>
+                                                    const eliminarFila = () => {
+                                                        let table = document.getElementById("tablaServiciosConsulta");
+                                                        let rowCount = table.rows.length;
+
+                                                        if (rowCount <= 1) {
+                                                            Swal.fire({
+                                                                title: "Notificación!",
+                                                                text: "No hay servicios cargados",
+                                                                icon: "warning"
+                                                            })
+                                                        }else{
+                                                            table.deleteRow(rowCount - 1);
+                                                            calcularTotalServicios();
+                                                        }
+                                                    }
+                                                </script>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="tablaServiciosConsulta" class="table is-striped" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 12%;">Und. Func.</th>
+                                    <th style="width: 13%;">Codigo</th>
+                                    <th style="width: 40%;">Procedimiento</th>
+                                    <th style="width: 12%;">Valor</th>
+                                    <th style="width: 13%;">Cantidad</th>
+                                    <th style="width: 13%;">SubTotal</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="columns">
+                            <div class="column"></div>
+                            <div class="column">
+                                <div class="field is-horizontal">
+                                    <div class="field label">
+                                        <label for="total" class="label">Total Liquidado: </label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <input class="input is-small" type="number" name="total" id="total" readonly required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                    <button class="button is-normal is-success">
+                        <span class="icon is-small"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
+                        <span>Guardar</span>
+                    </button>
+                </p>
+                <p class="control">
+                    <a onclick="confirmacion()" class="button is-normal is-danger">
+                        <span class="icon is-small"><i class="fa fa-ban" aria-hidden="true"></i></span>
+                        <span>Cancelar</span>
+                    </a>
+                    <script>
+                        const confirmacion = () => {
+                            Swal.fire({
+                            title: "Estas Seguro(a)?",
+                            text: "Los cambios no se guardarán!",
+                            icon: "question",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Si, cancelar!",
+                            cancelButtonText: "No, continuar!"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "{{ url_for('consultas.consultas') }}"
+                                }
+                            })
+                        }
+                    </script>
+                </p>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal Busqueda de Pacientes -->
+<div class="modal" id="modal-BusquedaPacientesConsultas">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Paciente</h5>
+            <table id="tablaBusquedaPacientesConsultas" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;" scope="col">Tipo Doc.</th>
+                        <th style="width: 20%;" scope="col">No. Documento</th>
+                        <th style="width: 70%;" scope="col">Nombre Completo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for paciente in pacientes %}
+                    <tr>
+                        <td style="width: 10%;">{{ paciente.tipo }}</td>
+                        <td style="width: 15%;">{{ paciente.documento }}</td>
+                        <td style="width: 75%;">{{ paciente.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<!-- Modal Busqueda de EAPB Administradoras -->
+ <div class="modal" id="modal-BusquedaAdminsConsultas">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Empresa Administradora</h5>
+            <table id="tablaBusquedaAdminsConsultas" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 15%;" scope="col">Codigo</th>
+                        <th style="width: 15%;" scope="col">Nit</th>
+                        <th style="width: 70%;" scope="col">Administradora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for administradora in administradoras %}
+                    <tr>
+                        <td style="width: 15%;">{{ administradora.codigo }}</td>
+                        <td style="width: 15%;">{{ administradora.nit }}</td>
+                        <td style="width: 70%;">{{ administradora.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+ </div>
+
+ <!-- Modal Busqueda Diagnosticos -->
+<div class="modal" id="modal-BusquedaDiagnosticosConsultas">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Diagnostico</h5>
+            <table id="tablaBusquedaDiagnosticosConsultas" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;" scope="col">Codigo</th>
+                        <th style="width: 75%;" scope="col">Diagnostico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for diagnostico in diagnosticos %}
+                    <tr>
+                        <td style="width: 25%;">{{ diagnostico.codigo }}</td>
+                        <td style="width: 75%;">{{ diagnostico.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+ <!-- Modal Busqueda Servicios -->
+<div class="modal" id="modal-BusquedaServiciosConsultas">
+    <div class="modal-background"></div>
+    <div class="modal-content is-active">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Servicios/Proceds.</h5>
+            <table id="tablaBusquedaServiciosConsultas" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;" scope="col">Codigo</th>
+                        <th style="width: 60%;" scope="col">Servicio/Proced.</th>
+                        <th style="width: 20%;" scope="col">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for servicio in servicios %}
+                    <tr>
+                        <td style="width: 20%;">{{ servicio.cod_servicio }}</td>
+                        <td style="width: 60%;">{{ servicio.nom_servicio }}</td>
+                        <td style="width: 20%;">{{ servicio.valor }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>  
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sweetalert2.all.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cons_externa/cons_ex_edit.js') }}"></script>
+
+<!-- Scripts de DataTables -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bulma.min.js"></script>
+ <!-- Script para llamar tablas -->
+<script src="{{ url_for('static', filename='js/dataTables.js')}}"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+function switchToDconsulta() {
+    removeActive();
+    hideAll();
+    $("#dconsulta-tab").addClass("is-active");
+    $("#dconsulta-tab-content").removeClass("is-hidden");
+}
+
+function switchToDfactConsulta() {
+    removeActive();
+    hideAll();
+    $("#dfactconsulta-tab").addClass("is-active");
+    $("#dfactconsulta-tab-content").removeClass("is-hidden");
+}
+
+function removeActive() {
+    $("li").each(function() {
+    $(this).removeClass("is-active");
+    });
+}
+
+function hideAll(){
+    $("#dconsulta-tab-content").addClass("is-hidden");
+    $("#dfactconsulta-tab-content").addClass("is-hidden");
+}
+</script>
+<script>
+    /* Calcular el total de los servicios */
+const $tablaServiciosConsulta = document.getElementById("tablaServiciosConsulta");
+const $total = document.getElementById("total");
+
+const calcularTotalServicios = () => {
+    let total = 0;
+    for (let i = 1; i < $tablaServiciosConsulta.rows.length; i++){
+        console.log($tablaServiciosConsulta.rows[i].cells[5].innerHTML);
+        let rowValue = $tablaServiciosConsulta.rows[i].cells[5].innerHTML;
+        total = total + Number(rowValue);       
+    }
+    $total.value = total;
+};
+</script>
+{% endblock %}

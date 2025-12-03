@@ -1,0 +1,132 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+
+{% endblock %}
+{% block title %}Plan Unico de Cuentas PUC{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Plan Unico de Cuentas (PUC)</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('plancuentas.add_cuenta') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nueva Cuenta en PUC</span>
+            </a>
+        </p>
+        <p class="control">
+            <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Información" data-target="modal-ayudaCuentas">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/info.png') }}" alt="icon"></i></span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Cuentas</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <!-- Tabla Cuentas PUC -->
+                <table id="tablaCuentas" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; font-size: small;" scope="col">Cuenta</th>
+                            <th style="width: 70%; font-size: small;" scope="col">Nombre</th>
+                            <th style="width: 5%; font-size: small;" scope="col">Clasificación</th>
+                            <th style="width: 5%; font-size: small;" scope="col">Naturaleza</th>
+                            <th style="width: 10%; font-size: small;" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cuenta in cuentas %}
+                        <tr>
+                            <td class="valor_codCuenta" style="width: 10%; font-size: small;">{{ cuenta.cod_cuenta }}</td>
+                            <td style="width: 70%; font-size: small;">{{ cuenta.nom_cuenta }}</td>
+                            <td style="width: 5%; font-size: small;">{{ cuenta.clasificacion }}</td>
+                            <td style="width: 5%; font-size: small;">{{ cuenta.naturaleza }}</td>
+                            <td>
+                                <a href="/edit_cuenta/{{ cuenta.cod_cuenta }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a onclick="confirmacion()" class="enlace_eliminar button is-small is-danger has-tooltip-bottom" data-tooltip="Eliminar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-ayudaCuentas" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Información</h5>
+            <p>
+                <strong>El Plan Unico de Cuentas comercial se estructura en los siguientes niveles:</strong>
+            </p>
+            <br>
+            <ul>
+                <li><strong>Cuenta Clase:</strong> Cuentas de un digito o el primer digito. <strong>Clasifación/Tipo: CL</strong></li>
+                <li><strong>Cuenta Grupo:</strong> Cuentas de dos digitos o desde el segundo digito. <strong>Clasifación/Tipo: G</strong></li>
+                <li><strong>Cuenta:</strong> Cuentas de cuatro digitos o desde los primeros cuatro digitos. <strong>Clasifación/Tipo: C</strong></li>
+                <li><strong>Subcuenta:</strong> Cuentas de seís digitos en adelante o desde los primeros seís digitos. <strong>Clasifación/Tipo: SC</strong></li>
+            </ul>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener('DOMContentLoaded', () =>{
+                Swal.fire({
+                    title: "Notificación!",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script>
+    const confirmacion = (cod_cuenta) => {
+        Swal.fire({
+            title: "Esta Seguro?",
+            text: "Esta acción no se puede revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/drop_cuenta/${cod_cuenta}`
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $('#tablaCuentas').off('click', '.enlace_eliminar').on('click', '.enlace_eliminar', function(event){
+            event.preventDefault();
+            const fila = $(this).closest('tr');
+            let cod_cuenta = fila.find('.valor_codCuenta').text();
+            confirmacion(cod_cuenta);
+        })
+    })
+</script>
+{% endblock %}

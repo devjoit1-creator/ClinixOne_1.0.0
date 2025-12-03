@@ -1,0 +1,400 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.inter-scrollable-section {
+    max-height: 515px;
+    overflow-y: auto;
+    padding: 0rem 0rem;
+}
+</style>
+{% endblock %}
+{% block title %} Editar Paciente {% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Editar Paciente</h5>
+<div class="container">
+    <form action="{{ url_for('pacientes.f_updatePaciente') }}" method="post">
+        <section class="inter-scrollable-section">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos Personales</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <input type="text" name="idPaciente" id="idPaciente" value="{{ pac.0 }}" hidden>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label class="label is-small">Tipo y Nro. Documento <strong style="color: red;">*</strong></label>
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <span class="select is-small">
+                                                    <select name="tipoDoc" id="tipoDoc" required>
+                                                        <option value="AS" {% if pac.1 == "AS" %} selected {% endif %}>AS</option>
+                                                        <option value="CC" {% if pac.1 == "CC" %} selected {% endif %}>CC</option>
+                                                        <option value="CD" {% if pac.1 == "CD" %} selected {% endif %}>CD</option>
+                                                        <option value="CE" {% if pac.1 == "CE" %} selected {% endif %}>CE</option>
+                                                        <option value="MS" {% if pac.1 == "MS" %} selected {% endif %}>MS</option>
+                                                        <option value="PA" {% if pac.1 == "PA" %} selected {% endif %}>PA</option>
+                                                        <option value="PE" {% if pac.1 == "PE" %} selected {% endif %}>PE</option>
+                                                        <option value="PT" {% if pac.1 == "PT" %} selected {% endif %}>PT</option>
+                                                        <option value="RC" {% if pac.1 == "RC" %} selected {% endif %}>RC</option>
+                                                        <option value="TI" {% if pac.1 == "TI" %} selected {% endif %}>TI</option>
+                                                    </select>
+                                                </span>
+                                            </p>
+                                            <p class="control is-expanded">
+                                                <input class="input is-small" type="text" name="numDoc" id="numDoc" value="{{ pac.2 }}" required>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <p class="control">
+                                        <label class="label is-small" for="papellido">Primer Apellido <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="papellido" id="papellido" value="{{ pac.3 }}" required>
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-small" for="sapellido">Segundo Apellido <strong style="color: red;">*</strong></label>
+                                    <input class="input is-small" type="text" name="sapellido" id="sapellido" value="{{ pac.4 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-small" for="pnombre">Primer Nombre <strong style="color: red;">*</strong></label>
+                                    <input class="input is-small" type="text" name="pnombre" id="pnombre" value="{{ pac.5 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-small" for="snombre">Segundo Nombre</label>
+                                    <input class="input is-small" type="text" name="snombre" id="snombre" value="{{ pac.6 }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="field-body">
+                                        <div class="field has-addons">
+                                            <p class="control">
+                                                <label class="label is-small" for="fechaNac">Fecha Nacimiento <strong style="color: red;">*</strong></label>
+                                                <input class="input is-small" type="date" name="fechaNac" id="fechaNac" value="{{ pac.7 }}" required>
+                                            </p>
+                                            <p class="control">
+                                                <label class="label is-small" for="edad">Edad</label>
+                                                <input class="input is-small" type="number" name="edad" id="edad" value="{{ pac.8 }}" readonly>
+                                            </p>
+                                            <p class="control">
+                                                <label class="label is-small" for="tipo_edad" style="color: white;">.</label>
+                                                <input class="input is-small" type="text" name="tipo_edad" id="tipo_edad" value="AÑOS" readonly>
+                                            </p>
+                                        </div>    
+                                    </div>
+                                </div>
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label class="label is-small" for="sexo">Sexo <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="sexo" id="sexo" required>
+                                                <option value="1" {% if pac.10 == 1 %} selected {% endif %}>MASCULINO</option>
+                                                <option value="2" {% if pac.10 == 2 %} selected {% endif %}>FEMENINO</option>
+                                                <option value="3" {% if pac.10 == 3 %} selected {% endif %}>INDETERMINADO</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label class="label is-small" for="direccion">Dirección <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="direccion" id="direccion" value="{{ pac.11 }}" required>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="telefono">Telefono Fijo <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="telefono" id="telefono" value="{{ pac.12 }}" required>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="movil">Telefono Movil <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="movil" id="movil" value="{{ pac.13 }}" required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control is-expanded">
+                                        <label class="label is-small" for="barrio">Barrio <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="barrio" id="barrio" value="{{ pac.14 }}" required>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="zona">Zona <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="zona" id="zona" required>
+                                                <option value="1" {% if pac.15 == 1 %} selected {% endif %}>URBANA</option>
+                                                <option value="2" {% if pac.15 == 2 %} selected {% endif %}>RURAL</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="depto">Departamento <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="depto" id="depto" required>
+                                                <option value="{{ pac.16 }}" selected>{{ pac.17 }}</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control" hidden>
+                                        <input class="input is-small" type="text" name="nom_depto" id="nom_depto" value="{{ pac.17 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="munic">Distrito/Municipio <strong style="color: red">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="munic" id="munic" required>
+                                                <option value="{{ pac.18 }}" selected>{{ pac.19 }}</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control" hidden>
+                                        <input class="input is-small" type="text" name="nom_munic" id="nom_munic" value="{{ pac.19 }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="nacionalidad">Nacionalidad <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="text" name="nacionalidad" id="nacionalidad" value="{{ pac.20 }}" required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label class="label is-small" for="pais">País Origen <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="pais" id="pais" required>
+                                                {% for pais in paises %}
+                                                <option value="{{ pais.id_pais }}" {% if pais.id_pais == pac.21 %} selected {% endif %}>{{ pais.nom_pais }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="paisRes">País Residencia <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="paisRes" id="paisRes" required>
+                                                {% for pais in paises %}
+                                                    <option value="{{ pais.id_pais }}" {% if pais.id_pais == pac.22 %} selected {% endif %}>{{ pais.nom_pais }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label class="label is-small" for="correo">E-mail <strong style="color: red;">*</strong></label>
+                                        <input class="input is-small" type="email" name="correo" id="correo" value="{{ pac.23 }}" required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos Adicionales</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label class="label is-small" for="estCivil">Estado Civil <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="estCivil" id="estCivil" required>
+                                                <option value="1" {% if pac.24 == 1 %} selected {% endif %}>SOLTERO(A)</option>
+                                                <option value="2" {% if pac.24 == 2 %} selected {% endif %}>CASADO(A)</option>
+                                                <option value="3" {% if pac.24 == 3 %} selected {% endif %}>SEPARADO(A)</option>
+                                                <option value="4" {% if pac.24 == 4 %} selected {% endif %}>VIUDO(A)</option>
+                                                <option value="5" {% if pac.24 == 5 %} selected {% endif %}>UNIÓN LIBRE</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="nivelEdu">Nivel de Escolaridad <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="nivelEdu" id="nivelEdu" required>
+                                                <option value=""></option>
+                                                {% for nivel in niveles %}
+                                                <option value="{{ nivel.id_nivel }}" {% if nivel.id_nivel == pac.25 %} selected {% endif %}>{{ nivel.nom_nivel }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="ocupacion">Ocupación <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="ocupacion" id="ocupacion" required>
+                                                {% for ocupacion in ocupaciones %}
+                                                <option value="{{ ocupacion.id_ocupacion }}" {% if ocupacion.id_ocupacion == pac.26 %} selected {% endif %}>{{ ocupacion.nom_ocupacion }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="checkbox" for="noTiene">
+                            <input type="checkbox" id="noTiene">
+                            No Tiene
+                        </label>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label class="label is-small" for="acompanante">Acompañante <strong style="color: red;">*</strong></label>
+                                    <input class="input is-small" type="text" name="acompanante" id="acompanante" value="{{ pac.27 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-small" for="telAcompanante">Teléfono <strong style="color: red;">*</strong></label>
+                                    <input class="input is-small" type="text" name="telAcompanante" id="telAcompanante" value="{{ pac.28 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-small" for="parentAcompanante">Parentesco <strong style="color: red;">*</strong></label>
+                                    <input class="input is-small" type="text" name="parentAcompanante" id="parentAcompanante" value="{{ pac.29 }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label class="label is-small" for="responsable">Responsable <strong style="color: red;">*</strong></label>
+                                    <input class="input is-small" type="text" name="responsable" id="responsable" value="{{ pac.30 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-small" for="telResponsable">Teléfono <strong style="color: red;">*</strong></label>
+                                    <input class="input is-small" type="text" name="telResponsable" id="telResponsable" value="{{ pac.31 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label class="label is-small" for="parentResponsable">Parentesco <strong style="color: red;">*</strong></label>
+                                    <input class="input is-small" type="text" name="parentResponsable" id="parentResponsable" value="{{ pac.32 }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label class="label is-small" for="religion">Religión</label>
+                                        <input class="input is-small" type="text" name="religion" id="religion" value="{{ pac.33 }}">
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="etnia">Etnia <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                                <select name="etnia" id="etnia" required>
+                                                    {% for e in etnia %}
+                                                        <option value="{{ e.id_etnia }}" {% if e.id_etnia == pac.34 %} selected {% endif %}>{{ e.nom_etnia }}</option>
+                                                    {% endfor %}
+                                            </select>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos Administradora P.B.</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label class="label is-small" for="regimen">Regimen <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="regimen" id="regimen" required>
+                                                <option value="01" {% if pac.35 == '01' %} selected {% endif %}>Contributivo cotizante</option>
+                                                <option value="02" {% if pac.35 == '02' %} selected {% endif %}>Contributivo beneficiario</option>
+                                                <option value="03" {% if pac.35 == '03' %} selected {% endif %}>Contributivo adicional</option>
+                                                <option value="04" {% if pac.35 == '04' %} selected {% endif %}>Subsidiado</option>
+                                                <option value="05" {% if pac.35 == '05' %} selected {% endif %}>No afiliado</option>
+                                                <option value="06" {% if pac.35 == '06' %} selected {% endif %}>Especial o Excepcion cotizante</option>
+                                                <option value="07" {% if pac.35 == '07' %} selected {% endif %}>Especial o Excepcion beneficiario</option>
+                                                <option value="08" {% if pac.35 == '08' %} selected {% endif %}>Personas privadas de la libertad a cargo del Fondo Nacional de Salud</option>
+                                                <option value="09" {% if pac.35 == '09' %} selected {% endif %}>Tomador / Amparado ARL</option>
+                                                <option value="10" {% if pac.35 == '10' %} selected {% endif %}>Tomador / Amparado SOAT</option>
+                                                <option value="11" {% if pac.35 == '11' %} selected {% endif %}>Tomador / Amparado Planes voluntarios de salud</option>
+                                                <option value="12" {% if pac.35 == '12' %} selected {% endif %}>Particular</option>
+                                                <option value="13" {% if pac.35 == '13' %} selected {% endif %}>Especial o Exepcion no cotizante Ley 352 de 1997</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="afiliacion">Afiliación</label>
+                                        <span class="select is-small">
+                                            <select name="afiliacion" id="afiliacion">
+                                                <option value="1" {% if pac.36 == 1 %} selected {% endif %}>C</option>
+                                                <option value="2" {% if pac.36 == 2 %} selected {% endif %}>B</option>
+                                                <option value="3" {% if pac.36 == 3 %} selected {% endif %}>E</option>
+                                                <option value="4" {% if pac.36 == 4 %} selected {% endif %}>A</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" for="nivel_afi">Nivel Afiliación <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="nivel_afi" id="nivel_afi" required>
+                                                <option value="1" {% if pac.37 == 1 %} selected {% endif %}>Nivel 1</option>
+                                                <option value="2" {% if pac.37 == 2 %} selected {% endif %}>Nivel 2</option>
+                                                <option value="3" {% if pac.37 == 3 %} selected {% endif %}>Nivel 3</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" name="tipo_paciente" id="tipo_paciente" value="PERSONA_NATURAL" hidden>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button class="button is-success" id="guardarPac">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/pacientes/edit_pacientes.js') }}"></script>
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardaran!",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if(result.isConfirmed){
+                window.location.href = `{{ url_for('pacientes.pacientes') }}`
+            }
+        })
+    }
+</script>
+{% endblock %}

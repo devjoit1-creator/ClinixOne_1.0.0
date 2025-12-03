@@ -1,0 +1,428 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sweetalert2.min.css')}}">
+<!-- CSS DataTables -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/dataTables.bulma.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css">
+{% endblock %}
+{% block title %}Nueva Factura de Venta{% endblock %}
+
+{% block content %}
+<form id="formulario" action="{{ url_for('facturas.f_addFactura') }}" method="post">
+    <div class="card">
+        <div class="card-header">
+            <p class="card-header-title">Nueva Factura de Venta</p>
+        </div>
+        <div class="card-content">
+            <div class="content">
+                <input type="text" name="usuario" id="usuario" value="{{ session['name'] }}" hidden>
+                <div class="field is-grouped">
+                    <p class="control">
+                        <label for="cod_fuente" class="label is-small">Fuente</label>
+                        <span class="select is-small">
+                            <select name="cod_fuente" id="cod_fuente" required>
+                                {% for fuente in fuentes %}
+                                <option value="{{ fuente.cod_fuente }}">{{ fuente.prefijo }}</option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </p>
+                    <p class="control">
+                        <label for="id_factura" class="label is-small">Nro. Factura</label>
+                        <input type="number" name="id_factura" id="id_factura" class="input is-small" value="{{ consecutivo.0 }}" readonly required>
+                    </p>
+                    <p class="control">
+                        <label for="fecha" class="label is-small">Fecha Factura</label>
+                        <input type="date" name="fecha" id="fecha" class="input is-small" readonly>
+                    </p>
+                    <p class="control">
+                        <label for="hora" class="label is-small">Hora Factura</label>
+                        <input type="time" name="hora" id="hora" class="input is-small" readonly>
+                    </p>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="" class="label is-small">Datos del Cliente</label>
+                                        <input type="text" name="tipo" id="tipo" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="codigo" id="codigo" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="nombre" id="nombre" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small">Dirección</label>
+                                        <input type="text" name="direccion" id="direccion" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small">Telefono</label>
+                                        <input type="text" name="telefono" id="telefono" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="" class="label is-small">Correo</label>
+                                        <input type="text" name="correo" id="correo" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <a class="button is-small is-primary js-modal-trigger" data-target="modalBusquedaTercerosFacturas">
+                                            <span class="icon is-small"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="cod_serv" class="label is-small">Codigo</label>
+                                        <input class="input is-small" type="text" name="cod_serv" id="cod_serv" readonly>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="nom_serv" class="label is-small">Servicio</label>
+                                        <input class="input is-small" type="text" name="nom_serv" id="nom_serv" readonly>
+                                    </p>
+                                    <p class="control">
+                                        <label for="valor_serv" class="label is-small">Valor</label>
+                                        <input class="input is-small" type="text" name="valor_serv" id="valor_serv" readonly>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <a href="#" class="button is-small is-primary js-modal-trigger" data-target="modal-BusquedaServiciosTerceros">
+                                            <span class="icon is-small"><i class="fa fa-search" aria-hidden="true"></i></span>
+                                        </a>
+                                    </p>
+                                    <p class="control">
+                                        <label for="cantidad" class="label is-small">Cantidad</label>
+                                        <input class="input is-small" type="number" name="cantidad" id="cantidad">
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small">Subtotal</label>
+                                        <input class="input is-small" type="number" name="subtotal" id="subtotal" readonly>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <button type="button" onclick="agregarFila()" class="button is-small is-primary">
+                                            <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        </button>
+                                        <script>
+                                            const agregarFila = () => {
+                                                let $cod_serv = document.getElementById("cod_serv");
+                                                let $nom_serv = document.getElementById("nom_serv");
+                                                let $valor_serv = document.getElementById("valor_serv");
+                                                let $cantidad = document.getElementById("cantidad");
+                                                let $subtotal = document.getElementById("subtotal");
+
+                                                if($cod_serv.value === "" && $nom_serv.value === "" && $valor_serv.value === ""){
+                                                    Swal.fire({
+                                                        title: "Notificación!",
+                                                        text: "Debe seleccionar un procedimiento",
+                                                        icon: "warning"
+                                                    })
+                                                }else{
+                                                    document.getElementById("tablaServiciosFactura").insertRow(-1).innerHTML = 
+                                                    `<td>${$cod_serv.value}</td><td>${$nom_serv.value}</td><td>${$valor_serv.value}</td><td>${$cantidad.value}</td><td>${$subtotal.value}</td>`;
+                                                
+                                                    calcularTotalServicios()
+                                                    $cod_serv.value =""
+                                                    $nom_serv.value =""
+                                                    $valor_serv.value=""
+                                                    $cantidad.value=""
+                                                    $subtotal.value=""
+                                                }
+                                            }
+                                        </script>
+                                    </p>
+                                    <p class="control">
+                                        <label for="" class="label is-small" style="color: white;">.</label>
+                                        <button type="button" onclick="eliminarFila()" class="button is-small is-danger">
+                                            <span class="icon is-small"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                        </button>
+                                        <script>
+                                            const eliminarFila = () => {
+                                                let table = document.getElementById("tablaServiciosFactura");
+                                                let rowCount = table.rows.length;
+
+                                                if (rowCount <= 1) {
+                                                    Swal.fire({
+                                                        title: "Notificación!",
+                                                        text: "No hay servicios cargados",
+                                                        icon: "warning"
+                                                    })
+                                                }else{
+                                                    table.deleteRow(rowCount - 1);
+                                                    calcularTotalServicios();
+                                                }
+                                            }
+                                        </script>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="data" name="data">
+                <table id="tablaServiciosFactura" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th style="width: 13%;">Codigo</th>
+                            <th style="width: 50%;">Servicio</th>
+                            <th style="width: 12%;">Valor</th>
+                            <th style="width: 13%;">Cantidad</th>
+                            <th style="width: 13%;">SubTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="columns">
+                    <div class="column is-two-thirds"></div>
+                    <div class="column">
+                        <table class="table" style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td class="label is-small">Vlr. Bruto:</td>
+                                    <td colspan="2">
+                                        <input class="input is-small" type="number" name="valor_bruto" id="valor_bruto" readonly required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label is-small">% Desc.:</td>
+                                    <td>
+                                        <input type="number" min="0" name="percent_desc" id="percent_desc" class="input is-small" value="0">
+                                    </td>
+                                    <td>
+                                        <input class="input is-small" type="number" name="descuento" id="descuento" value="0" readonly required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label is-small">Subtotal:</td>
+                                    <td colspan="2">
+                                        <input type="number" name="subtotal_factura" id="subtotal_factura" class="input is-small" readonly required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label is-small">% IVA:</td>
+                                    <td>
+                                        <input type="number" min="0" max="19" name="percent_iva" id="percent_iva" class="input is-small" value="0">
+                                    </td>
+                                    <td>
+                                        <input type="number" name="iva" id="iva" class="input is-small" value="0" readonly required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label is-small">Vlr. Neto:</td>
+                                    <td colspan="2">
+                                        <input type="number" name="valor_neto" id="valor_neto" class="input is-small" readonly required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a id="limpiarDescuentos" class="button is-small is-fullwidth">
+                                            <span class="icon is-small"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                            <span>Desc. e Iva en 0</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                    <button type="button" onclick="enviarDatos()" class="button is-normal is-success">
+                        <span class="icon is-small"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>
+                        <span>Guardar</span>
+                    </button>
+                </p>
+                <p class="control">
+                    <a onclick="confirmacion()" class="button is-normal is-danger">
+                        <span class="icon is-small"><i class="fa fa-ban" aria-hidden="true"></i></span>
+                        <span>Cancelar</span>
+                    </a>
+                    <script>
+                        const confirmacion = () => {
+                            Swal.fire({
+                                title: "Estas Seguro(a)?",
+                                text: "Los cambios no se guardarán!",
+                                icon: "question",
+                                showCancelButton: true,
+                                confirmButtonColor: "#3085d6",
+                                cancelButtonColor: "#d33",
+                                confirmButtonText: "Si, cancelar!",
+                                cancelButtonText: "No, continuar!"
+                            }).then((result) => {
+                                if(result.isConfirmed){
+                                    window.location.href = "{{ url_for('facturas.facturas') }}"
+                                }
+                            })
+                        }
+                    </script>
+                </p>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal Busqueda de Terceros/Clientes -->
+<div id="modalBusquedaTercerosFacturas" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content" style="width: 800px;">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Terceros / Clientes</h5>
+            <table id="tablaBusquedaTercerosFacturas" class="table is-striped is-hoverable" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 4%;">ID</th>
+                        <th scope="col" style="width: 4%;">Tipo idf.</th>
+                        <th scope="col" style="width: 10%;">Identificación</th>
+                        <th scope="col" style="width: 20%;">Nombre</th>
+                        <th scope="col" style="width: 20%;">Dirección</th>
+                        <th scope="col" style="width: 10%;">Telefono</th>
+                        <th scope="col" style="width: 20%;">Correo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tercero in terceros %}
+                    <tr>
+                        <td style="width: 4%;">{{ tercero.id_tercero }}</td>
+                        <td style="width: 4%;">{{ tercero.tipo_idf }}</td>
+                        <td style="width: 10%;">{{ tercero.identificacion }}</td>
+                        <td style="width: 20%;">{{ tercero.nom_tercero }}</td>
+                        <td style="width: 20%;">{{ tercero.dir_tercero }}</td>
+                        <td style="width: 10%;">{{ tercero.tel_tercero}}</td>
+                        <td style="width: 20%;">{{ tercero.correo }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="hidden"></button>
+</div>
+
+ <!-- Modal Busqueda Servicios Terceros-->
+ <div class="modal" id="modal-BusquedaServiciosTerceros">
+    <div class="modal-background"></div>
+    <div class="modal-content is-active">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Servicios/Proceds.</h5>
+            <table id="tablaBusquedaServiciosTerceros" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;" scope="col">Codigo</th>
+                        <th style="width: 60%;" scope="col">Servicio/Proced.</th>
+                        <th style="width: 20%;" scope="col">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for servicio in servicios %}
+                    <tr>
+                        <td style="width: 20%;">{{ servicio.cod_servicio }}</td>
+                        <td style="width: 60%;">{{ servicio.nom_servicio }}</td>
+                        <td style="width: 20%;">{{ servicio.valor }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>  
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/sweetalert2.all.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/modal.js')}}"></script>
+<script src="{{url_for('static', filename='js/facturas.js')}}"></script>
+<!-- Scripts de DataTables -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bulma.min.js"></script>
+ <!-- Script para llamar tablas -->
+<script src="{{ url_for('static', filename='js/dataTables.js')}}"></script>
+
+<script>
+    /* Calcular el total de los servicios */
+const $tablaServiciosFactura = document.getElementById("tablaServiciosFactura");
+const $valor_bruto = document.getElementById("valor_bruto");
+const $percent_desc = document.getElementById("percent_desc");
+const $descuento = document.getElementById("descuento");
+const $subtotal_factura = document.getElementById("subtotal_factura");
+const $percent_iva = document.getElementById("percent_iva");
+const $iva = document.getElementById("iva");
+const $valor_neto = document.getElementById("valor_neto");
+
+const calcularTotalServicios = () => {
+    let total = 0;
+    for (let i = 1; i < $tablaServiciosFactura.rows.length; i++){
+        /* console.log($tablaServiciosConsulta.rows[i].cells[5].innerHTML); */
+        let rowValue = $tablaServiciosFactura.rows[i].cells[4].innerHTML;
+        total = total + Number(rowValue);       
+    }
+    $valor_bruto.value = total;
+    $subtotal_factura.value = $valor_bruto.value;
+    $valor_neto.value = $valor_bruto.value;
+};
+
+/* Calcular Descuento con Base en Porcentaje */
+const calcularDescuentoPorcentaje = () => {
+    let porcentaje = $percent_desc.value * 1 / 100;
+    $descuento.value = $valor_bruto.value * porcentaje;
+    $subtotal_factura.value = $valor_bruto.value - $descuento.value;
+    $valor_neto.value = $subtotal_factura.value;
+}
+
+$percent_desc.addEventListener('change', (e) => {
+    e.preventDefault();
+    calcularDescuentoPorcentaje();
+})
+
+/* Calcular Iva con Base en Porcentaje */
+$percent_iva.addEventListener('change', (e) => {
+    e.preventDefault();
+    let porcentaje = $percent_iva.value * 1 / 100;
+    $iva.value = $subtotal_factura.value * porcentaje;
+    $valor_neto.value = Number($subtotal_factura.value) + Number($iva.value);
+})
+
+/* Retornar a 0 campos de Descuento e Iva */
+const $limpiarDescuentos = document.getElementById("limpiarDescuentos");
+$limpiarDescuentos.addEventListener('click', (e) => {
+    e.preventDefault();
+    $percent_desc.value = 0
+    $descuento.value = 0
+    $percent_iva.value = 0
+    $iva.value = 0
+
+    calcularDescuentoPorcentaje();
+})
+</script>
+
+<script>
+    function enviarDatos() { 
+        const tabla = document.getElementById('tablaServiciosFactura'); 
+        let data = ''; 
+        for (let i = 1; i < tabla.rows.length; i++) { 
+            const celdas = tabla.rows[i].cells; 
+            data += celdas[0].textContent + '-' + celdas[1].textContent + '-' + celdas[2].textContent + '-' + celdas[3].textContent + '-' + celdas[4].textContent +';'; 
+        } 
+        document.getElementById('data').value = data; 
+        document.getElementById('formulario').submit(); 
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Res. Fact. Electronica{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Resoluciones de Factura Eléctronica</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('resfacturacion.add_resfacturacion') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nueva Resolución</span>
+            </a>
+        </p>
+        <!-- Prueba -->
+        <!-- <p class="control">
+            <a href="{{ url_for('resfacturacion.get_token_resf') }}" class="button is-small is-warning">
+                <span class="icon is-small"><i class="fa fa-list" aria-hidden="true"></i></span>
+                <span>Obtener Token</span>
+            </a>
+        </p> -->
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <p class="card-header-title">Registros</p>
+        </div>
+        <div class="card-content">
+            <div class="content">
+                <table id="tablaResFacturacion" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 5%;">ID</th>
+                            <th scope="col" style="width: 15%;">Nombre</th>
+                            <th scope="col" style="width: 15%;">Resolución</th>
+                            <th scope="col" style="width: 10%;">Fecha Inicio</th>
+                            <th scope="col" style="width: 10%;">Fecha Fin</th>
+                            <th scope="col" style="width: 5%;">Prefijo</th>
+                            <th scope="col" style="width: 10%;">No. Inicio</th>
+                            <th scope="col" style="width: 10%;">No. Fin</th>
+                            <th scope="col" style="width: 10%;">Estado</th>
+                            <th scope="col" style="width: 10%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for resolucion in resoluciones %}
+                        <tr>
+                            <td style="width: 5%;">{{ resolucion.id }}</td>
+                            <td style="width: 15%;">{{ resolucion.nombre }}</td>
+                            <td style="width: 15%;">{{ resolucion.nro_res }}</td>
+                            <td style="width: 10%;">{{ resolucion.inicio }}</td>
+                            <td style="width: 10%;">{{ resolucion.fin }}</td>
+                            <td style="width: 5%;">{{ resolucion.prefijo }}</td>
+                            <td style="width: 10%;">{{ resolucion.nro_inicio }}</td>
+                            <td style="width: 10%;">{{ resolucion.nro_fin }}</td>
+                            <td style="width: 10%;">{{ resolucion.estado }}</td>
+                            <td>
+                                <a href="{{ url_for('resfacturacion.edit_resfacturacion', id = resolucion.id) }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                </a>
+                                <!-- <a class="button is-small is-danger has-tooltip-bottom" data-tooltip="Eliminar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                </a> -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                Swal.fire({
+                    title: "Notificación!",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% endblock %}

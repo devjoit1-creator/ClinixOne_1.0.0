@@ -1,0 +1,110 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{%block title %} Medicos {% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Medicos</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('medicos.add_medico') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nuevo Medico</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <!-- Tabla Principal Medicos -->
+                <table id="tablaMedicos" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 5%;">ID</th>
+                            <th scope="col" style="width: 10%;">T. Doc.</th>
+                            <th scope="col" style="width: 20%;">Documento</th>
+                            <th scope="col" style="width: 25%;">Nombre Completo</th>
+                            <th scope="col" style="width: 30%;">Cargo Asistencial</th>
+                            <th scope="col" style="width: 10%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for med in meds %}
+                        <tr>
+                            <td class="valor_idmedico" style="width: 5%;">{{ med.id_medico }}</td>
+                            <td style="width: 10%;">{{ med.tipo_documento }}</td>
+                            <td style="width: 20%;">{{ med.num_documento }}</td>
+                            <td style="width: 25%;">{{ med.nombre_completo }}</td>
+                            <td style="width: 30%;">{{ med.cargo }}</td>
+                            <td style="width: 10%;">
+                                <a href="{{ url_for('medicos.edit_medico', id = med.id_medico) }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a class="enlace_eliminar button is-small is-danger has-tooltip-bottom" data-tooltip="Eliminar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Script Notificaciones  -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    title: "Notificación",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            });
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script>
+    const confirmacion = (id_medico) => {
+        Swal.fire({
+            title: "Esta Seguro(a)?",
+            text: "Esta acción no se puede revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/drop_Medico/${id_medico}`
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        $('#tablaMedicos').off('click', '.enlace_eliminar').on('click', '.enlace_eliminar', function(event) {
+            event.preventDefault();
+            const fila = $(this).closest('tr');
+            let id_medico = fila.find('.valor_idmedico').text();
+            confirmacion(id_medico);
+        })
+    })
+</script>
+{% endblock %}

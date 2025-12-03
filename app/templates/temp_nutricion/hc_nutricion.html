@@ -1,0 +1,380 @@
+{% extends 'base_reporte.html' %}
+{% block css %}
+{% endblock %}
+
+{% block title %}H.C. Nutrición{% endblock %}
+{% block report %}
+<!-- Datos de Paciente -->
+<hr>
+<table style="height: 82px; float: left; width: 640px;">
+    <tbody>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small"><strong>No. Documento:</strong>{{ paciente.0 }}-{{ paciente.1 }}</td>
+            <td style="width: 541px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small" colspan="2"><strong>Nombre Completo:</strong> {{ paciente.2 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Fecha Nac.:</strong> {{ paciente.3 }}</td>
+            <td style="width: 238.34px;; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Estado Civil:</strong> {{ paciente.4 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Acompañante:</strong> {{ paciente.5 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Sexo:</strong> {{ paciente.6 }}</td>
+            <td style="width: 238.34px;; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Ocupación:</strong> {{ paciente.7 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Tel. Acompañante:</strong> {{ paciente.8 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Dirección:</strong> {{ paciente.9 }}</td>
+            <td style="width: 238.34px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Telefono:</strong> {{ paciente.10 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Responsable:</strong> {{ paciente.11 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 221px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Municipio:</strong> {{ paciente.12 }}</td>
+            <td style="width: 238.34px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Parentesco Acom.:</strong> {{ paciente.13 }}</td>
+            <td style="width: 302.66px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Tel. Responsable:</strong> {{ paciente.14 }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<hr>
+<p style="text-align: right; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Fecha:</strong> {{ registro.3 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Hora:</strong> {{ registro.4 }}</p>
+<p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>HISTORIA CLINICA - NUTRICIÓN CLINICA</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Motivo de Consulta</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.5 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Enfermedad Actual</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.6 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Antecedentes Personales</strong></p>
+<table>
+    <tbody>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Diarrea:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.7 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Estreñimiento:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.8 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Gastritis:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.9 }}</td>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Úlcera:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.10 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Naúseas:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.11 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Pirosis:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.12 }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Vomito:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.13 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Colitis:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.14 }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Otro:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.15 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Cual?:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.16 }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Dentadura:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.17 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Protesis:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.18 }}</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Observaciones</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.19 }}</p>
+<table>
+    <tbody>
+        <tr>
+            <td style="width: 25%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Padece enfermedad diagnosticada:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.20 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Cual:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.21 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 25%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Ha padecido una enfermedad importante:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.22 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Cual:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.23 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 25%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Toma algún medicamento:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.24 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Cual:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.25 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Dosis:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.26 }}</td>
+        </tr>
+    </tbody>
+</table>
+<table>
+    <tbody>
+        <tr>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Toma laxantes:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.27 }}</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Toma diúreticos:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.28 }}</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Toma antiacidos:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.29 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Toma analgésicos:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.30 }}</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Le han practicado alguna cirugia:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.31 }}</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Cual:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.32 }}</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Antecedentes Familiares</strong></p>
+<table>
+    <tbody>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Obesidad:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.33 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Parentesco:</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.34 }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Diabetes:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.35 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Parentesco:</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.36 }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Cancer:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.37 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Parentesco:</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.38 }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">HTA:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.39 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Parentesco:</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.40 }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Hipercolesterolemia:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.41 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Parentesco:</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.42 }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Hipercolesterolemia:</td>
+            <td style="width: 15%; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.43 }}</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Parentesco:</td>
+            <td style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.44 }}</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Habitos / Estilo de vida</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Anamnesis Alimentaria</p>
+<table class="table-report" style="width: 100%; height: 108px;">
+    <tbody>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 12.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">&nbsp;</td>
+            <td class="table-report-data" style="width: 38.368%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Alimentos</strong></td>
+            <td class="table-report-data" style="width: 39.7569%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Tiempo de Comida y Cantidad</strong></td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 12.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Desayuno</strong></td>
+            <td class="table-report-data" style="width: 38.368%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.45 }}</td>
+            <td class="table-report-data" style="width: 39.7569%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.46 }}</td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 12.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Media mañana</strong></td>
+            <td class="table-report-data" style="width: 38.368%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.47 }}</td>
+            <td class="table-report-data" style="width: 39.7569%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.48 }}</td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 12.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Almuerzo</strong></td>
+            <td class="table-report-data" style="width: 38.368%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.49 }}</td>
+            <td class="table-report-data" style="width: 39.7569%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.50 }}</td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 12.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Media tarde</strong></td>
+            <td class="table-report-data" style="width: 38.368%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.51 }}</td>
+            <td class="table-report-data" style="width: 39.7569%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.52 }}</td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 12.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Cena</strong></td>
+            <td class="table-report-data" style="width: 38.368%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.53 }}</td>
+            <td class="table-report-data" style="width: 39.7569%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.54 }}</td>
+        </tr>
+    </tbody>
+</table>
+<p class="break"></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Ejercicios</p>
+<table class="table-report" style="width: 100%; height: 54px;">
+    <tbody>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 8.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Aerobicos:</strong></td>
+            <td class="table-report-data" style="width: 5.243%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.55 }}</td>
+            <td class="table-report-data" style="width: 6.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Frecuencia:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.56 }}</td>
+            <td class="table-report-data" style="width: 5.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Duración:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.57 }}</td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 8.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Anaerobicos:</strong></td>
+            <td class="table-report-data" style="width: 5.243%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.58 }}</td>
+            <td class="table-report-data" style="width: 6.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Frecuencia:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.59 }}</td>
+            <td class="table-report-data" style="width: 5.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Duración:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.60 }}</td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 8.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Musculatura:</strong></td>
+            <td class="table-report-data" style="width: 5.243%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.61 }}</td>
+            <td class="table-report-data" style="width: 6.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Frecuencia:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.62 }}</td>
+            <td class="table-report-data" style="width: 5.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Duración:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.63 }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Consumo</p>
+<table class="table-report" style="width: 100%; height: 54px;">
+    <tbody>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 8.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Alcohol:</strong></td>
+            <td class="table-report-data" style="width: 5.243%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.64 }}</td>
+            <td class="table-report-data" style="width: 6.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Frecuencia:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.65 }}</td>
+            <td class="table-report-data" style="width: 5.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Duración:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.66 }}</td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 8.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Tabaco:</strong></td>
+            <td class="table-report-data" style="width: 5.243%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.67 }}</td>
+            <td class="table-report-data" style="width: 6.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Frecuencia:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.68 }}</td>
+            <td class="table-report-data" style="width: 5.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Duración:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.69 }}</td>
+        </tr>
+        <tr style="height: 18px;">
+            <td class="table-report-data" style="width: 8.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Cafe:</strong></td>
+            <td class="table-report-data" style="width: 5.243%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.70 }}</td>
+            <td class="table-report-data" style="width: 6.875%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Frecuencia:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; height: 18px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.71 }}</td>
+            <td class="table-report-data" style="width: 5.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Duración:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.72 }}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">Signos Clinicos</p>
+<table class="table-report" style="width: 100%;">
+    <tbody>
+        <tr>
+            <td class="table-report-data" style="width: 4.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Cabello:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.73 }}</td>
+            <td class="table-report-data" style="width: 4.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Uñas:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.76 }}</td>
+        </tr>
+        <tr>
+            <td class="table-report-data" style="width: 4.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Ojos:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.74 }}</td>
+            <td class="table-report-data" style="width: 4.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Labios:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.77 }}</td>
+        </tr>
+        <tr>
+            <td class="table-report-data" style="width: 4.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Piel:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.75 }}</td>
+            <td class="table-report-data" style="width: 4.875%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Encias:</strong></td>
+            <td class="table-report-data" style="width: 22.3307%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.78 }}</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Alimentación Complementaria</strong></p>
+<table class="table-report" style="width: 100%;">
+    <tbody>
+        <tr>
+            <td class="table-report-data" style="width: 35%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Alimentos Preferidos:</strong></td>
+            <td class="table-report-data" style="width: 65%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;" colspan="3">{{ registro.79 }}</td>
+        </tr>
+        <tr>
+            <td class="table-report-data" style="width: 35%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Alimentos que no le agradan:</strong></td>
+            <td class="table-report-data" style="width: 65%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;" colspan="3">{{ registro.80 }}</td>
+        </tr>
+        <tr>
+            <td class="table-report-data" style="width: 35%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Alimentos que le causan malestar:</strong></td>
+            <td class="table-report-data" style="width: 65%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;" colspan="3">{{ registro.81 }}</td>
+        </tr>
+        <tr>
+            <td class="table-report-data" style="width: 35%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Alergico o intolerante a algún alimento ?:</strong></td>
+            <td class="table-report-data" style="width: 8%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.82 }}</td>
+            <td class="table-report-data" style="width: 12%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Cual ?:</strong></td>
+            <td class="table-report-data" style="width: 45%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.83 }}</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Medidas Antropometricas</strong></p>
+<table class="table-report" style="width: 100%;">
+    <tbody>
+    	<tr>
+        	<td class="table-report-data" style="width: 10%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Peso Habitual:</strong></td>
+            <td class="table-report-data" style="font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.84 }} KG.</td>
+            <td class="table-report-data" style="width: 10%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Peso Actual:</strong></td>
+            <td class="table-report-data" style="font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.85 }} KG.</td>
+            <td class="table-report-data" style="width: 10%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Estatura:</strong></td>
+            <td class="table-report-data" style="font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.86 }} Mts.</td>
+        </tr>
+        <tr>
+        	<td class="table-report-data" style="width: 10%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>IMC:</strong></td>
+            <td class="table-report-data" style="font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.87 }}</td>
+            <td class="table-report-data" style="width: 10%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Nivel de Peso:</strong></td>
+            <td colspan="3" class="table-report-data" style="font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">
+                {% if registro.87 < 18.5 %}
+                Bajo Peso
+                {% elif registro.87 > 18.5 and registro.87 < 24.9 %}
+                Peso Saludable
+                {% elif registro.87 > 25.0 and registro.87 < 29.9 %}
+                Sobrepeso
+                {% else %}
+                Obesidad
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td class="table-report-data" style="width: 20%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Circunferencia Brazo:</strong></td>
+            <td class="table-report-data" style="font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">{{ registro.88 }} Cms.</td>
+            <td class="table-report-data" style="width: 20%; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Circunferencia Cintura:</strong></td>
+            <td class="table-report-data" style="font-family: Arial, Helvetica, sans-serif; font-size: xx-small;" colspan="3">{{ registro.89 }} Cms.</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnosticos</strong></p>
+<table style="width: 100%;">
+    <tbody>
+        <tr>
+            <td style="width: 905.875px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico Principal:</strong> {{ registro.90 }} - {{ registro.91 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 905.875px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico Relac. 1:</strong> {{ registro.92 }} - {{ registro.93 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 905.875px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico Relac. 2:</strong> {{ registro.94 }} - {{ registro.95 }}</td>
+        </tr>
+        <tr>
+            <td style="width: 905.875px; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico Relac. 3:</strong> {{ registro.96 }} - {{ registro.97 }}</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Plan de Tratamiento</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ registro.98 }}</p>
+<br>
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,{{ firma }}" alt="firma-medico" style="width: 180px; height: 64px;">
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>{{ medico.1 }}</strong></p>
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>{{ medico.2 }}</strong></p>
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Doc.: {{ medico.3 }}, R.M.: {{ medico.4 }}</strong></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

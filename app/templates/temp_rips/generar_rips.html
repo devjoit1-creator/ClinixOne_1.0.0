@@ -1,0 +1,80 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+    .inter-scrollable-section{
+        max-height: 370px;
+        overflow-y: auto;
+        padding: 0rem 0rem;
+    }
+</style>
+{% endblock %}
+{% block title %}RIPS Res. 2275-2023{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Generar RIPS Res. 2275 de 2023</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <label for="fecha_inicio" class="label is-normal">Fecha Inicio <strong style="color: red;">*</strong></label>
+            <input type="date" name="fecha_inicio" id="fecha_inicio" class="input is-normal">
+        </p>
+        <p class="control">
+            <label for="fecha_fin" class="label is-normal">Fecha Fin <strong style="color: red;">*</strong></label>
+            <input type="date" name="fecha_fin" id="fecha_fin" class="input is-normal">
+        </p>
+        <p class="control">
+            <label for="emp_admin" class="label is-normal">Empresa Administradora <strong style="color: red">*</strong></label>
+            <span class="select is-normal">
+                <select name="emp_admin" id="emp_admin">
+                    <option value=""></option>
+                    {% for a in admin %}
+                    <option value="{{ a.codigo }}">{{ a.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </span>
+        </p>
+        <p class="control">
+            <label class="label is-normal" style="color: white;">.</label>
+            <a id="consultar_rips" class="button is-normal is-primary">
+                <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                <span>Consultar</span>
+            </a>
+        </p>
+        <p class="control">
+            <label class="label is-normal" style="color: white;">.</label>
+            <a id="generar_rips" class="button is-normal is-success">
+                <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/enviar.png') }}" alt="icon"></i></span>
+                <span>Generar RIPS</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Resultados de Consulta</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <section class="inter-scrollable-section">
+                    <table id="tablaRips" class="table is-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th><i class="fa fa-check" aria-hidden="true"></i></th>
+                                <th style="font-size: small;">Fecha</th>
+                                <th style="font-size: small;">No. Factura</th>
+                                <th style="font-size: small;">Empresa Administradora</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/rips/generar_rips.js') }}"></script>
+{% endblock %}

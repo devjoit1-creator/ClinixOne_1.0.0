@@ -1,0 +1,165 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title %}Editar Res. Fact. Electronica{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Editar Resolución Factura Eléctronica</h5>
+<div class="container">
+    <form action="{{ url_for('resfacturacion.f_updateResFacturacion') }}" method="post">
+        <div class="card">
+            <div class="card-header">
+                <p class="card-header-title">Modificar información</p>
+            </div>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <input type="text" name="id_resfacturacion" id="id_resfacturacion" value="{{ resolucion.0 }}" hidden>
+                            <div class="field is-grouped">
+                                <p class="control is-expanded">
+                                    <label for="nombre" class="label is-small">Nombre <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="nombre" id="nombre" class="input is-small" value="{{ resolucion.1 }}" required>
+                                </p>
+                                <p class="control">
+                                    <label for="tipo_documento" class="label is-small">Tipo Documento <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small is-expanded">
+                                        <select name="tipo_documento" id="tipo_documento" required>
+                                            {% if resolucion.2 == 1 %}
+                                            <option value="{{ resolucion.2 }}" selected>Documento Facturación</option>
+                                            {% elif resolucion.2 == 2 %}
+                                            <option value="{{ resolucion.2 }}" selected>Documento Nota Debito</option>
+                                            {% else %}
+                                            <option value="{{ resolucion.2 }}" selected>Documento Nota Credito</option>
+                                            {% endif %}
+                                            <option value="1">Documento Facturación</option>
+                                            <option value="2">Documento Nota Debito</option>
+                                            <option value="3">Documento Nota Credito</option>
+                                        </select>
+                                    </span>
+                                </p>
+                                <p class="control">
+                                    <label for="estado_res" class="label is-small">Estado Resolución <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small is-expanded">
+                                        <select name="estado_res" id="estado_res" required>
+                                            {% if resolucion.3 == 0 %}
+                                            <option value="{{ resolucion.3 }}" selected>Inactivo</option>
+                                            {% else %}
+                                            <option value="{{ resolucion.3 }}" selected>Activo</option>
+                                            {% endif %}
+                                            <option value="0">Inactivo</option>
+                                            <option value="1">Activo</option>
+                                        </select>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                <p class="control is-expanded">
+                                    <label for="account_id" class="label is-small">Provider Account ID <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="account_id" id="account_id" class="input is-small" value="{{ resolucion.4 }}" required>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="auth_token" class="label is-small">Auth Token <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="auth_token" id="auth_token" class="input is-small" value="{{ resolucion.5 }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                <p class="control is-expanded">
+                                    <label for="numero_resolucion" class="label is-small">No. Resolución DIAN <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="numero_resolucion" id="numero_resolucion" class="input is-small" value="{{ resolucion.7 }}" required>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="fecha_inicio" class="label is-small">Fecha de Inicio <strong style="color: red;">*</strong></label>
+                                    <input type="date" name="fecha_inicio" id="fecha_inicio" class="input is-small" value="{{ resolucion.8 }}" required>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="fecha_fin" class="label is-small">Fecha Fin <strong style="color: red;">*</strong></label>
+                                    <input type="date" name="fecha_fin" id="fecha_fin" class="input is-small" value="{{ resolucion.9 }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <label for="prefijo" class="label is-small">Prefijo <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="prefijo" id="prefijo" class="input is-small" value="{{ resolucion.10 }}" required>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="numero_inicio" class="label is-small">No. Inicio <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="numero_inicio" id="numero_inicio" class="input is-small" value="{{ resolucion.11 }}" required>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="numero_fin" class="label is-small">No. Fin <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="numero_fin" id="numero_fin" class="input is-small" value="{{ resolucion.12 }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="texto_encabezado" class="label is-small">Texto Encabezado <strong style="color: red;">*</strong></label>
+                                <input type="text" name="texto_encabezado" id="texto_encabezado" class="input is-small" value="{{ resolucion.6 }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="encabezado" class="label is-small">Encabezado</label>
+                        <p class="control">
+                            <textarea name="encabezado" id="encabezado" class="textarea is-large" required>{{ resolucion.13 }}</textarea>
+                        </p>
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                        <button class="button is-normal is-success">
+                            <span class="icon is-small"><i class="fa fa-edit" aria-hidden="true"></i></span>
+                            <span>Actualizar</span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <a onclick="confirmacion()" class="button is-normal is-danger">
+                            <span class="icon is-small"><i class="fa fa-ban" aria-hidden="true"></i></span>
+                            <span>Cancelar</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/resfacturacion/edit_resfacturacion.js')}}"></script>
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardaran!",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if(result.isConfirmed){
+                window.location.href = `{{ url_for('resfacturacion.resfacturacion') }}`
+            }
+        })
+    }
+</script>
+{% endblock %}

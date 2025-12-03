@@ -1,0 +1,182 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.enlace-desactivado {
+    pointer-events: none; /* Evita que se pueda hacer clic */
+    cursor: not-allowed;  /* Muestra el cursor de "no permitido" */
+    opacity: 0.5;
+}
+</style>
+{% endblock %}
+{% block title %}Facturas de Venta (FEV){% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Facturas de Venta (FEV)</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('facturas.add_factura') }}" class="button is-small is-info" aria-disabled="true" disabled>
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nueva Factura de Venta</span>
+            </a>
+        </p>
+        <p class="control">
+            <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Información" data-target="modal-InformacionFacturas">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/info.png') }}" alt="icon"></i></span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <!-- Tabla Facturas -->
+                <table id="tablaFacturas" class="table is-striped" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 8%; font-size: small;">Fuente</th>
+                            <th scope="col" style="width: 10%; font-size: small;">Factura</th>
+                            <th scope="col" style="width: 10%; font-size: small;">NIT/CC</th>
+                            <th scope="col" style="width: 25%; font-size: small;">Cliente/Tercero</th>
+                            <th scope="col" style="width: 10%; font-size: small;">Valor Factura</th>
+                            <th scope="col" style="width: 25%; font-size: small;">FE UUID</th>
+                            <th scope="col" style="width: 8%; font-size: small;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in registros %}
+                        <tr>
+                            <td style="width: 8%; font-size: small;">{{ registro.fuente }}</td>
+                            <td class="valor_factura" style="width: 10%; font-size: small;">{{ registro.factura }}</td>
+                            <td style="width: 10%; font-size: small;">{{ registro.documento }}</td>
+                            <td style="width: 25%; font-size: small;">{{ registro.cliente }}</td>
+                            <td style="width: 10%; font-size: small;">{{ registro.total }}</td>
+                            <td class="valor_feuuid" style="width: 25%; font-size: small;">{{ registro.uuid }}</td>
+                            <td style="width: 8%;">
+                                <a class="enlace_anular_fact button is-small is-primary has-tooltip-bottom" data-tooltip="Anular Factura" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/prohibir.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a href="{{ registro.pdf }}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Imprimir Factura Electronica" style="padding: 0em 1.0em;"
+                                onclick="window.open(this.href,'mywin','left=500,top=60,width=600,height=600,toolbar=1,resizable=0');return false;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/pdf.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td> 
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información -->
+<div id="modal-InformacionFacturas" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Información</h5>
+            <p>En este modulo puede gestionar las facturas generadas <strong>antes y solo antes</strong> de ser emitidas como factura electronica.</p>
+            <br>
+            <h5 class="title is-5">Recordatorio</h5>
+            <p>Las facturas se generan directamente en los modulos de gestión medica de Consulta / Hospitalización.</p>
+            <p>Y se emiten en el Modulo: <strong>Financiero -> Emitir Facturas</strong> </p>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modalPrueba" class="modal is-hidden">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box container_iframe"></div>
+    </div>
+    <button class="modal-close is-large"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                Swal.fire({
+                    title: "Notificación",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script>
+    /* Anular Factura Generada */
+    const anularFacturaGenerada = (factura) => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Esta acción no se puede revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                //window.location.href = `/drop_hospitalizacion/${factura}`
+                Swal.fire({
+                    text: "Prueba",
+                    icon: "success"
+                });
+            }
+        });
+    }
+
+    /* Función para desactivar link de anular/eliminar atención */
+    function desactivarlinkAnular($linkAnular){
+        $linkAnular
+            .addClass('enlace-desactivado')
+            .removeAttr('href')
+            .off('click')
+    }
+
+    $(document).ready(function(){
+        /* Declarando el Datatable */
+        const tabla = $('#tablaFacturas').DataTable();
+
+        /* Función Interna para desactivar enlaces */
+        function aplicarDesactivacion() {
+            $('#tablaFacturas tbody tr').each(function(){
+                const feUuid = $.trim($(this).find('.valor_feuuid').text());
+                if(feUuid !== 'None'){
+                    const $linkAnular = $(this).find('.enlace_anular_fact');
+                    desactivarlinkAnular($linkAnular);
+                }
+            });
+        }
+
+        aplicarDesactivacion();
+
+        tabla.on('draw', function(){
+            aplicarDesactivacion();
+        })
+
+        /* Enlaces Activos */
+        $('#tablaFacturas').off('click', '.enlace_anular_fact').on('click', '.enlace_anular_fact:not(.enlace-desactivado)', function(event){
+            event.preventDefault();
+            const fila = $(this).closest('tr');
+            let factura = fila.find('.valor_factura').text();
+            anularFacturaGenerada(factura);
+        })
+    })
+</script>
+{% endblock %}

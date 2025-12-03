@@ -1,0 +1,111 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+
+{% endblock %}
+{% block title %}Editar Fuente Contable{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Editar Fuente Contable</h5>
+<div class="container">
+    <form id="form_updatefuente" action="{{ url_for('fuentes.f_updateFuente') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Modificar Información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="cod_fuente" id="cod_fuente" value="{{ fuente.0 }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="nom_fuente" class="label">Nombre: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="text" name="nom_fuente" id="nom_fuente" class="input" value="{{ fuente.1 }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="prefijo" class="label">Prefijo: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="text" name="prefijo" id="prefijo" class="input" value="{{ fuente.2 }}" maxlength="3" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="consecutivo" class="label">Consecutivo: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="number" name="consecutivo" id="consecutivo" class="input" value="{{ fuente.3 }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/actualizar.png') }}" alt="icon"></i></span>
+                    <span>Actualizar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Modo Cancelar -->
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardarán!",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{ url_for('fuentes.fuentes') }}"
+            }
+        })
+    }
+</script>
+<!-- Loading -->
+<script>
+    const $form_updatefuente = document.getElementById("form_updatefuente");
+    $form_updatefuente.addEventListener("submit", (e) => {
+        Swal.fire({
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+{% endblock %}
+{% block title%} Nuevo Usuario {% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nuevo Usuario</h5>
+<div class="container">
+    <form id="form_addusuario" action="{{ url_for('usuarios.f_addUsuario') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Ingrese la información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="" class="label is-normal">Nro. Documento: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <input type="text" class="input is-normal" name="doc_usuario" id="doc_usuario" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="" class="label is-normal">Nombre Completo: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <input type="text" class="input is-normal" name="nombre_completo" id="nombre_completo" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="" class="label is-normal">Usuario: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <input type="text" class="input is-normal" name="usuario" id="usuario" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="" class="label is-normal">Contraseña: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <input type="password" class="input is-normal" name="password" id="password" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="" class="label is-normal">Perfil: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="field-body">
+                                    <div class="field has-addons">
+                                        <p class="control">
+                                            <span class="select is-normal">
+                                                <select name="perfil" id="perfil" required>
+                                                    <option value=""></option>
+                                                    {% for p in perf %}
+                                                    <option value="{{ p.id_perfil }}">{{ p.nom_perfil }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </span>
+                                        </p>
+                                        <p class="control">
+                                            <button id="select_medico" class="button is-primary js-modal-trigger" data-target="modalMedicos" disabled>
+                                                <span class="icon is-normal"><i class="fa fa-user-md"></i></span>
+                                                <span>Buscar Medico</span>
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                        <button type="submit" class="button is-success">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                            <span>Guardar</span>
+                        </button>
+                    </p>
+                    <p class="control">
+                        <a onclick="confirmacion()" class="button is-danger">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                            <span>Cancelar</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Datos de Medico -->
+<div id="modalMedicos" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Datos de Medico</h5>
+            <!-- Tabla datos Medico -->
+             <table id="tablaDatosMedico" class="table is-hoverable" style="width: 100%; font-size: small;">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;" scope="col">No. Documento</th>
+                        <th style="width: 75%;" scope="col">Medico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in med %}
+                    <tr>
+                        <td style="width: 25%;">{{ m.num_documento }}</td>
+                        <td style="width: 75%;">{{ m.nombre_completo }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+             </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/usuarios/add_usuario.js') }}"></script>
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardaran.",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                window.location.href = "{{ url_for('usuarios.usuarios') }}"
+            }
+        })
+    }
+</script>
+{% endblock %}

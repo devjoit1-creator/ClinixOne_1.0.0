@@ -1,0 +1,114 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+
+{% endblock %}
+{% block title %}Editar Cuenta en PUC{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Editar Cuenta en PUC</h5>
+<div class="container">
+    <form id="form_updatecuenta" action="{{ url_for('plancuentas.f_updateCuenta') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Modificar información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                     <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="cod_cuenta" class="label">Cuenta: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="number" name="cod_cuenta" id="cod_cuenta" class="input is-normal" value="{{ cuenta.0 }}" readonly>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="nom_cuenta" class="label">Nombre: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="text" name="nom_cuenta" id="nom_cuenta" class="input is-normal" value="{{ cuenta.1 }}" required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="clasificacion" class="label">Clasificación/Tipo: <strong style="color: red;">*</strong></label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input type="text" name="clasificacion" id="clasificacion" class="input is-normal" value="{{ cuenta.2 }}" readonly required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="naturaleza" class="label">Naturaleza:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <span class="select is-normal">
+                                        <select name="naturaleza" id="naturaleza" required>
+                                            <option value="Debito" {% if cuenta.3 == 'Debito' %} selected {% endif %}>Débito</option>
+                                            <option value="Credito" {% if cuenta.3 == 'Credito' %} selected {% endif %}>Crédito</option>
+                                        </select>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="submit" class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/actualizar.png') }}" alt="icon"></i></span>
+                    <span>Actualizar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/plancuentas/edit_cuentas.js') }}"></script>
+<!-- Modo Cancelar -->
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardarán!",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `{{ url_for('plancuentas.plancuentas') }}`
+            }
+        })
+    }
+</script>
+{% endblock %}

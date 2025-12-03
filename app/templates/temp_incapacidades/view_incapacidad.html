@@ -1,0 +1,237 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.inter-scrollable-section {
+    max-height: 515px;
+    overflow-y: auto;
+    padding: 0rem 0rem;
+}
+</style>
+{% endblock %}
+{% block title %}Ver Incapacidad{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Ver Incapacidad</h5>
+<div class="container">
+    <form id="form_verincapacidad" action="#" method="post">
+        <section class="inter-scrollable-section">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Atención</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                        <input type="text" name="id_registro" id="id_registro" value="{{ incapacidad.0 }}" hidden>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="atencion" class="label is-small">Atención</label>
+                                        <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ incapacidad.19 }}" disabled>
+                                    </p>
+                                    <p class="control">
+                                        <label for="codigo" class="label is-small">Paciente</label>
+                                        <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ incapacidad.1 }}" disabled>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" disabled>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="fecha" class="label is-small">Fecha</label>
+                                        <input type="date" name="fecha" id="fecha" class="input is-small" value="{{ incapacidad.3 }}" disabled>
+                                    </p>
+                                    <p class="control">
+                                        <label for="hora" class="label is-small">Hora</label>
+                                        <input type="text" name="hora" id="hora" class="input is-small" value="{{ incapacidad.4 }}" disabled>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de la Incapacidad</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label for="grupo_ser" class="label is-small">Grupo de Servicios</label>
+                                        <span class="select is-small">
+                                            <select name="grupo_ser" id="grupo_ser" disabled>
+                                                <option value="{{ incapacidad.5 }}">{{ incapacidad.5 }}</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label for="origen" class="label is-small">Origen</label>
+                                        <span class="select is-small">
+                                            <select name="origen" id="origen" disabled>
+                                                <option value="{{ incapacidad.6 }}">{{ incapacidad.6 }}</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: x-small;">
+                                <label class="label is-small">Diagnostico Principal:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input type="text" name="cod_diag" id="cod_diag" class="input is-small" value="{{ incapacidad.7 }}" disabled>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input type="text" name="nom_diag" id="nom_diag" class="input is-small" value="{{ incapacidad.8 }}" disabled>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: x-small;">
+                                <label class="label is-small">Diag. Relacionado:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input type="text" name="cod_diag2" id="cod_diag2" class="input is-small" value="{{ incapacidad.9 }}" disabled>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input type="text" name="nom_diag2" id="nom_diag2" class="input is-small" value="{{ incapacidad.10 }}" disabled>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label for="fecha_inicio" class="label is-small">Fecha Inicio</label>
+                                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="input is-small" value="{{ incapacidad.11 }}" disabled>
+                                    </p>
+                                    <p class="control">
+                                        <label for="fecha_fin" class="label is-small">Fecha Fin</label>
+                                        <input type="date" name="fecha_fin" id="fecha_fin" class="input is-small" value="{{ incapacidad.12 }}" disabled>
+                                    </p>
+                                    <p class="control">
+                                        <label for="dias" class="label is-small">Dias</label>
+                                        <input type="number" name="dias" id="dias" class="input is-small" value="{{ incapacidad.13 }}" disabled>
+                                    </p>
+                                    <p class="control">
+                                        <label for="tipo" class="label is-small">Tipo</label>
+                                        <span class="select is-small">
+                                            <select name="tipo" id="tipo" disabled>
+                                                <option value="{{ incapacidad.14 }}">{{ incapacidad.14 }}</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="modalidad" class="label is-small">Modalidad de la prestación del servicio</label>
+                                        <span class="select is-small">
+                                            <select name="modalidad" id="modalidad" style="width: 250px;" disabled>
+                                                {% if incapacidad.15 == 1 %}
+                                                <option value="{{ incapacidad.15 }}">Intramural</option>
+                                                {% elif incapacidad.15 == 2 %}
+                                                <option value="{{ incapacidad.15 }}">Extramural unidad movil</option>
+                                                {% elif incapacidad.15 == 3 %}
+                                                <option value="{{ incapacidad.15 }}">Extramural domiciliaria</option>
+                                                {% elif incapacidad.15 == 4 %}
+                                                <option value="{{ incapacidad.15 }}">Extramural jornada de salud</option>
+                                                {% elif incapacidad.15 == 6 %}
+                                                <option value="{{ incapacidad.15 }}">Telemedicina interactiva</option>
+                                                {% elif incapacidad.15 == 7 %}
+                                                <option value="{{ incapacidad.15 }}">Telemedicina no interactiva</option>
+                                                {% elif incapacidad.15 == 8 %}
+                                                <option value="{{ incapacidad.15 }}">Telemedicina telexperticia</option>
+                                                {% else %}
+                                                <option value="{{ incapacidad.15 }}">Telemedicina telemonitoreo</option>
+                                                {% endif %}
+                                            </select>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <p class="control is-expanded">
+                                        <label for="retroactiva" class="label is-small">Incapacidad retroactiva</label>
+                                        <span class="select is-small">
+                                            <select name="retroactiva" id="retroactiva" disabled>
+                                                {% if incapacidad.16 == 1 %}
+                                                <option value="{{ incapacidad.16 }}">Urgencias o internación del paciente</option>
+                                                {% elif incapacidad.16 == 2 %}
+                                                <option value="{{ incapacidad.16 }}">Trastorno de memoria, confusión mental, desorientación en persona tiempo y lugar, otras alteraciones de
+                                                    de la esfera psiquica, orgánica o funcional según criterio medico u odontologico
+                                                </option>
+                                                {% elif incapacidad.16 == 3 %}
+                                                <option value="{{ incapacidad.16 }}">Evento catastrofico o terrorista</option>
+                                                {% else %}
+                                                <option value="{{ incapacidad.16 }}">No Aplica</option>
+                                                {% endif %}
+                                            </select>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label for="causa" class="label is-small">Causa que motiva la atención</label>
+                                    <p class="control">
+                                        <textarea name="causa" id="causa" class="textarea is-small" disabled>{{ incapacidad.17 }}</textarea>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label for="observacion" class="label is-small">Observación</label>
+                                    <p class="control">
+                                        <textarea name="observacion" id="observacion" class="textarea is-small" disabled>{{ incapacidad.18 }}</textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-info">
+                    <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/regresar.png') }}" alt="icon"></i></span>
+                    <span>Regresar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Modo Regresar -->
+<script>
+const confirmacion = () => {
+    let atencion = document.getElementById("atencion").value;
+    let paciente = document.getElementById("codigo").value;
+    window.location.href = `/incapacidades/${atencion}/${paciente}`
+};
+</script>
+{% endblock %}

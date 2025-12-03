@@ -1,0 +1,304 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+.inter-scrollable-section {
+    max-height: 515px;
+    overflow-y: auto;
+    padding: 0rem 0rem;
+}
+</style>
+{% endblock %}
+{% block title %}Nueva Incapacidad{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva Incapacidad</h5>
+<div class="container">
+    <form id="form_addincapacidad" action="{{ url_for('incapacidades.f_addIncapacidad') }}" method="post">
+        <section class="inter-scrollable-section">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Atención</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="atencion" class="label is-small">Atención</label>
+                                        <input class="input is-normal" type="text" name="atencion" id="atencion" value="{{ atencion }}" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="codigo" class="label is-small">Paciente</label>
+                                        <input class="input is-normal" type="text" name="codigo" id="codigo" value="{{ paciente }}" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <input class="input is-normal" type="text" name="paciente" id="paciente" value="{{ dato_pac.2 }}" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="fecha" class="label is-small">Fecha <strong style="color: red;">*</strong></label>
+                                        <input type="date" name="fecha" id="fecha" class="input is-small" required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="hora" class="label is-small">Hora <strong style="color: red;">*</strong></label>
+                                        <input type="time" name="hora" id="hora" class="input is-small" required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de la Incapacidad</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label for="grupo_ser" class="label is-small">Grupo de Servicios <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="grupo_ser" id="grupo_ser" required>
+                                                <option value=""></option>
+                                                <option value="Consulta Externa">Consulta Externa</option>
+                                                <option value="Apoyo Diagnostico clinico y compl. terapeutica">Apoyo Diagnostico clinico y compl. terapeutica</option>
+                                                <option value="Internación">Internación</option>
+                                                <option value="Quirúrgico">Quirúrgico</option>
+                                                <option value="Atención Inmediata">Atención Inmediata</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label for="origen" class="label is-small">Origen <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="origen" id="origen" required>
+                                                <option value=""></option>
+                                                <option value="Accidente de Transito">Accidente de Transito</option>
+                                                <option value="Accidente Laboral">Accidente Laboral</option>
+                                                <option value="Enfermedad General">Enfermedad General</option>
+                                                <option value="Enfermedad Profesional">Enfermedad Profesional</option>
+                                                <option value="Enfermedad Oncologica">Enfermedad Oncologica</option>
+                                                <option value="Procedimiento Quirúrgico">Procedimiento Quirúrgico</option>
+                                                <option value="Otros">Otros</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <button id="btn_corregir" class="button is-small is-primary">
+                                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png')}}" alt="icon"></i></span>
+                                            <span>Corregir Diagnosticos</span>
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: x-small;">
+                                <label class="label is-small">Diagnostico Principal: <strong style="color: red;">*</strong></label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input type="text" name="cod_diag" id="cod_diag" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input type="text" name="nom_diag" id="nom_diag" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal-BusquedaDiagnosticosIncap">
+                                            <span>...</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: x-small;">
+                                <label class="label is-small">Diag. Relacionado: <strong style="color: red;">*</strong></label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input type="text" name="cod_diag2" id="cod_diag2" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input type="text" name="nom_diag2" id="nom_diag2" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal-BusquedaDiagnosticosIncap">
+                                            <span>...</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <label for="fecha_inicio" class="label is-small">Fecha Inicio <strong style="color: red;">*</strong></label>
+                                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="input is-small" required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="fecha_fin" class="label is-small">Fecha Fin <strong style="color: red;">*</strong></label>
+                                        <input type="date" name="fecha_fin" id="fecha_fin" class="input is-small" required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="dias" class="label is-small">Dias</label>
+                                        <input type="number" name="dias" id="dias" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="tipo" class="label is-small">Tipo <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="tipo" id="tipo" required>
+                                                <option value=""></option>
+                                                <option value="Inicial">Inicial</option>
+                                                <option value="Prorroga">Prorroga</option>
+                                                <option value="Lic. Maternidad">Lic. Maternidad</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="modalidad" class="label is-small">Modalidad de la prestación del servicio <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="modalidad" id="modalidad" style="width: 250px;" required>
+                                                <option value=""></option>
+                                                <option value="1">Intramural</option>
+                                                <option value="2">Extramural unidad movil</option>
+                                                <option value="3">Extramural domiciliaria</option>
+                                                <option value="4">Extramural jornada de salud</option>
+                                                <option value="6">Telemedicina interactiva</option>
+                                                <option value="7">Telemedicina no interactiva</option>
+                                                <option value="8">Telemedicina telexperticia</option>
+                                                <option value="9">Telemedicina telemonitoreo</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <p class="control is-expanded">
+                                        <label for="retroactiva" class="label is-small">Incapacidad retroactiva <strong style="color: red;">*</strong></label>
+                                        <span class="select is-small">
+                                            <select name="retroactiva" id="retroactiva" required>
+                                                <option value=""></option>
+                                                <option value="1">Urgencias o internación del paciente</option>
+                                                <option value="2">Trastorno de memoria, confusión mental, desorientación en persona tiempo y lugar, otras alteraciones de
+                                                    de la esfera psiquica, orgánica o funcional según criterio medico u odontologico
+                                                </option>
+                                                <option value="3">Evento catastrofico o terrorista</option>
+                                                <option value="4">No Aplica</option>
+                                            </select>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <div class="field">
+                                    <label for="causa" class="label is-small">Causa que motiva la atención <strong style="color: red;">*</strong></label>
+                                    <p class="control">
+                                        <textarea name="causa" id="causa" class="textarea is-small" required></textarea>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label for="observacion" class="label is-small">Observación <strong style="color: red;">*</strong></label>
+                                    <p class="control">
+                                        <textarea name="observacion" id="observacion" class="textarea is-small" required></textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="submit" class="button is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Busqueda Diagnosticos -->
+<div class="modal" id="modal-BusquedaDiagnosticosIncap">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Diagnostico</h5>
+            <table id="tablaBusquedaDiagnosticosIncap" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;" scope="col">Codigo</th>
+                        <th style="width: 75%;" scope="col">Diagnostico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for diagnostico in diagnosticos %}
+                    <tr>
+                        <td style="width: 25%;">{{ diagnostico.codigo }}</td>
+                        <td style="width: 75%;">{{ diagnostico.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/incapacidades/add_incapacidades.js') }}"></script>
+<!-- Modo Cancelar -->
+<script>
+const confirmacion = () => {
+    Swal.fire({
+        title: "Estas Seguro(a)?",
+        text: "Los cambios no se guardarán!",
+        icon: "question",
+        confirmButtonText: "Si, Cancelar!",
+        confirmButtonColor: "#48c78e",
+        cancelButtonText: "No, Continuar",
+        cancelButtonColor: "#f14668",
+        showCancelButton: true,
+        allowOutsideClick: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let atencion = document.getElementById("atencion").value;
+            let paciente = document.getElementById("codigo").value;
+            window.location.href = `/incapacidades/${atencion}/${paciente}`
+        }
+    })
+};
+</script>
+{% endblock %}
