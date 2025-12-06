@@ -1,0 +1,93 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+
+{% endblock %}
+{% block title %}Anexar Documentos{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Anexar Documentos</h5>
+<div class="container">
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <div class="field is-grouped">
+                <p class="control is-expanded">
+                    <label for="fecha" class="label is-small">Fecha <strong style="color: red;">*</strong></label>
+                    <input type="date" name="fecha" id="fecha" class="input is-small" readonly required>
+                </p>
+                <p class="control is-expanded">
+                    <label for="hora" class="label is-small">Hora <strong style="color: red;">*</strong></label>
+                    <input type="time" name="hora" id="hora" class="input is-small" readonly required>
+                </p>
+            </div>
+            <div class="field has-addons">
+                <p class="control">
+                    <label for="codigo" class="label is-small">Paciente <strong style="color: red;">*</strong></label>
+                    <input type="text" name="codigo" id="codigo" class="input is-small" readonly required>
+                </p>
+                <p class="control is-expanded">
+                    <label for="paciente" class="label is-small" style="color: white;">.</label>
+                    <input type="text" name="paciente" id="paciente" class="input is-small" readonly required>
+                </p>
+                <p class="control">
+                    <label class="label is-small" style="color: white;">.</label>
+                    <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Paciente" data-target="modal-BusquedaPacientesAnexos">
+                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/usuario.png') }}" alt="icon"></i></span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <div class="field is-grouped">
+                <p class="control">
+                    <label for="tipo_documento" class="label is-small">Tipo de Documento Anexo <strong style="color: red;">*</strong></label>
+                    <span class="select is-small">
+                        <select name="" id="" required>
+                            <option value=""></option>
+                            {% for tipo in tipos %}
+                            <option value="{{ tipo.ID }}">{{ tipo.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </p>
+                <p class="control is-expanded">
+                    <label for="descripcion" class="label is-small">Descripción Breve <strong style="color: red;">*</strong></label>
+                    <input type="text" name="descripcion" id="descripcion" class="input is-small" required>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <div class="field">
+                <label for="documento" class="label is-small">Cargar Documento <strong style="color: red;">* (Max. 1MB)</strong></label>
+                <div id="file-anexo" class="file is-small has-name">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="documento" accept="application/pdf" />
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fa fa-upload"></i>
+                            </span>
+                            <span class="file-label"> Cargar Documento PDF </span>
+                        </span>
+                        <span class="file-name is-expanded"> No hay documento cargado </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Busqueda de Pacientes -->
+<div id="modal-BusquedaPacientesAnexos" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content"></div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/anexos/anexos.js') }}"></script>
+{% endblock %}

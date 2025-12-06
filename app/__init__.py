@@ -21,6 +21,7 @@ from app.routes.resfacturacion_routes import bp_resfacturacion
 from app.routes.paciente_routes import bp_pacientes
 from app.routes.consultas_routes import bp_consultas
 from app.routes.hospitalizacion_routes import bp_hospitalizacion
+from app.routes.anexos_routes import bp_anexos
 
 # Importando los Blueprints Atención Medica
 from app.routes.atenciones_routes import bp_atenciones
@@ -69,6 +70,7 @@ app.register_blueprint(bp_resfacturacion)
 app.register_blueprint(bp_pacientes)
 app.register_blueprint(bp_consultas)
 app.register_blueprint(bp_hospitalizacion)
+app.register_blueprint(bp_anexos)
 
 # Registro Blueprints Atención Medica
 app.register_blueprint(bp_atenciones)
