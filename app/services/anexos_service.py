@@ -19,4 +19,16 @@ def listar_tipos_anexos():
     finally:
         conn.close()
 
-    return tipos_anexo    
+    return tipos_anexo
+
+#Insert Nuevo Anexo
+def insert_anexo(codigo, fecha, hora, tipo_documento, descripcion, documento):
+    conn = db.connection()
+    query = """ INSERT INTO anexos (codigo, fecha, hora, tipo_documento, descripcion, documento) 
+                VALUES (%s, %s, %s, %s, %s, %s) """
+    
+    params = (codigo, fecha, hora, tipo_documento, descripcion, documento)
+    with conn.cursor() as cursor:
+        cursor.execute(query, params)
+        conn.commit()
+        conn.close()
