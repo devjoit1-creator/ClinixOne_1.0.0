@@ -33,16 +33,28 @@
                         <label for="" class="label is-small">Busqueda por Documento:</label>
                     </p>
                     <p class="control">
-                        <input type="text" name="" id="" class="input is-small" required>
+                        <input type="text" name="codigo" id="codigo" class="input is-small" required>
                     </p>
                     <p class="control">
-                        <a href="#" class="button is-small is-info has-tooltip-bottom" data-tooltip="Realizar Busqueda">
+                        <a id="btn_buscar" class="button is-small is-info has-tooltip-bottom" data-tooltip="Realizar Busqueda">
                             <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
                         </a>
                     </p>
                 </div>
                 <section class="inter-scrollable-section">
-                    <table id="tablaAnexos" class="table is-striped" style="width: 100%;"></table>
+                    <table id="tablaAnexos" class="table is-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="font-size: small; width: 5%;">ID</th>
+                                <th scope="col" style="font-size: small; width: 10%;">Documento</th>
+                                <th scope="col" style="font-size: small; width: 20%;">Nombre</th>
+                                <th scope="col" style="font-size: small; width: 10%;">Fecha</th>
+                                <th scope="col" style="font-size: small; width: 20%;">Tipo</th>
+                                <th scope="col" style="font-size: small; width: 5%;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </section>
             </div>
         </div>
@@ -51,5 +63,21 @@
 {% endblock %}
 
 {% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                Swal.fire({
+                    title: "Notificación!",
+                    text: "{{ message }}",
+                    icon: "{{ category }}"
+                })
+            });
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
+<script src="{{ url_for('static', filename='js/anexos/anexos.js') }}"></script>
 {% endblock %}

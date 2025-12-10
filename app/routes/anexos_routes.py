@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from app.services import paciente_service, anexos_service
 from io import BytesIO
 import mysql.connector.errors as error
+import base64
 
 #Blueprint
 bp_anexos = Blueprint('anexos', __name__)
@@ -43,3 +44,23 @@ def add_anexo():
     except Exception as ex:
         flash(f"Se presentó un error inesperado: {ex}", "error")
         return redirect(url_for('anexos.anexos'))
+    
+#Ruta AJAX para Listar todos los anexos
+@bp_anexos.post('/getAnexos')
+def getAnexos():
+    try:
+        data = request.get_json()
+        codigo = data.get("codigo")
+        anexos = anexos_service.list_anexos_doc(codigo)
+        
+        if anexos:
+            return jsonify(anexos)
+        
+        else:
+            return jsonify({"Error": "No se encontraron registros."}), 200
+        
+    except error.Error as e:
+        return jsonify({"Error": f"{e.msg}"}), 500
+
+    except Exception as ex:
+        return jsonify({"Error": f"{ex}"}), 500

@@ -71,11 +71,9 @@ const fileAnexo = document.querySelector("#file-anexo input[type=file]");
 
 /* Validar Form */
 $form_addDocumentos.addEventListener("submit", (e) => {
-    let fecha = $fecha.value;
-    let hora = $hora.value;
     let codigo = $codigo.value;
     let paciente = $paciente.value
-    if(!fecha || !hora || !codigo || !paciente){
+    if(codigo === "" || paciente === ""){
         e.preventDefault();
         Swal.fire({
             title: "Advertencia!",
