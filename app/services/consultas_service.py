@@ -30,6 +30,31 @@ def listar_consultas():
     conn.close()
     return consultas
 
+#Listar Datos de Consulta por Numero de Atención
+def listar_consultas_atencion(atencion):
+    consultas = []
+    conn = db.connection()
+    query = """ SELECT c.atencion, c.fecha_atencion, c.hora_atencion, CONCAT(p.num_doc,'-',CONCAT(p.p_apellido,' ',p.s_apellido,' ',p.p_nombre,' ',p.s_nombre)), \
+                CONCAT(m.num_documento,'-',m.nombre_completo), c.nro_autorizacion, c.numero_fact
+                FROM consultas c, pacientes p, medicos m 
+                WHERE c.codigo = p.num_doc and c.medico = m.num_documento AND c.atencion = %s """
+    
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query, (atencion, ))
+            result = cursor.fetchall()
+            for row in result:
+                consultas.append({'id': row[0], 'fecha': row[1].strftime("%Y-%m-%d"), 'hora': row[2], 'paciente': row[3], 'medico': row[4], 'aut': row[5], 'numero_fact': row[6]})
+
+        return consultas
+
+    except Exception as ex:
+        print(f"Se presentó un error inesperado: {ex}")
+        return None
+    
+    finally:
+        conn.close()
+
 #Listar todas las consultas activas por medico y fecha
 def listar_consultas_med(medico, fecha):
     atenciones = []

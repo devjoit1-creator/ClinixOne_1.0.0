@@ -379,8 +379,8 @@ let tableBusquedaServiciosConsultas = new DataTable('#tablaBusquedaServiciosCons
         }
   }
 })
-
-let tableConsultas = new DataTable('#tablaConsultas',{
+/* Cambios en Panel de Consultas */
+/* let tableConsultas = new DataTable('#tablaConsultas',{
   language:{
     lengthMenu: "Mostrar _MENU_ registros por pagina",
         zeroRecords: "Sin registros encontrados",
@@ -395,7 +395,7 @@ let tableConsultas = new DataTable('#tablaConsultas',{
           previous: "Anterior"
         }
   }
-})
+}) */
 
 let tableAtenciones = new DataTable('#tablaAtenciones',{
   language:{
@@ -519,6 +519,7 @@ let tableBusquedaPacientesAnexos = new DataTable('#tablaBusquedaPacientesAnexos'
   }
 })
 
+/* Cambios en Panel de Busqueda de Habitaciones */
 /* let tableHabitacionesModal = new DataTable('#tablaHabitacionesModal',{
   language:{
     lengthMenu: "Mostrar _MENU_ registros por pagina",

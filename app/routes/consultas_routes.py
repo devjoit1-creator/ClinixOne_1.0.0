@@ -18,6 +18,24 @@ def consultas():
         flash(f"Se presentó un error inesperado: {ex}","error")
         return redirect(url_for('consultas.consultas'))
 
+#Ruta AJAX para obtener los datos de consulta por numero de Atención
+@bp_consultas.post('/getAtencionConsulta')
+def getAtencionConsulta():
+    try:
+        data = request.get_json()
+        atencion = data.get("atencion")
+        consultas = consultas_service.listar_consultas_atencion(atencion)
+        if consultas:
+            return jsonify(consultas)
+        else:
+            return jsonify({"Error": "No se encontraron registros."}), 200
+        
+    except error.Error as e:
+        return jsonify({"Error": f"{e.msg}"}), 500
+
+    except Exception as ex:
+        return jsonify({"Error": f"{ex}"}), 500    
+
 @bp_consultas.get('/add_consulta')
 def add_consulta():
     try:
