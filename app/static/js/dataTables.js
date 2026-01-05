@@ -431,7 +431,8 @@ let tableAtencionesHosp = new DataTable('#tablaAtencionesHosp',{
   }
 })
 
-let tableHospitalizacion = new DataTable('#tablaHospitalizacion',{
+/* Datatables de Hospitalización */
+/* let tableHospitalizacion = new DataTable('#tablaHospitalizacion',{
   initComplete: function () {
         this.api()
             .columns()
@@ -466,7 +467,7 @@ let tableHospitalizacion = new DataTable('#tablaHospitalizacion',{
           previous: "Anterior"
         }
   }
-})
+}) */
 
 let tableBusquedaPacientesHospitalizacion = new DataTable('#tablaBusquedaPacientesHospitalizacion',{
   language:{

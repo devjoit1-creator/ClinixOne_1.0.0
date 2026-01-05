@@ -3,9 +3,15 @@
 {% block css %}
 <style>
 .enlace-desactivado {
-  pointer-events: none; /* Evita que se pueda hacer clic */
-  cursor: not-allowed;  /* Muestra el cursor de "no permitido" */
-  opacity: 0.5;         /* Lo hace semitransparente */
+    pointer-events: none; /* Evita que se pueda hacer clic */
+    cursor: not-allowed;  /* Muestra el cursor de "no permitido" */
+    opacity: 0.5;         /* Lo hace semitransparente */
+}
+
+.inter-scrollable-section {
+    height: 55vh;
+    overflow-y: scroll;
+    padding: 0rem 0rem;
 }
 </style>
 {% endblock %}
@@ -28,50 +34,61 @@
         </header>
         <div class="card-content">
             <div class="content">
-                <table id="tablaHospitalizacion" class="table is-striped" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th style="width: 3%; font-size: small;" scope="col">Atención</th>
-                            <th style="width: 10%; font-size: small;" scope="col">Fecha Ing.</th>
-                            <th style="width: 10%; font-size: small;" scope="col">Hora Ing.</th>
-                            <th style="width: 10%; font-size: small;" scope="col">Documento</th>
-                            <th style="width: 30%; font-size: small;" scope="col">Paciente</th>
-                            <th style="width: 10%; font-size: small;" scope="col">Fecha Sal.</th>
-                            <th style="width: 10%; font-size: small;" scope="col">Hora Sal.</th>
-                            <th style="width: 8%; font-size: small;" scope="col">No. Aut.</th>
-                            <th style="width: 8%; font-size: small;" scope="col">No. Fact.</th>
-                            <th style="width: 15%; font-size: small;" scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for hospitalizacion in hospitalizaciones %}
-                        <tr>
-                            <td class="valor_atencion" style="width: 3%; font-size: small;">{{ hospitalizacion.atencion }}</td>
-                            <td style="width: 10%; font-size: small;">{{ hospitalizacion.fecha_ingreso }}</td>
-                            <td style="width: 10%; font-size: small;">{{ hospitalizacion.hora_ingreso }}</td>
-                            <td class="valor_codigo" style="width: 10%; font-size: small;">{{ hospitalizacion.codigo }}</td>
-                            <td class="valor_paciente" style="width: 30%; font-size: small;">{{ hospitalizacion.paciente }}</td>
-                            <td class="valor_egreso" style="width: 10%; font-size: small;">{{ hospitalizacion.fecha_salida }}</td>
-                            <td style="width: 10%; font-size: small;">{{ hospitalizacion.hora_salida }}</td>
-                            <td class="valor_aut" style="width: 8%; font-size: small;">{{ hospitalizacion.aut }}</td>
-                            <td class="valor_factura" style="width: 8%; font-size: small;">{{ hospitalizacion.numero_fact }}</td>
-                            <td style="width: 15%;">
-                                <a class="enlace_anular_hosp button is-small has-tooltip-bottom" data-tooltip="Anular Atención" style="padding: 0em 1.0em;">
-                                    <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png')}}" alt="icon"></i></span>
-                                </a>
-                                <a class="enlace_opciones button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Opciones" data-target="modal-opcionesHospitalizacion" style="padding: 0em 1.0em;">
-                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/menu.png') }}" alt="icon"></i></span>
-                                </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th style="width: 5%;" scope="col">Filtrar por Atención</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                <div class="field is-grouped">
+                    <p class="control">
+                        <label for="atencion" class="label is-small">Busqueda por Nro. de Atención:</label>
+                    </p>
+                    <p class="control">
+                        <input type="number" name="atencion" id="atencion" class="input is-small">
+                    </p>
+                    <p class="control">
+                        <a id="btn_buscar" class="button is-small is-info has-tooltip-bottom" data-tooltip="Realizar Busqueda">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                        </a>
+                    </p>
+                </div>
+                <section class="inter-scrollable-section">
+                    <table id="tablaHospitalizacion" class="table is-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 3%; font-size: small;" scope="col">Atención</th>
+                                <th style="width: 10%; font-size: small;" scope="col">Fecha Ing.</th>
+                                <th style="width: 10%; font-size: small;" scope="col">Hora Ing.</th>
+                                <th style="width: 10%; font-size: small;" scope="col">Documento</th>
+                                <th style="width: 30%; font-size: small;" scope="col">Paciente</th>
+                                <th style="width: 10%; font-size: small;" scope="col">Fecha Sal.</th>
+                                <th style="width: 10%; font-size: small;" scope="col">Hora Sal.</th>
+                                <th style="width: 8%; font-size: small;" scope="col">No. Aut.</th>
+                                <th style="width: 8%; font-size: small;" scope="col">No. Fact.</th>
+                                <th style="width: 15%; font-size: small;" scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <!-- <tbody>
+                            {% for hospitalizacion in hospitalizaciones %}
+                            <tr>
+                                <td class="valor_atencion" style="width: 3%; font-size: small;">{{ hospitalizacion.atencion }}</td>
+                                <td style="width: 10%; font-size: small;">{{ hospitalizacion.fecha_ingreso }}</td>
+                                <td style="width: 10%; font-size: small;">{{ hospitalizacion.hora_ingreso }}</td>
+                                <td class="valor_codigo" style="width: 10%; font-size: small;">{{ hospitalizacion.codigo }}</td>
+                                <td class="valor_paciente" style="width: 30%; font-size: small;">{{ hospitalizacion.paciente }}</td>
+                                <td class="valor_egreso" style="width: 10%; font-size: small;">{{ hospitalizacion.fecha_salida }}</td>
+                                <td style="width: 10%; font-size: small;">{{ hospitalizacion.hora_salida }}</td>
+                                <td class="valor_aut" style="width: 8%; font-size: small;">{{ hospitalizacion.aut }}</td>
+                                <td class="valor_factura" style="width: 8%; font-size: small;">{{ hospitalizacion.numero_fact }}</td>
+                                <td style="width: 15%;">
+                                    <a class="enlace_anular_hosp button is-small has-tooltip-bottom" data-tooltip="Anular Atención" style="padding: 0em 1.0em;">
+                                        <span class="icon is-normal"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png')}}" alt="icon"></i></span>
+                                    </a>
+                                    <a class="enlace_opciones button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Opciones" data-target="modal-opcionesHospitalizacion" style="padding: 0em 1.0em;">
+                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/menu.png') }}" alt="icon"></i></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody> -->
+                    </table>
+                </section>
             </div>
         </div>
     </div>
@@ -265,6 +282,7 @@
     {% endif %}
 {% endwith %}
 
+<script src="{{ url_for('static', filename='js/hospitalizacion/hospitalizacion.js') }}"></script>
 <!-- Obtener los valores de la celda atención y paciente para consultar los anexos -->
 <script>
     /* Funcion para anular/eliminar atencion */
@@ -305,7 +323,7 @@
     
     $(document).ready(function(){
         /* Declarar DataTable */
-        const tabla = $('#tablaHospitalizacion').DataTable();
+        //const tabla = $('#tablaHospitalizacion').DataTable();
 
         function aplicarDesactivacion(){
             $('#tablaHospitalizacion tbody tr').each(function(){
