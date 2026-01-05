@@ -50,6 +50,31 @@ def listar_hospitalizaciones():
     conn.close()
     return hospitalizaciones
 
+#Metodo para listar datos de hospitalizacion por numero de atención
+def listar_hospitalizacion_atencion(atencion):
+    hospitalizaciones = []
+    conn = db.connection()
+    query = """ SELECT h.atencion, h.fecha_ingreso, h.hora_ingreso, p.num_doc ,CONCAT(p.p_apellido,' ',p.s_apellido,' ',p.p_nombre,' ',p.s_nombre),
+                h.fecha_salida, h.hora_salida, h.nro_autorizacion, h.numero_fact
+                FROM hospitalizacion h,  pacientes p WHERE h.codigo = p.num_doc and h.atencion = %s  """
+    
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query, (atencion, ))
+            result = cursor.fetchall()
+            for row in result:
+                hospitalizaciones.append({'atencion': row[0], 'fecha_ingreso': row[1].strftime("%Y-%m-%d"), 'hora_ingreso': row[2], 'codigo': row[3], 'paciente': row[4], 'fecha_salida': row[5].strftime("%Y-%m-%d"), 'hora_salida': row[6], 'aut': row[7], 'numero_fact': row[8]})
+
+        return hospitalizaciones
+
+    except Exception as ex:
+        print(f"Se presentó un error inesperado: {ex}")
+        conn.rollback()
+        raise ex
+    
+    finally:
+        conn.close()
+
 #Metodo para listar hospitalizacion por id
 def listar_hospitalizacion_id(id_hospitalizacion):
     hospitalizacion = None

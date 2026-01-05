@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from app.services import hospitalizacion_service, consecutivo_service, paciente_service, administradoras_service, causas_service, medico_service, ufuncionales_service, habitaciones_service, diagnosticos_cie10, servicios_service, reportes_service, fuentes_service
 from flask_weasyprint import render_pdf, HTML
 from io import BytesIO
@@ -10,8 +10,35 @@ bp_hospitalizacion = Blueprint('hospitalizacion', __name__)
 #Ruta Principal Hospitalizacion
 @bp_hospitalizacion.get('/hospitalizacion')
 def hospitalizacion():
-    hospitalizaciones = hospitalizacion_service.listar_hospitalizaciones()
-    return render_template('temp_hospitalizacion/hospitalizacion.html', hospitalizaciones = hospitalizaciones)
+    try:
+        hospitalizaciones = hospitalizacion_service.listar_hospitalizaciones()
+        return render_template('temp_hospitalizacion/hospitalizacion.html', hospitalizaciones = hospitalizaciones)
+    
+    except error.Error as e:
+        flash(f"Se presentó un error inesperado: {e.msg}", "error")
+        return redirect(url_for('hospitalizacion.hospitalizacion'))
+    
+    except Exception as ex:
+        flash(f"Se presentó un error inesperado: {ex}", "error")
+        return redirect(url_for('hospitalizacion.hospitalizacion'))
+    
+#Ruta AJAX para obtener datos de hospitalizacion por numero de atención
+@bp_hospitalizacion.post('/getAtencionHosp')
+def getAtencionHosp():
+    try:
+        data = request.get_json()
+        atencion = data.get("atencion")
+        hospitalizaciones = hospitalizacion_service.listar_hospitalizacion_atencion(atencion)
+        if hospitalizaciones:
+            return jsonify(hospitalizaciones)
+        else:
+            return jsonify({"Error": "No se encontraron registros."}), 200
+
+    except error.Error as e:
+        return jsonify({"Error": f"{e.msg}"}), 500
+
+    except Exception as ex:
+        return jsonify({"Error": f"{ex}"}), 500    
 
 #Ruta Formulario Nueva Hospitalizacion
 @bp_hospitalizacion.get('/add_hospitalizacion')

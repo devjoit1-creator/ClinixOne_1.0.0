@@ -53,13 +53,13 @@
                             <tr>
                                 <th style="width: 3%; font-size: small;" scope="col">Atención</th>
                                 <th style="width: 10%; font-size: small;" scope="col">Fecha Ing.</th>
-                                <th style="width: 10%; font-size: small;" scope="col">Hora Ing.</th>
+                                <th style="width: 8%; font-size: small;" scope="col">Hora Ing.</th>
                                 <th style="width: 10%; font-size: small;" scope="col">Documento</th>
                                 <th style="width: 30%; font-size: small;" scope="col">Paciente</th>
                                 <th style="width: 10%; font-size: small;" scope="col">Fecha Sal.</th>
-                                <th style="width: 10%; font-size: small;" scope="col">Hora Sal.</th>
+                                <th style="width: 8%; font-size: small;" scope="col">Hora Sal.</th>
                                 <th style="width: 8%; font-size: small;" scope="col">No. Aut.</th>
-                                <th style="width: 8%; font-size: small;" scope="col">No. Fact.</th>
+                                <th style="width: 5%; font-size: small;" scope="col">Fact.</th>
                                 <th style="width: 15%; font-size: small;" scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -95,7 +95,7 @@
 </div>
 
 <!-- Modal Anexos Ordenes Hospitalizacion -->
-<div class="modal" id="modal-opcionesHospitalizacion">
+<div class="modal is-hidden" id="modal-opcionesHospitalizacion">
     <div class="modal-background"></div>
     <div class="modal-content">
         <div class="box">
@@ -104,8 +104,8 @@
                 <div class="field-body">
                     <div class="field has-addons">
                         <p class="control">
-                            <label for="atencion" class="label is-small">Atención</label>
-                            <input type="text" name="atencion" id="atencion" class="input is-small" readonly required>
+                            <label for="atencion_modal" class="label is-small">Atención</label>
+                            <input type="text" name="atencion_modal" id="atencion_modal" class="input is-small" readonly required>
                         </p>
                         <p class="control">
                             <label for="codigo" class="label is-small">Paciente</label>
@@ -285,27 +285,7 @@
 <script src="{{ url_for('static', filename='js/hospitalizacion/hospitalizacion.js') }}"></script>
 <!-- Obtener los valores de la celda atención y paciente para consultar los anexos -->
 <script>
-    /* Funcion para anular/eliminar atencion */
-    const anular_ingreso = (atencion) => {
-        Swal.fire({
-            title: "Estas Seguro(a)?",
-            text: "Esta acción no se puede revertir!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Si, Eliminar!",
-            confirmButtonColor: "#48c78e",
-            cancelButtonText: "No, Cancelar",
-            cancelButtonColor: "#f14668",
-            showCancelButton: true,
-            allowOutsideClick: false
-        })
-        .then((result) => {
-            if(result.isConfirmed){
-                window.location.href = `/drop_hospitalizacion/${atencion}`
-            }
-        })
-    };
-
+    
     /* Función para desactivar link de anular/eliminar atención */
     function desactivarlinkAnular($linkAnular){
         $linkAnular
@@ -314,7 +294,7 @@
             .off('click')
     }
 
-    const $atencion = document.getElementById("atencion");
+    //const $atencion = document.getElementById("atencion");
     const $codigo = document.getElementById("codigo");
     const $paciente = document.getElementById("paciente");
     const $fecha_egreso = document.getElementById("fecha_egreso")
