@@ -73,8 +73,23 @@ const getAtencionHosp = () => {
                 </td>
             `
         });
+        desactivarEnlaceAnular();
     })
     .catch(error => console.error("error: ", error))
+}
+
+/* Desactivar Boton Anular Ingreso Hosp */
+const desactivarEnlaceAnular = () => {
+    let filas = document.querySelectorAll("#tablaHospitalizacion tr");
+    filas.forEach(fila => {
+        const valor_egreso = fila.cells[5].innerText.trim();
+        if(valor_egreso !== null) {
+            const enlace_anular_hosp = fila.querySelector(".enlace_anular_hosp");
+            if(enlace_anular_hosp){
+                enlace_anular_hosp.classList.add("enlace-desactivado");
+            }
+        }
+    })
 }
 
 /* Swal para anular/eliminar atención por consulta externa */
@@ -118,6 +133,7 @@ const activarModal = (atencion, codigo, paciente, fecha_egreso, nro_autorizacion
 
     toogle_botones_egreso($fecha_egreso.value);
     toogle_botones_servicios($nro_autorizacion.value);
+    toogle_boton_factura($fecha_egreso.value, $nro_autorizacion.value, $nro_factura.value);
 }
 
 /* Verificar estado egreso */
@@ -142,6 +158,20 @@ const toogle_botones_servicios = (valor) => {
         generar_factura_link.classList.remove("enlace-desactivado");
     } else {
         cargar_servicios_link.classList.remove("enlace-desactivado");
+        generar_factura_link.classList.add("enlace-desactivado");
+    }
+}
+
+/* Verificar estado de todos los botones */
+const toogle_boton_factura = (valor1, valor2, valor3) => {
+    let generar_salida_link = document.getElementById("generar_salida_link");
+    let anular_salida_link = document.getElementById("anular_salida_link");
+    let cargar_servicios_link = document.getElementById("cargar_servicios_link");
+    let generar_factura_link = document.getElementById("generar_factura_link");
+    if(valor1 && valor2 && valor3 !== "null"){
+        generar_salida_link.classList.add("enlace-desactivado");
+        anular_salida_link.classList.add("enlace-desactivado");
+        cargar_servicios_link.classList.add("enlace-desactivado");
         generar_factura_link.classList.add("enlace-desactivado");
     }
 }
