@@ -295,11 +295,11 @@
     }
 
     //const $atencion = document.getElementById("atencion");
-    const $codigo = document.getElementById("codigo");
-    const $paciente = document.getElementById("paciente");
-    const $fecha_egreso = document.getElementById("fecha_egreso")
-    const $nro_autorizacion = document.getElementById("nro_autorizacion");
-    const $nro_factura = document.getElementById("nro_factura");
+    //const $codigo = document.getElementById("codigo");
+    //const $paciente = document.getElementById("paciente");
+    //const $fecha_egreso = document.getElementById("fecha_egreso")
+    //const $nro_autorizacion = document.getElementById("nro_autorizacion");
+    //const $nro_factura = document.getElementById("nro_factura");
     
     $(document).ready(function(){
         /* Declarar DataTable */
@@ -374,60 +374,5 @@
         });
     });
 
-   
-   //Función Egresar Paciente 
-   const generar_salida_link = document.getElementById("generar_salida_link");
-   const generar_salida = () => {
-        window.location.href = `/add_egreso_hosp/${$atencion.value}`;
-   };
-   generar_salida_link.addEventListener("click", (event) => {
-        event.preventDefault();
-        generar_salida();
-    });
-
-   //Función Cargue Servicios
-   const cargar_servicios_link = document.getElementById("cargar_servicios_link");
-   const cargar_servicios = () => {
-        window.location.href = `/cargue_servicios_hosp/${$atencion.value}`;
-   };
-   cargar_servicios_link.addEventListener("click", (event) => {
-        event.preventDefault();
-        cargar_servicios();
-    });
-
-   //Función Facturar Hospitalización
-   const generar_factura_link = document.getElementById("generar_factura_link");
-   const generar_factura = () => {
-        window.location.href = `/generar_factura_hosp/${$atencion.value}`;
-   };
-   generar_factura_link.addEventListener("click", (event) => {
-        event.preventDefault();
-        generar_factura();
-    });
-
-   //Función Anular Egreso Paciente
-   const anular_salida_link = document.getElementById("anular_salida_link");
-   const confirmacion_anular_egreso = () => {
-        Swal.fire({
-            title: "Estas Seguro(a)?",
-            text: "Esta acción no se puede deshacer!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Si, Eliminar!",
-            confirmButtonColor: "#48c78e",
-            cancelButtonText: "No, Cancelar",
-            cancelButtonColor: "#f14668",
-            showCancelButton: true,
-            allowOutsideClick: false
-        }).then((result) => {
-            if(result.isConfirmed){
-                window.location.href = `/anular_egreso_hosp/${$atencion.value}`
-            }
-        })
-    };
-    anular_salida_link.addEventListener("click", (event) => {
-        event.preventDefault();
-        confirmacion_anular_egreso();
-    })
 </script>
 {% endblock %}

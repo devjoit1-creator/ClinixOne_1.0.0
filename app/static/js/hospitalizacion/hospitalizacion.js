@@ -67,7 +67,7 @@ const getAtencionHosp = () => {
                     <a onclick="anularHospitalizacion(${hospitalizacion.atencion})" class="enlace_anular_hosp button is-small is-danger has-tooltip-bottom" data-tooltip="Anular Atención" style="padding: 0em 1.0em;">
                         <span class="icon is-normal"><i aria-hidden="true"><img src="./static/img/icons/basura.png" alt="icon"></i></span>
                     </a>
-                    <a onclick="activarModal(${hospitalizacion.atencion}, '${hospitalizacion.codigo}', '${hospitalizacion.paciente}', '${hospitalizacion.fecha_salida}', '${hospitalizacion.aut}', ${hospitalizacion.numero_fact})" class="enlace_opciones button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Opciones" data-target="modal-opcionesHospitalizacion" style="padding: 0em 1.0em;">
+                    <a onclick="activarModal(${hospitalizacion.atencion}, '${hospitalizacion.codigo}', '${hospitalizacion.paciente}', '${hospitalizacion.fecha_salida}', '${hospitalizacion.aut}', '${hospitalizacion.numero_fact}')" class="enlace_opciones button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Opciones" data-target="modal-opcionesHospitalizacion" style="padding: 0em 1.0em;">
                         <span class="icon is-small"><i aria-hidden="true"><img src="./static/img/icons/menu.png" alt="icon"></i></span>
                     </a>
                 </td>
@@ -115,4 +115,88 @@ const activarModal = (atencion, codigo, paciente, fecha_egreso, nro_autorizacion
     $fecha_egreso.value = fecha_egreso;
     $nro_autorizacion.value = nro_autorizacion;
     $nro_factura.value = nro_factura;
+
+    toogle_botones_egreso($fecha_egreso.value);
+    toogle_botones_servicios($nro_autorizacion.value);
 }
+
+/* Verificar estado egreso */
+const toogle_botones_egreso = (valor) => {
+    let generar_salida_link = document.getElementById("generar_salida_link");
+    let anular_salida_link = document.getElementById("anular_salida_link");
+    if(valor !== "null"){
+        generar_salida_link.classList.add("enlace-desactivado");
+        anular_salida_link.classList.remove("enlace-desactivado");
+    } else {
+        generar_salida_link.classList.remove("enlace-desactivado");
+        anular_salida_link.classList.add("enlace-desactivado");
+    }
+};
+
+/* Verificar estado servicios y factura */
+const toogle_botones_servicios = (valor) => {
+    let cargar_servicios_link = document.getElementById("cargar_servicios_link");
+    let generar_factura_link = document.getElementById("generar_factura_link");
+    if(valor !== "null"){
+        cargar_servicios_link.classList.add("enlace-desactivado");
+        generar_factura_link.classList.remove("enlace-desactivado");
+    } else {
+        cargar_servicios_link.classList.remove("enlace-desactivado");
+        generar_factura_link.classList.add("enlace-desactivado");
+    }
+}
+
+//Función Egresar Paciente 
+const generar_salida_link = document.getElementById("generar_salida_link");
+const generar_salida = () => {
+    window.location.href = `/add_egreso_hosp/${$atencion.value}`;
+};
+generar_salida_link.addEventListener("click", (event) => {
+    event.preventDefault();
+    generar_salida();
+});
+
+//Función Anular Egreso Paciente
+const anular_salida_link = document.getElementById("anular_salida_link");
+const confirmacion_anular_egreso = () => {
+    Swal.fire({
+        title: "Estas Seguro(a)?",
+        text: "Esta acción no se puede deshacer!",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Si, Eliminar!",
+        confirmButtonColor: "#48c78e",
+        cancelButtonText: "No, Cancelar",
+        cancelButtonColor: "#f14668",
+        showCancelButton: true,
+        allowOutsideClick: false
+    }).then((result) => {
+        if(result.isConfirmed){
+            window.location.href = `/anular_egreso_hosp/${$atencion.value}`
+        }
+    })
+};
+anular_salida_link.addEventListener("click", (event) => {
+    event.preventDefault();
+    confirmacion_anular_egreso();
+});
+
+//Función Cargue Servicios
+const cargar_servicios_link = document.getElementById("cargar_servicios_link");
+const cargar_servicios = () => {
+    window.location.href = `/cargue_servicios_hosp/${$atencion.value}`;
+};
+cargar_servicios_link.addEventListener("click", (event) => {
+    event.preventDefault();
+    cargar_servicios();
+});
+
+//Función Facturar Hospitalización
+const generar_factura_link = document.getElementById("generar_factura_link");
+const generar_factura = () => {
+    window.location.href = `/generar_factura_hosp/${$atencion.value}`;
+};
+generar_factura_link.addEventListener("click", (event) => {
+    event.preventDefault();
+    generar_factura();
+});

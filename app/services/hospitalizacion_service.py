@@ -63,7 +63,7 @@ def listar_hospitalizacion_atencion(atencion):
             cursor.execute(query, (atencion, ))
             result = cursor.fetchall()
             for row in result:
-                hospitalizaciones.append({'atencion': row[0], 'fecha_ingreso': row[1].strftime("%Y-%m-%d"), 'hora_ingreso': row[2], 'codigo': row[3], 'paciente': row[4], 'fecha_salida': row[5].strftime("%Y-%m-%d"), 'hora_salida': row[6], 'aut': row[7], 'numero_fact': row[8]})
+                hospitalizaciones.append({'atencion': row[0], 'fecha_ingreso': row[1].strftime("%Y-%m-%d"), 'hora_ingreso': row[2], 'codigo': row[3], 'paciente': row[4], 'fecha_salida': "null" if row[5] == None else row[5].strftime("%Y-%m-%d"), 'hora_salida': row[6], 'aut': row[7], 'numero_fact': row[8]})
 
         return hospitalizaciones
 
