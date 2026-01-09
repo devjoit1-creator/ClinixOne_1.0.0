@@ -397,7 +397,8 @@ let tableBusquedaServiciosConsultas = new DataTable('#tablaBusquedaServiciosCons
   }
 }) */
 
-let tableAtenciones = new DataTable('#tablaAtenciones',{
+/* Cambios en Panel de Atenciones Consulta */
+/* let tableAtenciones = new DataTable('#tablaAtenciones',{
   language:{
     lengthMenu: "Mostrar _MENU_ registros por pagina",
         zeroRecords: "Sin registros encontrados",
@@ -412,7 +413,7 @@ let tableAtenciones = new DataTable('#tablaAtenciones',{
           previous: "Anterior"
         }
   }
-})
+}) */
 
 let tableAtencionesHosp = new DataTable('#tablaAtencionesHosp',{
   language:{

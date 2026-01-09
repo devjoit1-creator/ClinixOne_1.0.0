@@ -67,7 +67,7 @@ def listar_consultas_med(medico, fecha):
         cursor.execute(query, params)
         result = cursor.fetchall()
         for row in result:
-            atenciones.append({'id': row[0], 'fecha': row[1], 'hora': row[2], 'documento': row[3], 'paciente': row[4]})
+            atenciones.append({'id': row[0], 'fecha': row[1].strftime("%Y/%m/%d"), 'hora': row[2], 'documento': row[3], 'paciente': row[4]})
 
     conn.close()
     return atenciones
