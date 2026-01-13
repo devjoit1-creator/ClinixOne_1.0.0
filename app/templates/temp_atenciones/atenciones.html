@@ -3,7 +3,7 @@
 {% block css %}
 <style>
     .inter-scrollable-section{
-        max-height: 80vh; /*370px;*/
+        height: 55vh; /*370px;*/
         overflow-y: scroll;
         padding: 0rem 0rem;
     }
@@ -22,7 +22,7 @@
                     <label for="fecha_atencion" class="label">Fecha: </label>
                 </p>
                 <p class="control">
-                    <input type="date" name="fecha_atencion" id="fecha_atencion" class="input is-small"> <!-- onchange="consulta_ajax()" -->
+                    <input type="date" name="fecha_atencion" id="fecha_atencion" class="input is-small">
                 </p>
             </div>
         </div>
@@ -48,85 +48,6 @@
                         <tbody></tbody>
                     </table>
                 </section>
-            </div>
-        </div>
-    </div>
-    <div class="card is-hidden">
-         <header class="card-header">
-            <p class="card-header-title">Historias Clinicas y Ordenes Medicas</p>
-        </header>
-        <div class="card-content">
-            <div class="content">
-                <div class="field is-horizontal">
-                    <div class="field-body">
-                        <div class="field is-grouped">
-                            <p class="control">
-                                <label for="atencion" class="label is-small">Atención Seleccionada <strong style="color: red;">*</strong></label>
-                                <input class="input is-small" type="text" name="atencionn" id="atencionn" readonly required>
-                            </p>
-                            <p class="control">
-                                <label class="label is-small">Doc. Paciente</label>
-                                <input class="input is-small" type="text" name="codigoo" id="codigoo" readonly required>
-                            </p>
-                            <p class="control is-expanded">
-                                <label class="label is-small">Paciente</label>
-                                <input class="input is-small" type="text" name="pacientee" id="pacientee" readonly required>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div id="containerPanelHC" class="container" style="display: none;">
-                    <div class="columns">
-                        <div class="column">
-                            <p><strong>Historias Clinicas</strong></p>
-                            <div class="field is-grouped">
-                                <p class="control">
-                                    <a href="#" class="button is-small is-primary">
-                                        <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/estetoscopio.png') }}" alt="ico"></i></span>
-                                        <span>HC. Med. General</span>
-                                    </a>
-                                </p>
-                                <p class="control">
-                                    <a onclick="psicologia_link()" class="button is-small is-primary">
-                                        <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/psicologia.png') }}" alt="ico"></i></span>
-                                        <span>HC. Psicología</span>
-                                    </a>
-                                    <script>
-                                        const psicologia_link = () => {
-                                            let atencion = document.getElementById("atencion").value;
-                                            let paciente = document.getElementById("codigo").value;
-                                            window.location.href = `/psicologia/${atencion}/${paciente}`
-                                        }
-                                    </script>
-                                </p>
-                                <p class="control">
-                                    <a href="#" class="button is-small is-primary">
-                                        <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/psicologia.png') }}" alt="ico"></i></span>
-                                        <span>HC. Psiquiatría</span>
-                                    </a>
-                                </p>
-                                <p class="control">
-                                    <a onclick="nutricion_link()" class="button is-small is-primary">
-                                        <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/nutricion.png') }}" alt="ico"></i></span>
-                                        <span>HC. Nutrición</span>
-                                    </a>
-                                    <script>
-                                        const nutricion_link = () => {
-                                            let atencion = document.getElementById("atencion").value;
-                                            let paciente = document.getElementById("codigo").value;
-                                            window.location.href = `/nutricion/${atencion}/${paciente}`
-                                        }
-                                    </script>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <p><strong>Ordenes Medicas</strong></p>
-                            
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -157,9 +78,59 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-header">
-                    <p class="card-header-title">Ordenes Medicas</p>
+                <header class="card-header">
+                    <p class="card-header-title">Historias Clinicas</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <a href="#" class="button is-small is-primary">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/estetoscopio.png') }}" alt="ico"></i></span>
+                                    <span>HC. Med. General</span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a onclick="psicologia_link()" class="button is-small is-primary">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/psicologia.png') }}" alt="ico"></i></span>
+                                    <span>HC. Psicología</span>
+                                </a>
+                                <script>
+                                    const psicologia_link = () => {
+                                        let atencion = document.getElementById("atencion").value;
+                                        let paciente = document.getElementById("codigo").value;
+                                        window.location.href = `/psicologia/${atencion}/${paciente}`
+                                    }
+                                </script>
+                            </p>
+                            <p class="control">
+                                <a href="#" class="button is-small is-primary">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/psicologia.png') }}" alt="ico"></i></span>
+                                    <span>HC. Psiquiatría</span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a onclick="nutricion_link()" class="button is-small is-primary">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/nutricion.png') }}" alt="ico"></i></span>
+                                    <span>HC. Nutrición</span>
+                                </a>
+                                <script>
+                                    const nutricion_link = () => {
+                                        let atencion = document.getElementById("atencion").value;
+                                        let paciente = document.getElementById("codigo").value;
+                                        window.location.href = `/nutricion/${atencion}/${paciente}`
+                                    }
+                                </script>
+                            </p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <!-- Panel Ordenes Medicas -->
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Ordenes Medicas</p>
+                </header>
                 <div class="card-content">
                     <div class="content">
                         <div class="field is-grouped">
