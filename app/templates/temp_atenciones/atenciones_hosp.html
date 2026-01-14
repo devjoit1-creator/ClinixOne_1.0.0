@@ -3,8 +3,8 @@
 {% block css %}
 <style>
     .inter-scrollable-section{
-        max-height: 370px;
-        overflow-y: auto;
+        height: 55vh;
+        overflow-y: scroll;
         padding: 0rem 0rem;
     }
 </style>
@@ -20,7 +20,8 @@
         </p>
         <p class="control">
             <span class="select is-small">
-                <select name="un_funcional" id="un_funcional" onchange="get_atenciones_hosp(this)">
+                <select name="un_funcional" id="un_funcional"> <!-- onchange="get_atenciones_hosp(this)" -->
+                    <option value=""></option>
                     {% for unidad in unidades %}
                     <option value="{{ unidad.cod_ufuncional }}">{{ unidad.nom_ufuncional }}</option>
                     {% endfor %}
@@ -36,151 +37,173 @@
             <div class="content">
                 <section class="inter-scrollable-section">
                     <table id="tablaAtencionesHosp" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
-
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 5%; font-size: small;">Atención</th>
+                                <th scope="col" style="width: 10%; font-size: small;">Fecha</th>
+                                <th scope="col" style="width: 10%; font-size: small;">Documento</th>
+                                <th scope="col" style="width: 30%; font-size: small;">Paciente</th>
+                                <th scope="col" style="width: 10%; font-size: small;">Habitación</th>
+                                <th scope="col" style="width: 20%; font-size: small;">Administradora</th>
+                                <th scope="col" style="width: 5%; font-size: small;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
                     </table>
                 </section>
             </div>
         </div>
     </div>
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">Historias Clinicas y Ordenes Medicas</p>
-        </header>
-        <div class="card-content">
-            <div class="content">
-                <div class="field is-horizontal">
-                    <div class="field-body">
+</div>
+
+<!-- Modal Menú de Ordenes y Atenciones -->
+<div id="modal_historiasHosp" class="modal is-hidden">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Menú de Atención</h5>
+            <div class="field is-horizontal">
+                <div class="field-body">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <label for="atencion" class="label is-small">Atención</label>
+                            <input type="number" name="atencion" id="atencion" class="input is-small" readonly>
+                        </p>
+                        <p class="control">
+                            <label for="codigo" class="label is-small">Documento</label>
+                            <input type="text" name="codigo" id="codigo" class="input is-small" readonly>
+                        </p>
+                        <p class="control is-expanded">
+                            <label for="paciente" class="label is-small">Paciente</label>
+                            <input type="text" name="paciente" id="paciente" class="input is-small" readonly>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Panel Historias Clinicas -->
+            <div class="card">
+                <header class="card-heaader">
+                    <p class="card-header-title">Historias Clínicas</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
                         <div class="field is-grouped">
                             <p class="control">
-                                <label for="atencion" class="label is-small">Atención Seleccionada <strong style="color: red;">*</strong></label>
-                                <input class="input is-small" type="text" name="atencion" id="atencion" readonly required>
+                                <a href="#" class="button is-small is-primary">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/estetoscopio.png') }}" alt="ico"></i></span>
+                                    <span>HC. Med. General</span>
+                                </a>
                             </p>
                             <p class="control">
-                                <label for="codigo" class="label is-small">Doc. Paciente</label>
-                                <input class="input is-small" type="text" name="codigo" id="codigo" readonly required>
+                                <a onclick="psicologia_link()" class="button is-small is-primary">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/psicologia.png') }}" alt="ico"></i></span>
+                                    <span>HC. Psicología</span>
+                                </a>
+                                <script>
+                                    const psicologia_link = () => {
+                                        let atencion = document.getElementById("atencion").value;
+                                        let paciente = document.getElementById("codigo").value;
+                                        window.location.href = `/psicologia/${atencion}/${paciente}`
+                                    }
+                                </script>
                             </p>
-                            <p class="control is-expanded">
-                                <label for="" class="label is-small">Paciente</label>
-                                <input class="input is-small" type="text" name="paciente" id="paciente" readonly required>
+                            <p class="control">
+                                <a href="#" class="button is-small is-primary">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/psicologia.png') }}" alt="ico"></i></span>
+                                    <span>HC. Psiquiatría</span>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <a onclick="nutricion_link()" class="button is-small is-primary">
+                                    <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/nutricion.png') }}" alt="ico"></i></span>
+                                    <span>HC. Nutrición</span>
+                                </a>
+                                <script>
+                                    const nutricion_link = () => {
+                                        let atencion = document.getElementById("atencion").value;
+                                        let paciente = document.getElementById("codigo").value;
+                                        window.location.href = `/nutricion/${atencion}/${paciente}`
+                                    }
+                                </script>
                             </p>
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div id="containerPanelHC" class="container" style="display: none;">
-                    <div class="columns">
-                        <div class="column">
-                            <p><strong>Historias Clinicas</strong></p>
-                            <div class="field is-grouped">
-                                <p class="control">
-                                    <a href="#" class="button is-small is-primary">
-                                        <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/estetoscopio.png') }}" alt="ico"></i></span>
-                                        <span>HC. Med. General</span>
-                                    </a>
-                                </p>
-                                <p class="control">
-                                    <a onclick="psicologia_link()" class="button is-small is-primary">
-                                        <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/psicologia.png') }}" alt="ico"></i></span>
-                                        <span>HC. Psicología</span>
-                                    </a>
-                                    <script>
-                                        const psicologia_link = () => {
-                                            let atencion = document.getElementById("atencion").value;
-                                            let paciente = document.getElementById("codigo").value;
-                                            window.location.href = `/psicologia/${atencion}/${paciente}`
-                                        }
-                                    </script>
-                                </p>
-                                <p class="control">
-                                    <a href="#" class="button is-small is-primary">
-                                        <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/psicologia.png') }}" alt="ico"></i></span>
-                                        <span>HC. Psiquiatría</span>
-                                    </a>
-                                </p>
-                                <p class="control">
-                                    <a onclick="nutricion_link()" class="button is-small is-primary">
-                                        <span class="icon is-small"><i><img src="{{ url_for('static', filename='img/icons/nutricion.png') }}" alt="ico"></i></span>
-                                        <span>HC. Nutrición</span>
-                                    </a>
-                                    <script>
-                                        const nutricion_link = () => {
-                                            let atencion = document.getElementById("atencion").value;
-                                            let paciente = document.getElementById("codigo").value;
-                                            window.location.href = `/nutricion/${atencion}/${paciente}`
-                                        }
-                                    </script>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <p><strong>Ordenes Medicas</strong></p>
-                            <div class="field is-grouped">
-                                <p class="control">
-                                    <a onclick="ordenes_diag_link()" class="button is-small is-info">
-                                        <span class="icon is-small"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
-                                        <span>Orden de Servicios</span>
-                                    </a>
-                                    <script>
-                                        const ordenes_diag_link = () => {
-                                            let atencion = document.getElementById("atencion").value;
-                                            let paciente = document.getElementById("codigo").value;
-                                            window.location.href = `/ordenes_diag/${atencion}/${paciente}`
-                                        }
-                                    </script>
-                                </p>
-                                <p class="control">
-                                    <a onclick="receta_medica_link()" class="button is-small is-info">
-                                        <span class="icon is-small"><i class="fa fa-medkit" aria-hidden="true"></i></span>
-                                        <span>Receta Medica</span>
-                                    </a>
-                                    <script>
-                                        const receta_medica_link = () =>{
-                                            let atencion = document.getElementById("atencion").value;
-                                            let paciente = document.getElementById("codigo").value;
-                                            window.location.href = `/recomendaciones/${atencion}/${paciente}`
-                                        }
-                                    </script>
-                                </p>
-                                <p class="control">
-                                    <a onclick="incapacidades_link()" class="button is-small is-info">
-                                        <span class="icon is-small"><i class="fa fa-address-card-o" aria-hidden="true"></i></span>
-                                        <span>Incapacidades</span>
-                                    </a>
-                                    <script>
-                                        const incapacidades_link = () => {
-                                            let atencion = document.getElementById("atencion").value;
-                                            let paciente = document.getElementById("codigo").value;
-                                            window.location.href = `/incapacidades/${atencion}/${paciente}`
-                                        }
-                                    </script>
-                                </p>
-                                <p class="control">
-                                    <a onclick="interconsultas_link()" class="button is-small is-info">
-                                        <span class="icon is-small"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
-                                        <span>Interconsultas</span>
-                                    </a>
-                                    <script>
-                                        const interconsultas_link = () => {
-                                            let atencion = document.getElementById("atencion").value;
-                                            let paciente = document.getElementById("codigo").value;
-                                            window.location.href = `/interconsultas/${atencion}/${paciente}`
-                                        }
-                                    </script>
-                                </p>
-                            </div>
+            </div>
+            <!-- Panel Ordenes Medicas -->
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Ordenes Medicas</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <a onclick="ordenes_diag_link()" class="button is-small is-info">
+                                    <span class="icon is-small"><i class="fa fa-list-alt" aria-hidden="true"></i></span>
+                                    <span>Orden de Servicios</span>
+                                </a>
+                                <script>
+                                    const ordenes_diag_link = () => {
+                                        let atencion = document.getElementById("atencion").value;
+                                        let paciente = document.getElementById("codigo").value;
+                                        window.location.href = `/ordenes_diag/${atencion}/${paciente}`
+                                    }
+                                </script>
+                            </p>
+                            <p class="control">
+                                <a onclick="receta_medica_link()" class="button is-small is-info">
+                                    <span class="icon is-small"><i class="fa fa-medkit" aria-hidden="true"></i></span>
+                                    <span>Receta Medica</span>
+                                </a>
+                                <script>
+                                    const receta_medica_link = () =>{
+                                        let atencion = document.getElementById("atencion").value;
+                                        let paciente = document.getElementById("codigo").value;
+                                        window.location.href = `/recomendaciones/${atencion}/${paciente}`
+                                    }
+                                </script>
+                            </p>
+                            <p class="control">
+                                <a onclick="incapacidades_link()" class="button is-small is-info">
+                                    <span class="icon is-small"><i class="fa fa-address-card-o" aria-hidden="true"></i></span>
+                                    <span>Incapacidades</span>
+                                </a>
+                                <script>
+                                    const incapacidades_link = () => {
+                                        let atencion = document.getElementById("atencion").value;
+                                        let paciente = document.getElementById("codigo").value;
+                                        window.location.href = `/incapacidades/${atencion}/${paciente}`
+                                    }
+                                </script>
+                            </p>
+                            <p class="control">
+                                <a onclick="interconsultas_link()" class="button is-small is-info">
+                                    <span class="icon is-small"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
+                                    <span>Interconsultas</span>
+                                </a>
+                                <script>
+                                    const interconsultas_link = () => {
+                                        let atencion = document.getElementById("atencion").value;
+                                        let paciente = document.getElementById("codigo").value;
+                                        window.location.href = `/interconsultas/${atencion}/${paciente}`
+                                    }
+                                </script>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <button class="modal-close is-large" aria-label="close"></button>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/atenciones/atenciones_hosp.js') }}"></script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     function get_atenciones_hosp(element){
         let valor = element.value;
         let tabla = document.getElementById("tablaAtencionesHosp");
@@ -196,5 +219,5 @@
             }
         })
     }
-</script>
+</script> -->
 {% endblock %}

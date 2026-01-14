@@ -6,7 +6,7 @@ const $codigo = document.getElementById("codigo");
 const $paciente = document.getElementById("paciente");
 const $tablaAtenciones = document.getElementById("tablaAtenciones");
 const $modal_historiasConsulta = document.getElementById("modal_historiasConsulta");
-const $containerPanelHC = document.getElementById("containerPanelHC");
+/* const $containerPanelHC = document.getElementById("containerPanelHC"); */
 
 /* Cargar Fecha Actual */
 document.addEventListener("DOMContentLoaded", () => {

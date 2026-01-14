@@ -222,7 +222,7 @@ def listar_atenciones_hosp(und_funcional):
         cursor.execute(query, (und_funcional, ))
         result = cursor.fetchall()
         for row in result:
-            atenciones_hosp.append({'atencion': row[0], 'fecha': row[1], 'codigo': row[2], 'paciente': row[3], 'habitacion': row[4], 'administradora': row[5]})
+            atenciones_hosp.append({'id': row[0], 'fecha': row[1].strftime("%Y/%m/%d"), 'codigo': row[2], 'paciente': row[3], 'habitacion': row[4], 'administradora': row[5]})
 
 
     conn.close()

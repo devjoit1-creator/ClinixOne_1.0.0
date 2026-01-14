@@ -14,6 +14,19 @@ def listar_ufuncionales():
     conn.close()
     return ufuncionales
 
+def listar_ufuncionales_hosp():
+    ufuncionales = []
+    conn = db.connection()
+    query = """ SELECT cod_ufuncional, nom_ufuncional FROM unidades_funcionales WHERE cod_ufuncional NOT IN ("CE") """
+    with conn.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        for row in result:
+            ufuncionales.append({"cod_ufuncional": row[0], "nom_ufuncional": row[1]})
+
+    conn.close()
+    return ufuncionales        
+
 #Función para listar la u. funcional por codigo
 def listar_ufuncional_id(id_ufuncional):
     ufuncional = None
