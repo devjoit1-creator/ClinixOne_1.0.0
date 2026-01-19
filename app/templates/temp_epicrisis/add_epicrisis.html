@@ -1,0 +1,102 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+    .inter-scrollable-section {
+        height: 75vh;
+        overflow-y: scroll;
+        padding: 0rem 0rem;
+    }
+</style>
+{% endblock %}
+{% block title %}Nueva Epicrisis{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva Epicrisis</h5>
+<div class="container">
+    <section class="inter-scrollable-section">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos del Paciente</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="tipo_doc" class="label is-small">Tipo Documento</label>
+                                    <input type="text" name="tipo_doc" id="tipo_doc" class="input is-small" readonly>
+                                </p>
+                                <p class="control">
+                                    <label for="codigo" class="label is-small">Paciente</label>
+                                    <input type="text" name="codigo" id="codigo" class="input is-small" readonly>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="paciente" class="label is-small" style="color: white;">.</label>
+                                    <input type="text" name="paciente" id="paciente" class="input is-small" readonly>
+                                </p>
+                                <p class="control">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <a class="button is-small is-info js-modal-trigger has-tooltip-bottom" data-target="modal_busquedaPacientesEpicrisis" data-tooltip="Buscar Paciente">
+                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/usuario.png') }}" alt="icon"></i></span>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Botones -->
+    <div class="field is-grouped is-grouped-centered">
+        <p class="control">
+            <button type="button" class="button is-small is-success">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                <span>Guardar</span>
+            </button>
+        </p>
+        <p class="control">
+            <a id="btn_cancelar" class="button is-small is-danger">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                <span>Cancelar</span>
+            </a>
+        </p>
+    </div>
+</div>
+
+<!-- Modal Busqueda de Pacientes -->
+<div id="modal_busquedaPacientesEpicrisis" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Pacientes</h5>
+            <table id="tablaBusquedaPacientesEpicrisis" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 10%;">Tipo Doc.</th>
+                        <th scope="col" style="width: 15%;">Documento</th>
+                        <th scope="col" style="width: 75%;">Nombre Completo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for paciente in pacientes %}
+                    <tr>
+                        <td style="width: 10%;">{{ paciente.tipo }}</td>
+                        <td style="width: 15%;">{{ paciente.documento }}</td>
+                        <td style="width: 75%;">{{ paciente.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/epicrisis/add_epicrisis.js') }}"></script>
+{% endblock %}

@@ -31,6 +31,7 @@ from app.routes.incapacidades_routes import bp_incapacidades
 from app.routes.interconsultas_routes import bp_interconsultas
 from app.routes.nutricion_routes import bp_nutricion
 from app.routes.psicologia_routes import bp_psicologia
+from app.routes.epicrisis_routes import bp_epicrisis
 
 # Importando los Blueprints Financiero
 from app.routes.facturas_routes import bp_facturas
@@ -80,6 +81,7 @@ app.register_blueprint(bp_incapacidades)
 app.register_blueprint(bp_interconsultas)
 app.register_blueprint(bp_nutricion)
 app.register_blueprint(bp_psicologia)
+app.register_blueprint(bp_epicrisis)
 
 # Registro Blueprints Financiero
 app.register_blueprint(bp_facturas)

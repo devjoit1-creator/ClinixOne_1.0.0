@@ -522,6 +522,23 @@ let tableBusquedaPacientesAnexos = new DataTable('#tablaBusquedaPacientesAnexos'
   }
 })
 
+let tableBusquedaPacientesEpicrisis = new DataTable('#tablaBusquedaPacientesEpicrisis',{
+  language:{
+    lengthMenu: "Mostrar _MENU_ registros por pagina",
+        zeroRecords: "Sin registros encontrados",
+        info: "Mostrando pagina _PAGE_ de _PAGES_",
+        infoEmpty: "No hay registros disponibles",
+        infoFiltered: "(filtrado de _MAX_ registros)",
+        search: "Filtrar:",
+        paginate: {
+          first: "Primera",
+          last: "Última",
+          next: "Siguiente",
+          previous: "Anterior"
+        }
+  }
+})
+
 /* Cambios en Panel de Busqueda de Habitaciones */
 /* let tableHabitacionesModal = new DataTable('#tablaHabitacionesModal',{
   language:{

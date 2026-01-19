@@ -1,0 +1,55 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+    .inter-scrollable-section {
+        height: 58vh;
+        overflow-y: scroll;
+        padding: 0rem 0rem;
+    }
+</style>
+{% endblock %}
+{% block title %}Epicrisis{% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Epicrisis (Resumen Clínico)</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="{{ url_for('epicrisis.add_epicrisis') }}" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nueva Epicrisis</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <section class="inter-scrollable-section">
+
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            Swal.fire({
+                title: "Notificación",
+                text: "{{ message }}",
+                icon: "{{ category }}"
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% endblock %}
