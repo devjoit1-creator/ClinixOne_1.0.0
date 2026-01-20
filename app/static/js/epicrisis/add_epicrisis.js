@@ -2,7 +2,9 @@
 const $tipo_doc = document.getElementById("tipo_doc");
 const $codigo = document.getElementById("codigo");
 const $paciente = document.getElementById("paciente");
+const $medico = document.getElementById("medico");
 const $tablaBusquedaPacientesEpicrisis = document.getElementById("tablaBusquedaPacientesEpicrisis");
+const $btn_consultar = document.getElementById("btn_consultar");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 
 /* Obtener Datos de paciente desde el modal */
@@ -14,6 +16,52 @@ $tablaBusquedaPacientesEpicrisis.addEventListener("click", (e) => {
     $paciente.value = data[2].innerText;
     closeAllModals();
 })
+
+/* Validación */
+const validar = () => {
+    let codigo = $codigo.value;
+    if(!codigo){
+        Swal.fire({
+            title: "Advertencia!",
+            text: "Debe seleccionar al paciente para consultar atenciones.",
+            icon: "warning"
+        });
+    } else {
+       getAtencionesConsultaEpicrisis();
+    }
+}
+
+$btn_consultar.addEventListener("click", (e) => {
+    e.preventDefault();
+    validar();
+})
+
+/* Fetch Atenciones de consulta por paciente y medico */
+const getAtencionesConsultaEpicrisis = () => {
+    let paciente = $codigo.value;
+    let medico = $medico.value;
+    fetch("/getAtencionesConsultaEpicrisis", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ paciente, medico })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(!Array.isArray(data) || data.length === 0){
+            Swal.fire({
+                title: "Advertencia!",
+                text: "No se encontraron registros asociados.",
+                icon: "warning"
+            });
+            return;
+        }
+
+        data.forEach(atencion => {
+            alert(`la atención es: ${atencion.atencion}, ingresó ${atencion.ingreso}, salió ${atencion.salida}, en el servicio ${atencion.servicio}`)
+        });
+    })
+    .catch(error => console.error("error: ", error))
+}
 
 /* Modo Cancelar */
 $btn_cancelar.addEventListener("click", (e) => {
