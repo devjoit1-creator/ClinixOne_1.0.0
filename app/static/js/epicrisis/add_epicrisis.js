@@ -4,10 +4,11 @@ const $codigo = document.getElementById("codigo");
 const $paciente = document.getElementById("paciente");
 const $medico = document.getElementById("medico");
 const $tablaBusquedaPacientesEpicrisis = document.getElementById("tablaBusquedaPacientesEpicrisis");
+const $modal_resultadoAtenciones = document.getElementById("modal_resultadoAtenciones");
 const $btn_consultar = document.getElementById("btn_consultar");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 
-/* Obtener Datos de paciente desde el modal */
+/* Obtener Datos de paciente desde el modal pacientes */
 $tablaBusquedaPacientesEpicrisis.addEventListener("click", (e) => {
     e.preventDefault();
     let data = e.target.parentElement.children;
@@ -55,7 +56,7 @@ const getAtencionesConsultaEpicrisis = () => {
             });
             return;
         }
-
+        
         data.forEach(atencion => {
             alert(`la atención es: ${atencion.atencion}, ingresó ${atencion.ingreso}, salió ${atencion.salida}, en el servicio ${atencion.servicio}`)
         });
