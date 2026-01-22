@@ -55,6 +55,52 @@
                 </div>
             </div>
         </div>
+        <!-- Datos de Atención -->
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Datos de Atención</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="atencion" class="label is-small">Atención/Historia <strong style="color: red;">*</strong></label>
+                                <input type="text" name="atencion" id="atencion" class="input is-small" readonly required>
+                            </div>
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="fecha_ingreso" class="label is-small">Fecha Ingreso <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="input is-small" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="hora_ingreso" class="label is-small">Hora Ingreso <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="hora_ingreso" id="hora_ingreso" class="input is-small" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="servicio_ingreso" class="label is-small">Servicio Ingreso <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="servicio_ingreso" id="servicio_ingreso" class="input is-small" readonly required>
+                                </p>
+                            </div>
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="fecha_salida" class="label is-small">Fecha Salida <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="fecha_salida" id="fecha_salida" class="input is-small" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="hora_salida" class="label is-small">Hora Salida <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="hora_salida" id="hora_salida" class="input is-small" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="servicio_salida" class="label is-small">Servicio Salida <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="servicio_salida" id="servicio_salida" class="input is-small" readonly required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- Botones -->
     <div class="field is-grouped is-grouped-centered">
@@ -126,12 +172,14 @@
             <div class="container">
                 <!-- Contenido Pestaña Atenciones Consulta -->
                 <div id="tabAtencionesConsultas">
-                    <table id="tablaAtencionesConsultaEpicrisis" class="table is-striped is-hoverable" style="width: 100%;">
+                    <table id="tablaAtencionesConsultaEpicrisis" class="table is-striped" style="width: 100%; cursor: pointer;">
                         <thead>
                             <tr>
-                                <th scope="col" style="width: 20%; font-size: x-small;">Atención</th>
-                                <th scope="col" style="width: 20%; font-size: x-small;">Ingresó</th>
+                                <th scope="col" style="width: 5%; font-size: x-small;">Atención</th>
+                                <th scope="col" style="width: 20%; font-size: x-small;">Ingreso</th>
+                                <th scope="col" style="width: 10%; font-size: x-small;">Hora Ingreso</th>
                                 <th scope="col" style="width: 20%; font-size: x-small;">Salida</th>
+                                <th scope="col" style="width: 10%; font-size: x-small;">Hora Salida</th>
                                 <th scope="col" style="width: 20%; font-size: x-small;">Servicio</th>
                             </tr>
                         </thead>
@@ -140,7 +188,19 @@
                 </div>
                 <!-- Contenido Pestaña Atenciones Hosp. -->
                 <div id="tabAtencionesHosp" class="is-hidden">
-                    <p>Prueba cambio</p>
+                    <table id="tablaAtencionesHospEpicrisis" class="table is-striped" style="width: 100%; cursor: pointer;">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 5%; font-size: x-small;">Atención</th>
+                                <th scope="col" style="width: 20%; font-size: x-small;">Ingreso</th>
+                                <th scope="col" style="width: 10%; font-size: x-small;">Hora Ingreso</th>
+                                <th scope="col" style="width: 20%; font-size: x-small;">Salida</th>
+                                <th scope="col" style="width: 10%; font-size: x-small;">Hora Salida</th>
+                                <th scope="col" style="width: 20%; font-size: x-small;">Servicio</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>

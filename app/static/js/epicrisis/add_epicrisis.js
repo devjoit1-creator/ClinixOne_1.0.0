@@ -3,6 +3,13 @@ const $tipo_doc = document.getElementById("tipo_doc");
 const $codigo = document.getElementById("codigo");
 const $paciente = document.getElementById("paciente");
 const $medico = document.getElementById("medico");
+const $atencion = document.getElementById("atencion");
+const $fecha_ingreso = document.getElementById("fecha_ingreso");
+const $hora_ingreso = document.getElementById("hora_ingreso");
+const $servicio_ingreso = document.getElementById("servicio_ingreso");
+const $fecha_salida = document.getElementById("fecha_salida");
+const $hora_salida = document.getElementById("hora_salida");
+const $servicio_salida = document.getElementById("servicio_salida");
 const $btn_consultar = document.getElementById("btn_consultar");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 
@@ -16,10 +23,11 @@ const $tabAtencionesConsultas = document.getElementById("tabAtencionesConsultas"
 const $tab_hosp = document.getElementById("tab_hosp");
 const $tabAtencionesHosp = document.getElementById("tabAtencionesHosp");
 const $tablaAtencionesConsultaEpicrisis = document.getElementById("tablaAtencionesConsultaEpicrisis");
+const $tablaAtencionesHospEpicrisis = document.getElementById("tablaAtencionesHospEpicrisis");
 
 /* Obtener Datos de paciente desde el modal pacientes */
 $tablaBusquedaPacientesEpicrisis.addEventListener("click", (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     let data = e.target.parentElement.children;
     $tipo_doc.value = data[0].innerText;
     $codigo.value = data[1].innerText;
@@ -39,6 +47,7 @@ const validar = () => {
     } else {
         activarModalResultados();
         getAtencionesConsultaEpicrisis();
+        getAtencionesHospEpicrisis();
     }
 }
 
@@ -54,7 +63,7 @@ const getAtencionesConsultaEpicrisis = () => {
     /* Limpiar Tabla */
     while($tablaAtencionesConsultaEpicrisis.rows.length > 1){
         $tablaAtencionesConsultaEpicrisis.deleteRow(1);
-    }
+    };
     /* API Fetch */
     fetch("/getAtencionesConsultaEpicrisis", {
         method: "POST",
@@ -75,9 +84,52 @@ const getAtencionesConsultaEpicrisis = () => {
         /* Resultados en tabla */
         data.forEach(atencion => {
             $tablaAtencionesConsultaEpicrisis.insertRow().innerHTML = `
-                <td style="width: 20%; font-size: x-small;">${atencion.atencion}</td>
+                <td style="width: 5%; font-size: x-small;">${atencion.atencion}</td>
                 <td style="width: 20%; font-size: x-small;">${atencion.ingreso}</td>
+                <td style="width: 10%; font-size: x-small;">${atencion.hora_ingreso}</td>
                 <td style="width: 20%; font-size: x-small;">${atencion.salida}</td>
+                <td style="width: 10%; font-size: x-small;">${atencion.hora_salida}</td>
+                <td style="width: 20%; font-size: x-small;">${atencion.servicio}</td>
+            `
+        });
+    })
+    .catch(error => console.error("error: ", error))
+}
+
+/* Fetch Atenciones de hospitalizacion por paciente y medico */
+const getAtencionesHospEpicrisis = () => {
+    let paciente = $codigo.value;
+    let medico = $medico.value;
+    /* Limpiar Tabla */
+    while ($tablaAtencionesHospEpicrisis.rows.length > 1) {
+        $tablaAtencionesHospEpicrisis.deleteRow(1);
+    };
+    /* API Fetch */
+    fetch("/getAtencionesHospEpicrisis", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ paciente, medico })
+    })
+    .then(response => response.json())
+    .then(data => {
+        /* Alerta si no hay resultados */
+        if(!Array.isArray(data) || data.length === 0){
+            Swal.fire({
+                title: "Advertencia!",
+                text: "No se encontraron resultados asociados.",
+                icon: "warning"
+            });
+            return;
+        }
+
+        /* Resultados en tabla */
+        data.forEach(atencion => {
+            $tablaAtencionesHospEpicrisis.insertRow().innerHTML = `
+                <td style="width: 5%; font-size: x-small;">${atencion.atencion}</td>
+                <td style="width: 20%; font-size: x-small;">${atencion.ingreso}</td>
+                <td style="width: 10%; font-size: x-small;">${atencion.hora_ingreso}</td>
+                <td style="width: 20%; font-size: x-small;">${atencion.salida}</td>
+                <td style="width: 10%; font-size: x-small;">${atencion.hora_salida}</td>
                 <td style="width: 20%; font-size: x-small;">${atencion.servicio}</td>
             `
         });
@@ -90,6 +142,20 @@ const activarModalResultados = () => {
     $modal_resultadoAtenciones.classList.remove("is-hidden");
     $modal_resultadoAtenciones.classList.add("is-active");
 }
+
+/* Obtener Datos de paciente desde el modal pacientes */
+$tablaAtencionesConsultaEpicrisis.addEventListener("click", (e) => {
+    e.stopPropagation();
+    let data = e.target.parentElement.children;
+    $atencion.value = data[0].innerText;
+    $fecha_ingreso.value = data[1].innerText;
+    $hora_ingreso.value = data[2].innerText;
+    $servicio_ingreso.value = data[5].innerText;
+    $fecha_salida.value = data[3].innerText;
+    $hora_salida.value = data[4].innerText;
+    $servicio_salida.value = $servicio_ingreso.value;
+    closeAllModals();
+})
 
 /* Activar/Desactivar Pestañas */
 $tab_consultas.addEventListener("click", () => {
