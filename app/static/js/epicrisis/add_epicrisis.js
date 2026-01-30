@@ -33,7 +33,7 @@ $tablaBusquedaPacientesEpicrisis.addEventListener("click", (e) => {
     $codigo.value = data[1].innerText;
     $paciente.value = data[2].innerText;
     closeAllModals();
-})
+});
 
 /* Validación */
 const validar = () => {
@@ -49,12 +49,12 @@ const validar = () => {
         getAtencionesConsultaEpicrisis();
         getAtencionesHospEpicrisis();
     }
-}
+};
 
 $btn_consultar.addEventListener("click", (e) => {
     e.preventDefault();
     validar();
-})
+});
 
 /* Fetch Atenciones de consulta por paciente y medico */
 const getAtencionesConsultaEpicrisis = () => {
@@ -94,7 +94,7 @@ const getAtencionesConsultaEpicrisis = () => {
         });
     })
     .catch(error => console.error("error: ", error))
-}
+};
 
 /* Fetch Atenciones de hospitalizacion por paciente y medico */
 const getAtencionesHospEpicrisis = () => {
@@ -135,15 +135,15 @@ const getAtencionesHospEpicrisis = () => {
         });
     })
     .catch(error => console.error("error: ", error))
-}
+};
 
 /* Activar Modal de Resultados de Atenciones */
 const activarModalResultados = () => {
     $modal_resultadoAtenciones.classList.remove("is-hidden");
     $modal_resultadoAtenciones.classList.add("is-active");
-}
+};
 
-/* Obtener Datos de paciente desde el modal pacientes */
+/* Obtener Datos de atención desde el modal consultas */
 $tablaAtencionesConsultaEpicrisis.addEventListener("click", (e) => {
     e.stopPropagation();
     let data = e.target.parentElement.children;
@@ -155,7 +155,21 @@ $tablaAtencionesConsultaEpicrisis.addEventListener("click", (e) => {
     $hora_salida.value = data[4].innerText;
     $servicio_salida.value = $servicio_ingreso.value;
     closeAllModals();
-})
+});
+
+/* Obtener Datos de atención desde el modal hospitalización */
+$tablaAtencionesHospEpicrisis.addEventListener("click", (e) => {
+    e.stopPropagation();
+    let data = e.target.parentElement.children;
+    $atencion.value = data[0].innerText;
+    $fecha_ingreso.value = data[1].innerText;
+    $hora_ingreso.value = data[2].innerText;
+    $servicio_ingreso.value = data[5].innerText;
+    $fecha_salida.value = data[3].innerText;
+    $hora_salida.value = data[4].innerText;
+    $servicio_salida.value = $servicio_ingreso.value;
+    closeAllModals();
+});
 
 /* Activar/Desactivar Pestañas */
 $tab_consultas.addEventListener("click", () => {
@@ -163,19 +177,19 @@ $tab_consultas.addEventListener("click", () => {
     $tab_consultas.classList.add("is-active");
     $tabAtencionesConsultas.classList.remove("is-hidden");
     $tab_hosp.classList.remove("is-active")
-})
+});
 
 $tab_hosp.addEventListener("click", () => {
     ocultarCont();
     $tab_hosp.classList.add("is-active");
     $tabAtencionesHosp.classList.remove("is-hidden");
     $tab_consultas.classList.remove("is-active");
-})
+});
 
 function ocultarCont(){
     $tabAtencionesConsultas.classList.add("is-hidden");
     $tabAtencionesHosp.classList.add("is-hidden");
-}
+};
 
 /* Modo Cancelar */
 $btn_cancelar.addEventListener("click", (e) => {
@@ -196,7 +210,7 @@ $btn_cancelar.addEventListener("click", (e) => {
             window.location.href = `/epicrisis`
         }
     })
-})
+});
 
 /* Funciones para cerrar modal */
 function closeModal($el) {

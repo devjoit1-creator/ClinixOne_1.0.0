@@ -14,109 +14,157 @@
 {% block content %}
 <h5 class="title is-5">Nueva Epicrisis</h5>
 <div class="container">
-    <section class="inter-scrollable-section">
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">Datos del Paciente</p>
-            </header>
-            <div class="card-content">
-                <div class="content">
-                    <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
-                    <div class="field is-horizontal">
-                        <div class="field-body">
-                            <div class="field has-addons">
-                                <p class="control">
-                                    <label for="tipo_doc" class="label is-small">Tipo Documento</label>
-                                    <input type="text" name="tipo_doc" id="tipo_doc" class="input is-small" readonly>
-                                </p>
-                                <p class="control">
-                                    <label for="codigo" class="label is-small">Paciente</label>
-                                    <input type="text" name="codigo" id="codigo" class="input is-small" readonly>
-                                </p>
-                                <p class="control is-expanded">
-                                    <label for="paciente" class="label is-small" style="color: white;">.</label>
-                                    <input type="text" name="paciente" id="paciente" class="input is-small" readonly>
-                                </p>
-                                <p class="control">
-                                    <label class="label is-small" style="color: white;">.</label>
-                                    <a class="button is-small is-info js-modal-trigger has-tooltip-bottom" data-target="modal_busquedaPacientesEpicrisis" data-tooltip="Buscar Paciente">
-                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/usuario.png') }}" alt="icon"></i></span>
-                                    </a>
-                                </p>
-                                <p class="control">
-                                    <label class="label is-small" style="color: white;">.</label>
-                                    <a id="btn_consultar" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Consultar Atenciones">
-                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
-                                    </a>
-                                </p>
+    <form id="" action="#" method="post">
+        <section class="inter-scrollable-section">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos del Paciente</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="tipo_doc" class="label is-small">Tipo Documento</label>
+                                        <input type="text" name="tipo_doc" id="tipo_doc" class="input is-small" readonly>
+                                    </p>
+                                    <p class="control">
+                                        <label for="codigo" class="label is-small">Paciente</label>
+                                        <input type="text" name="codigo" id="codigo" class="input is-small" readonly>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="paciente" class="label is-small" style="color: white;">.</label>
+                                        <input type="text" name="paciente" id="paciente" class="input is-small" readonly>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <a class="button is-small is-info js-modal-trigger has-tooltip-bottom" data-target="modal_busquedaPacientesEpicrisis" data-tooltip="Buscar Paciente">
+                                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/usuario.png') }}" alt="icon"></i></span>
+                                        </a>
+                                    </p>
+                                    <p class="control">
+                                        <label class="label is-small" style="color: white;">.</label>
+                                        <a id="btn_consultar" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Consultar Atenciones">
+                                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                                        </a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Datos de Atención -->
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">Datos de Atención</p>
-            </header>
-            <div class="card-content">
-                <div class="content">
-                    <div class="field is-horizontal">
-                        <div class="field-body">
-                            <div class="field">
-                                <label for="atencion" class="label is-small">Atención/Historia <strong style="color: red;">*</strong></label>
-                                <input type="text" name="atencion" id="atencion" class="input is-small" readonly required>
+            <!-- Datos de Atención -->
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Datos de Epicrisis</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="atencion" class="label is-small">Atención/Historia <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="atencion" id="atencion" class="input is-small" readonly required>
+                                </div>
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="fecha_ingreso" class="label is-small">Fecha Ingreso <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="hora_ingreso" class="label is-small">Hora Ingreso <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="hora_ingreso" id="hora_ingreso" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="servicio_ingreso" class="label is-small">Servicio Ingreso <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="servicio_ingreso" id="servicio_ingreso" class="input is-small" readonly required>
+                                    </p>
+                                </div>
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <label for="fecha_salida" class="label is-small">Fecha Salida <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="fecha_salida" id="fecha_salida" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="hora_salida" class="label is-small">Hora Salida <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="hora_salida" id="hora_salida" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <label for="servicio_salida" class="label is-small">Servicio Salida <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="servicio_salida" id="servicio_salida" class="input is-small" readonly required>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="field has-addons">
+                        </div>
+                        <!-- Motivo Consulta y Enfermedad Actual -->
+                        <div class="columns">
+                            <div class="column">
+                                <label for="motivo_consulta" class="label is-small">Motivo de Consulta <strong style="color: red;">*</strong></label>
                                 <p class="control">
-                                    <label for="fecha_ingreso" class="label is-small">Fecha Ingreso <strong style="color: red;">*</strong></label>
-                                    <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="input is-small" readonly required>
-                                </p>
-                                <p class="control">
-                                    <label for="hora_ingreso" class="label is-small">Hora Ingreso <strong style="color: red;">*</strong></label>
-                                    <input type="text" name="hora_ingreso" id="hora_ingreso" class="input is-small" readonly required>
-                                </p>
-                                <p class="control">
-                                    <label for="servicio_ingreso" class="label is-small">Servicio Ingreso <strong style="color: red;">*</strong></label>
-                                    <input type="text" name="servicio_ingreso" id="servicio_ingreso" class="input is-small" readonly required>
+                                    <textarea name="motivo_consulta" id="motivo_consulta" class="textarea is-small" style="height: 20vh;" required></textarea>
                                 </p>
                             </div>
-                            <div class="field has-addons">
+                            <div class="column">
+                                <label for="enf_actual" class="label is-small">Enfermedad Actual <strong style="color: red;">*</strong></label>
                                 <p class="control">
-                                    <label for="fecha_salida" class="label is-small">Fecha Salida <strong style="color: red;">*</strong></label>
-                                    <input type="text" name="fecha_salida" id="fecha_salida" class="input is-small" readonly required>
+                                    <textarea name="enf_actual" id="enf_actual" class="textarea is-small" style="height: 20vh;" required></textarea>
                                 </p>
+                            </div>
+                        </div>
+                        <!-- Antecedentes y Hallazgo de examen fisico -->
+                        <div class="columns">
+                            <div class="column">
+                                <label for="antecedentes" class="label is-small">Antecedentes Personales y Familiares <strong style="color: red;">*</strong></label>
                                 <p class="control">
-                                    <label for="hora_salida" class="label is-small">Hora Salida <strong style="color: red;">*</strong></label>
-                                    <input type="text" name="hora_salida" id="hora_salida" class="input is-small" readonly required>
+                                    <textarea name="antecedentes" id="antecedentes" class="textarea is-small" style="height: 20vh;" required></textarea>
                                 </p>
+                            </div>
+                            <div class="column">
+                                <label for="examen_fisico" class="label is-small">Hallazgos de Examen Fisico <strong style="color: red;">*</strong></label>
                                 <p class="control">
-                                    <label for="servicio_salida" class="label is-small">Servicio Salida <strong style="color: red;">*</strong></label>
-                                    <input type="text" name="servicio_salida" id="servicio_salida" class="input is-small" readonly required>
+                                    <textarea name="examen_fisico" id="examen_fisico" class="textarea is-small" style="height: 20vh;" required></textarea>
                                 </p>
+                            </div>
+                        </div>
+                        <!-- Diagnostico de Ingreso -->
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label for="cod_diag_ingreso" class="label is-small">Diagnostico de Ingreso: <strong style="color: red;">*</strong></label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input type="text" name="cod_diag_ingreso" id="cod_diag_ingreso" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input type="text" name="nom_diag_ingreso" id="nom_diag_ingreso" class="input is-small" readonly required>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+        <!-- Botones -->
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="button" class="button is-small is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a id="btn_cancelar" class="button is-small is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
         </div>
-    </section>
-    <!-- Botones -->
-    <div class="field is-grouped is-grouped-centered">
-        <p class="control">
-            <button type="button" class="button is-small is-success">
-                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
-                <span>Guardar</span>
-            </button>
-        </p>
-        <p class="control">
-            <a id="btn_cancelar" class="button is-small is-danger">
-                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
-                <span>Cancelar</span>
-            </a>
-        </p>
-    </div>
+    </form>
 </div>
 
 <!-- Modal Busqueda de Pacientes -->
