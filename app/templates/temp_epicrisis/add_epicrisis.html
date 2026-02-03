@@ -145,6 +145,67 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Conductas y Cambios en paciente -->
+                        <div class="columns">
+                            <div class="column">
+                                <label for="conducta" class="label is-small">Conductas <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="conducta" id="conducta" class="textarea is-small" style="height: 20vh;" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="cambio" class="label is-small">Cambios en paciente que modifiquen manejo <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="cambio" id="cambio" class="textarea is-small" style="height: 20vh;" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Procedimientos y Justificación -->
+                        <div class="columns">
+                            <div class="column">
+                                <label for="procedimientos" class="label is-small">Procedimientos Diagnosticos <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="procedimientos" id="procedimientos" class="textarea is-small" style="height: 20vh;" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <label for="justificacion" class="label is-small">Justificación de Indicaciones Terapeuticas <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="justificacion" id="justificacion" class="textarea is-small" style="height: 20vh;" required></textarea>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Diagnostico de Egreso -->
+                        <div class="field is-horizontal">
+                            <div class="field-label" style="font-size: small;">
+                                <label for="cod_diag_egreso" class="label is-small">Diagnostico de Egreso: <strong style="color: red;">*</strong></label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input type="text" name="cod_diag_egreso" id="cod_diag_egreso" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <input type="text" name="nom_diag_egreso" id="nom_diag_egreso" class="input is-small" readonly required>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Plan de Manejo y Estado a la Salida -->
+                        <div class="columns">
+                            <div class="column">
+                                <label for="plan_manejo" class="label is-small">Plan de Manejo Ambulatorio <strong style="color: red;">*</strong></label>
+                                <p class="control">
+                                    <textarea name="plan_manejo" id="plan_manejo" class="textarea is-small" style="height: 20vh;" required></textarea>
+                                </p>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label for="estado_salida" class="label is-small">Estado a la Salida <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="estado_salida" id="estado_salida" class="input is-small" required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
