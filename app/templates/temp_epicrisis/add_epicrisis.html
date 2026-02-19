@@ -142,6 +142,9 @@
                                     <p class="control is-expanded">
                                         <input type="text" name="nom_diag_ingreso" id="nom_diag_ingreso" class="input is-small" readonly required>
                                     </p>
+                                    <p class="control">
+                                        <a class="button is-small has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal_busquedaDiagnosticosEpicrisis">...</a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -187,6 +190,22 @@
                                     </p>
                                     <p class="control is-expanded">
                                         <input type="text" name="nom_diag_egreso" id="nom_diag_egreso" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control">
+                                        <a class="button is-small has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Diagnostico" data-target="modal_busquedaDiagnosticosEpicrisis">...</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label"></div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <p class="control">
+                                        <button id="corregir_diagnosticos" type="button" class="button is-small is-primary">
+                                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png')}}" alt="icon"></i></span>
+                                            <span>Corregir Diagnosticos</span>
+                                        </button>
                                     </p>
                                 </div>
                             </div>
@@ -327,6 +346,33 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<!-- Modal Busqueda de Diagnosticos -->
+<div id="modal_busquedaDiagnosticosEpicrisis" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Diagnosticos</h5>
+            <table id="tablaBusquedaDiagnosticosEpicrisis" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 25%;">Código</th>
+                        <th scope="col" style="width: 75%;">Diagnostico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for diagnostico in diagnosticos %}
+                    <tr>
+                        <td style="width: 25%;">{{ diagnostico.codigo }}</td>
+                        <td style="width: 75%;">{{ diagnostico.nombre }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close"></button>

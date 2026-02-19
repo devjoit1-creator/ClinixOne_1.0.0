@@ -196,6 +196,31 @@ function ocultarCont(){
     $tabAtencionesHosp.classList.add("is-hidden");
 };
 
+/* Obtener Datos de diagnostico desde modal  */
+const $tablaBusquedaDiagnosticosEpicrisis = document.getElementById("tablaBusquedaDiagnosticosEpicrisis");
+$tablaBusquedaDiagnosticosEpicrisis.addEventListener("click", (e) => {
+    e.stopPropagation();
+    let data = e.target.parentElement.children;
+    if($cod_diag_ingreso.value === '' && $nom_diag_ingreso.value === ''){
+        $cod_diag_ingreso.value = data[0].innerText;
+        $nom_diag_ingreso.value = data[1].innerText;
+    }else if ($cod_diag_egreso.value === '' && $nom_diag_egreso.value === '') {
+        $cod_diag_egreso.value = data[0].innerText;
+        $nom_diag_egreso.value = data[1].innerText;
+    };
+    closeAllModals();
+})
+
+/* Limpiar Campos de Diagnosticos */
+const $corregir_diagnosticos = document.getElementById("corregir_diagnosticos");
+$corregir_diagnosticos.addEventListener("click", (e) => {
+    e.preventDefault();
+    $cod_diag_ingreso.value = "";
+    $nom_diag_ingreso.value = "";
+    $cod_diag_egreso.value = "";
+    $nom_diag_egreso.value = "";
+})
+
 /* Modo Cancelar */
 $btn_cancelar.addEventListener("click", (e) => {
     e.preventDefault();

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
-from app.services import paciente_service, epicrisis_service
+from app.services import paciente_service, epicrisis_service, diagnosticos_cie10
 import mysql.connector.errors as error
 
 bp_epicrisis = Blueprint('epicrisis', __name__)
@@ -13,7 +13,8 @@ def epicrisis():
 @bp_epicrisis.get('/add_epicrisis')
 def add_epicrisis():
     pacientes = paciente_service.listar_pacientes_modal()
-    return render_template('temp_epicrisis/add_epicrisis.html', pacientes = pacientes)
+    diagnosticos = diagnosticos_cie10.listar_diagnosticos()
+    return render_template('temp_epicrisis/add_epicrisis.html', pacientes = pacientes, diagnosticos = diagnosticos)
 
 #Ruta Ajax para obtener las atenciones de consulta por paciente y medico
 @bp_epicrisis.post('/getAtencionesConsultaEpicrisis')
