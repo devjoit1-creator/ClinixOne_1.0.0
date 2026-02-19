@@ -14,7 +14,7 @@
 {% block content %}
 <h5 class="title is-5">Nueva Epicrisis</h5>
 <div class="container">
-    <form id="" action="#" method="post">
+    <form id="form_addepicrisis" action="{{ url_for('epicrisis.f_addEpicrisis') }}" method="post">
         <section class="inter-scrollable-section">
             <div class="card">
                 <header class="card-header">
@@ -202,7 +202,22 @@
                             <div class="column">
                                 <div class="field">
                                     <label for="estado_salida" class="label is-small">Estado a la Salida <strong style="color: red;">*</strong></label>
-                                    <input type="text" name="estado_salida" id="estado_salida" class="input is-small" required>
+                                    <span class="select is-small">
+                                        <select name="estado_salida" id="estado_salida" required>
+                                            <option value=""></option>
+                                            <option value="01">PACIENTE CON DESTINO A SU DOMICILIO</option>
+                                            <option value="02">PACIENTE MUERTO</option>
+                                            <option value="03">PACIENTE DERIVADO A OTRO SERVICIO</option>
+                                            <option value="04">REFERIDO A OTRA INSTITUCIÓN</option>
+                                            <option value="05">CONTRA REFERIDO A OTRA INSTITUCIÓN</option>
+                                            <option value="06">DERIVADO O REFERIDO A HOSPITALIZACION DOMICILIARIA</option>
+                                            <option value="07">DERIVADO A SERVICIO SOCIAL</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="field">
+                                    <label for="remitido_a" class="label is-small">Si fue remitido indique</label>
+                                    <input type="text" name="remitido_a" id="remitido_a" class="input is-small">
                                 </div>
                             </div>
                         </div>
@@ -213,7 +228,7 @@
         <!-- Botones -->
         <div class="field is-grouped is-grouped-centered">
             <p class="control">
-                <button type="button" class="button is-small is-success">
+                <button type="submit" class="button is-small is-success">
                     <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
                     <span>Guardar</span>
                 </button>
@@ -261,7 +276,7 @@
 <div id="modal_resultadoAtenciones" class="modal is-hidden">
     <div class="modal-background"></div>
     <div class="modal-content">
-        <div class="box">
+        <div class="box is-large">
             <h5 class="title is-5">Consultar Atenciones</h5>
             <div class="tabs is-boxed">
                 <!-- Lista para Pestañas -->

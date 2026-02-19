@@ -57,3 +57,25 @@ def listar_atenciones_hosp_epicrisis(paciente, medico):
     
     finally:
         conn.close()
+
+#Insertar Nueva Epicrisis
+def insert_epriciris(codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
+                     motivo_consulta, enf_actual, antecedentes, examen_fisico, cod_diag_ingreso, nom_diag_ingreso, conducta,
+                     cambio, procedimientos, justificacion, cod_diag_egreso, nom_diag_egreso, plan_manejo, estado_salida, remitido_a):
+    
+    conn = db.connection()
+    query = """ INSERT INTO epicrisis 
+                (codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
+                motivo_consulta, enf_actual, antecedentes, examen_fisico, cod_diag_ingreso, nom_diag_ingreso, conducta,
+                cambio, procedimientos, justificacion, cod_diag_egreso, nom_diag_egreso, plan_manejo, estado_salida, remitido_a) 
+                VALUES 
+                (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
+    
+    params = (codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
+              motivo_consulta, enf_actual, antecedentes, examen_fisico, cod_diag_ingreso, nom_diag_ingreso, conducta,
+              cambio, procedimientos, justificacion, cod_diag_egreso, nom_diag_egreso, plan_manejo, estado_salida, remitido_a)
+    
+    with conn.cursor() as cursor:
+        cursor.execute(query, params)
+        conn.commit()
+        conn.close()

@@ -10,8 +10,13 @@ const $servicio_ingreso = document.getElementById("servicio_ingreso");
 const $fecha_salida = document.getElementById("fecha_salida");
 const $hora_salida = document.getElementById("hora_salida");
 const $servicio_salida = document.getElementById("servicio_salida");
+const $cod_diag_ingreso = document.getElementById("cod_diag_ingreso");
+const $nom_diag_ingreso = document.getElementById("nom_diag_ingreso");
+const $cod_diag_egreso = document.getElementById("cod_diag_egreso");
+const $nom_diag_egreso = document.getElementById("nom_diag_egreso");
 const $btn_consultar = document.getElementById("btn_consultar");
 const $btn_cancelar = document.getElementById("btn_cancelar");
+const $form_addepicrisis = document.getElementById("form_addepicrisis");
 
 /* Constantes Modal Pacientes */
 const $tablaBusquedaPacientesEpicrisis = document.getElementById("tablaBusquedaPacientesEpicrisis");
@@ -211,6 +216,43 @@ $btn_cancelar.addEventListener("click", (e) => {
         }
     })
 });
+
+/* Validar Formulario */
+$form_addepicrisis.addEventListener("submit", (e) => {
+    /* Variables Internas */
+    let codigo = $codigo.value;
+    let atencion = $atencion.value;
+    let fechaIngreso = $fecha_ingreso.value;
+    let horaIngreso = $hora_ingreso.value;
+    let servicioIngreso = $servicio_ingreso.value;
+    let fechaSalida = $fecha_salida.value;
+    let horaSalida = $hora_salida.value;
+    let servicioSalida = $servicio_salida.value;
+    let codDiagIngreso = $cod_diag_ingreso.value;
+    let nomDiagIngreso = $nom_diag_ingreso.value;
+    let codDiagEgreso = $cod_diag_egreso.value;
+    let nomDiagEgreso = $nom_diag_egreso.value;
+
+    if(!codigo || !atencion || !fechaIngreso || !horaIngreso || !servicioIngreso || !fechaSalida || !horaSalida || !servicioSalida || 
+        !codDiagIngreso || !nomDiagIngreso || !codDiagEgreso || !nomDiagEgreso
+    ){
+        e.preventDefault();
+        Swal.fire({
+            title:"Advertencia!",
+            text: "Debe diligenciar todos los campos obligatorios (*)",
+            icon: "warning"
+        });
+        return;
+    }
+
+    /* Loading */
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => { Swal.showLoading() }
+    })
+})
 
 /* Funciones para cerrar modal */
 function closeModal($el) {
