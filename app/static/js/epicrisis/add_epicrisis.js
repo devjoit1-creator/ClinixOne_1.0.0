@@ -1,4 +1,6 @@
 /* Constantes Formulario */
+const $fecha_registro = document.getElementById("fecha_registro");
+const $hora_registro = document.getElementById("hora_registro");
 const $tipo_doc = document.getElementById("tipo_doc");
 const $codigo = document.getElementById("codigo");
 const $paciente = document.getElementById("paciente");
@@ -17,6 +19,27 @@ const $nom_diag_egreso = document.getElementById("nom_diag_egreso");
 const $btn_consultar = document.getElementById("btn_consultar");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 const $form_addepicrisis = document.getElementById("form_addepicrisis");
+
+/* Obtener Fecha y Hora Actual */
+document.addEventListener("DOMContentLoaded", () => {
+    let fecha = new Date();
+    let anio = fecha.getFullYear();
+    let mes = fecha.getMonth() + 1;
+    let dia = fecha.getDate();
+
+    if(mes < 10){
+        mes = "0" + mes;
+    };
+
+    if(dia < 10){
+        dia = "0" + dia;
+    };
+    $fecha_registro.value = anio + "-" + mes + "-" + dia;
+
+    let hora = fecha.getHours().toString().padStart(2, "0");
+    let minutos = fecha.getMinutes().toString().padStart(2, "0");
+    $hora_registro.value = `${hora}:${minutos}`;
+})
 
 /* Constantes Modal Pacientes */
 const $tablaBusquedaPacientesEpicrisis = document.getElementById("tablaBusquedaPacientesEpicrisis");

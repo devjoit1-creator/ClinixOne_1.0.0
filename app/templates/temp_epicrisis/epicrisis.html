@@ -28,8 +28,37 @@
         </header>
         <div class="card-content">
             <div class="content">
+                <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
+                <div class="field is-grouped">
+                    <!-- Busqueda por documento de paciente -->
+                    <p class="control">
+                        <label for="num_doc" class="label is-small">Busqueda por No. Documento Paciente:</label>
+                    </p>
+                    <p class="control">
+                        <input type="text" name="num_doc" id="num_doc" class="input is-small">
+                    </p>
+                    <p class="control">
+                        <a id="btn_buscar" class="button is-small is-info has-tooltip-bottom" data-tooltip="Buscar Registros">
+                            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                        </a>
+                    </p>
+                </div>
                 <section class="inter-scrollable-section">
-
+                    <!-- Tabla Principal de Epicrisis -->
+                    <table id="tablaEpicrisis" class="table is-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 10%; font-size: small;">ID</th>
+                                <th scope="col" style="width: 5%; font-size: small;">Atención</th>
+                                <th scope="col" style="width: 10%; font-size: small;">Documento</th>
+                                <th scope="col" style="width: 35%; font-size: small;">Paciente</th>
+                                <th scope="col" style="width: 10%; font-size: small;">Fecha Reg.</th>
+                                <th scope="col" style="width: 10%; font-size: small;">Hora Reg.</th>
+                                <th scope="col" style="width: 20%; font-size: small;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </section>
             </div>
         </div>
@@ -52,4 +81,5 @@
     {% endif %}
 {% endwith %}
 
+<script src="{{ url_for('static', filename='js/epicrisis/epicrisis.js') }}"></script>
 {% endblock %}

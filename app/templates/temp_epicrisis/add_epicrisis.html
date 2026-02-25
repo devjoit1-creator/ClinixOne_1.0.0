@@ -18,13 +18,24 @@
         <section class="inter-scrollable-section">
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title">Datos del Paciente</p>
+                    <p class="card-header-title">Datos de Registro y del Paciente</p>
                 </header>
                 <div class="card-content">
                     <div class="content">
                         <input type="text" name="medico" id="medico" value="{{ session['document'] }}" hidden>
                         <div class="field is-horizontal">
                             <div class="field-body">
+                                <div class="field is-grouped">
+                                    <p class="control is-expanded">
+                                        <label for="fecha_registro" class="label is-small">Fecha Registro <strong style="color: red;">*</strong></label>
+                                        <input type="date" name="fecha_registro" id="fecha_registro" class="input is-small" readonly required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="hora_registro" class="label is-small">Hora Registro <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="hora_registro" id="hora_registro" class="input is-small" readonly required>
+                                    </p>
+                                </div>
+
                                 <div class="field has-addons">
                                     <p class="control">
                                         <label for="tipo_doc" class="label is-small">Tipo Documento</label>

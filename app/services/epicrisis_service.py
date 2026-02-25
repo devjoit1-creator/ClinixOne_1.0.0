@@ -59,19 +59,19 @@ def listar_atenciones_hosp_epicrisis(paciente, medico):
         conn.close()
 
 #Insertar Nueva Epicrisis
-def insert_epriciris(codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
+def insert_epriciris(fecha_registro, hora_registro, codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
                      motivo_consulta, enf_actual, antecedentes, examen_fisico, cod_diag_ingreso, nom_diag_ingreso, conducta,
                      cambio, procedimientos, justificacion, cod_diag_egreso, nom_diag_egreso, plan_manejo, estado_salida, remitido_a):
     
     conn = db.connection()
     query = """ INSERT INTO epicrisis 
-                (codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
+                (fecha_registro, hora_registro, codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
                 motivo_consulta, enf_actual, antecedentes, examen_fisico, cod_diag_ingreso, nom_diag_ingreso, conducta,
                 cambio, procedimientos, justificacion, cod_diag_egreso, nom_diag_egreso, plan_manejo, estado_salida, remitido_a) 
                 VALUES 
-                (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
+                (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
     
-    params = (codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
+    params = (fecha_registro, hora_registro, codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
               motivo_consulta, enf_actual, antecedentes, examen_fisico, cod_diag_ingreso, nom_diag_ingreso, conducta,
               cambio, procedimientos, justificacion, cod_diag_egreso, nom_diag_egreso, plan_manejo, estado_salida, remitido_a)
     
@@ -79,3 +79,32 @@ def insert_epriciris(codigo, medico, atencion, fecha_ingreso, hora_ingreso, serv
         cursor.execute(query, params)
         conn.commit()
         conn.close()
+
+#Listar todas las epicrisis por medico y paciente
+def listar_epicrisis(paciente, medico):
+    registros = []
+    conn = db.connection()
+    query = """ SELECT e.id_epicrisis ID, e.atencion ATENCION, e.codigo DOCUMENTO, CONCAT(p.p_apellido,' ',p.s_apellido,' ',p.p_nombre,' ',p.s_nombre) PACIENTE,
+                e.fecha_registro, e.hora_registro 
+                FROM epicrisis e 
+                LEFT JOIN pacientes p ON p.num_doc = e.codigo
+                LEFT JOIN medicos m ON m.num_documento = e.medico   
+                WHERE e.codigo = %s and e.medico = %s """
+    params = (paciente, medico)
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query, params)
+            result = cursor.fetchall()
+            for row in result:
+                registros.append({'ID': row[0], 'atencion': row[1], 'documento': row[2], 'paciente': row[3], 'fecha': row[4].strftime("%Y-%m-%d"), 'hora': row[5]})
+
+        return registros        
+
+    except Exception as ex:
+        print(f"Se presentó un error inesperado: {ex}")
+        conn.rollback()
+        raise ex
+    
+    finally:
+        conn.close()
+        

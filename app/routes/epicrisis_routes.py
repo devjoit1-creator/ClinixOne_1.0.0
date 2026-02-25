@@ -9,6 +9,26 @@ bp_epicrisis = Blueprint('epicrisis', __name__)
 def epicrisis():
     return render_template('temp_epicrisis/epicrisis.html')
 
+#Ruta Ajax para obtener todos los registros de Epicrisis por paciente y medico
+@bp_epicrisis.post('/getRegistrosEpicrisis')
+def getRegistrosEpicrisis():
+    try:
+        data = request.get_json()
+        paciente = data.get("paciente")
+        medico = data.get("medico")
+        registros = epicrisis_service.listar_epicrisis(paciente, medico)
+        if registros:
+            return jsonify(registros), 200
+        
+        else:
+            return jsonify({"Error": "No se encontraron registros asociados"}), 200
+
+    except error.Error as e:
+        return jsonify({"Error": f"{e.msg}"}), 500
+    
+    except Exception as ex:
+        return jsonify({"Error": f"{e}"}), 500
+
 #Ruta Ventana Nueva Epicrisis
 @bp_epicrisis.get('/add_epicrisis')
 def add_epicrisis():
@@ -59,6 +79,8 @@ def getAtencionesHospEpicrisis():
 @bp_epicrisis.post('/f_addEpicrisis')
 def f_addEpicrisis():
     try:
+        fecha_registro = request.form["fecha_registro"]
+        hora_registro = request.form["hora_registro"]
         codigo = request.form["codigo"]
         medico = request.form["medico"]
         atencion = request.form["atencion"]
@@ -84,7 +106,7 @@ def f_addEpicrisis():
         estado_salida = request.form["estado_salida"]
         remitido_a = request.form["remitido_a"]
 
-        epicrisis_service.insert_epriciris(codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
+        epicrisis_service.insert_epriciris(fecha_registro, hora_registro, codigo, medico, atencion, fecha_ingreso, hora_ingreso, servicio_ingreso, fecha_salida, hora_salida, servicio_salida,
                                            motivo_consulta, enf_actual, antecedentes, examen_fisico, cod_diag_ingreso, nom_diag_ingreso, conducta, cambio, procedimientos,
                                            justificacion, cod_diag_egreso, nom_diag_egreso, plan_manejo, estado_salida, remitido_a)
 
