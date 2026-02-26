@@ -107,4 +107,24 @@ def listar_epicrisis(paciente, medico):
     
     finally:
         conn.close()
-        
+
+#Listar Datos de Epicrisis por ID        
+def listar_epicrisis_id(id):
+    epicrisis = None
+    conn = db.connection()
+    query = """ SELECT * FROM epicrisis WHERE id_epicrisis = %s """
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query, (id, ))
+            result = cursor.fetchone()
+            epicrisis = result
+
+        return epicrisis
+
+    except Exception as ex:
+        print(f"Se presentó un error inesperado: {ex}")
+        conn.rollback()
+        raise ex
+
+    finally:
+        conn.close()    

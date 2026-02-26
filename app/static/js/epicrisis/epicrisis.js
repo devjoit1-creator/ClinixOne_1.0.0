@@ -3,6 +3,9 @@ const $num_doc = document.getElementById("num_doc");
 const $medico = document.getElementById("medico");
 const $btn_buscar = document.getElementById("btn_buscar");
 const $tablaEpicrisis = document.getElementById("tablaEpicrisis");
+const $modal_vistaPreviaEpicrisis = document.getElementById("modal_vistaPreviaEpicrisis");
+const $iframeEpicrisis = document.getElementById("iframeEpicrisis");
+const $btn_cerrarModal = document.getElementById("btn_cerrarModal");
 
 /* Validar Busqueda */
 const validar = () => {
@@ -65,9 +68,28 @@ const getRegistrosEpicrisis = () => {
             <td style="width: 35%; font-size: small;">${registro.paciente}</td>
             <td style="width: 10%; font-size: small;">${registro.fecha}</td>
             <td style="width: 10%; font-size: small;">${registro.hora}</td>
-            <td style="width: 20%; font-size: small;"></td>
+            <td style="width: 20%; font-size: small;">
+                <a onclick="activarModal(${registro.ID}, '${registro.documento}', '${medico}')" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Ver PDF">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="./static/img/icons/pdf.png" alt="icon"></i></span>
+                </a>
+            </td>
             `
         });
     })
     .catch(error => console.error("error: ", error))
 }
+
+/* Activar Modal */
+const activarModal = (id, idpac, idmed) => {
+    $modal_vistaPreviaEpicrisis.classList.remove("is-hidden");
+    $modal_vistaPreviaEpicrisis.classList.add("is-active");
+
+    $iframeEpicrisis.src = `/hc_epicrisis/${id}/${idpac}/${idmed}`;
+}
+
+/* Desactivar Modal */
+$btn_cerrarModal.addEventListener("click", (e) => {
+    e.preventDefault();
+    $modal_vistaPreviaEpicrisis.classList.remove("is-active");
+    $iframeEpicrisis.src = "";
+})

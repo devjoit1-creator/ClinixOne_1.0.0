@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
-from app.services import paciente_service, epicrisis_service, diagnosticos_cie10
+from app.services import paciente_service, epicrisis_service, diagnosticos_cie10, reportes_service, medico_service
+from flask_weasyprint import render_pdf, HTML
 import mysql.connector.errors as error
+from io import BytesIO
+import base64
 
 bp_epicrisis = Blueprint('epicrisis', __name__)
 
@@ -120,3 +123,25 @@ def f_addEpicrisis():
     except Exception as ex:
         flash(f"Se presentó un error inesperado: {ex}", "error")
         return redirect(url_for('epicrisis.epicrisis'))
+
+#Ruta Generar PDF Epicrisis
+@bp_epicrisis.get('/hc_epicrisis/<int:id>/<idpac>/<idmed>')
+def hc_epicrisis(id, idpac, idmed):
+    #Datos Entidad
+    entidad = reportes_service.listar_datos_entidad()
+    imagen = BytesIO(entidad[6])
+    if imagen:
+        logo = base64.b64encode(imagen.read()).decode('utf-8')
+
+    #Datos de paciente
+    paciente = paciente_service.listar_paciente_doc(idpac)
+    #Datos Registro Epicrisis
+    epicrisis = epicrisis_service.listar_epicrisis_id(id)
+    #Datos Medico Profesional     
+    medico = medico_service.listar_medico_firma(idmed)
+    imagen_firma = BytesIO(medico[0])
+    if imagen_firma:
+        firma = base64.b64encode(imagen_firma.read()).decode('utf-8')
+
+    html = render_template('temp_epicrisis/rp_epicrisis.html', entidad = entidad, logo = logo, paciente = paciente, epicrisis = epicrisis, medico = medico, firma = firma)
+    return render_pdf(HTML(string = html))
