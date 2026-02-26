@@ -35,6 +35,47 @@
     </tbody>
 </table>
 <br>
+<hr>
 <p style="text-align: right; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Fecha:</strong> {{ epicrisis.1 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Hora:</strong> {{ epicrisis.2 }}</p>
 <p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: x-small;"><strong>EPICRISIS</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Atención:</strong> {{ epicrisis.5 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Fecha Ingreso:</strong> {{ epicrisis.6 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Hora Ingreso:</strong> {{ epicrisis.7 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Servicio Ingreso:</strong> {{ epicrisis.8 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <strong>Fecha Egreso:</strong> {{ epicrisis.9 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>Hora Egreso:</strong> {{ epicrisis.10 }}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<strong>Servicio Egreso:</strong> {{ epicrisis.11 }}</p>
+<br>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Motivo de Consulta</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.12 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Enfermedad Actual</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.13 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Antecedentes Personales y Familiares</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.14 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Hallazgos en Examen Fisico</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.15 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico Ingreso:</strong> {{ epicrisis.16 }} - {{ epicrisis.17 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Conductas</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.18 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Cambios en paciente que modifiquen manejo</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.19 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Procedimientos Diagnosticos</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.20 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Justificación de Indicaciones Terapeuticas</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.21 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Diagnostico Egreso:</strong> {{ epicrisis.22 }} - {{ epicrisis.23 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Plan de Manejo Ambulatorio</strong></p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small; white-space: pre-line;">{{ epicrisis.24 }}</p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Estado a la salida del paciente: </strong>
+    {% if epicrisis.25 == '01' %}
+        PACIENTE CON DESTINO A SU DOMICILIO
+    {% elif epicrisis.25 == '02' %}
+        PACIENTE MUERTO
+    {% elif epicrisis.25 == '03' %}
+        PACIENTE DERIVADO A OTRO SERVICIO
+    {% elif epicrisis.25 == '04' %}    
+        REFERIDO A OTRA INSTITUCIÓN
+    {% elif epicrisis.25 == '05' %}    
+        CONTRA REFERIDO A OTRA INSTITUCIÓN
+    {% elif epicrisis.25 == '06' %}    
+        DERIVADO O REFERIDO A HOSPITALIZACION DOMICILIARIA
+    {% else %}    
+        DERIVADO A SERVICIO SOCIAL
+    {% endif %}
+</p>
 {% endblock %}

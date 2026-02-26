@@ -83,7 +83,6 @@ const getRegistrosEpicrisis = () => {
 const activarModal = (id, idpac, idmed) => {
     $modal_vistaPreviaEpicrisis.classList.remove("is-hidden");
     $modal_vistaPreviaEpicrisis.classList.add("is-active");
-
     $iframeEpicrisis.src = `/hc_epicrisis/${id}/${idpac}/${idmed}`;
 }
 
