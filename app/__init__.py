@@ -41,6 +41,9 @@ from app.routes.fuentes_routes import bp_fuentes
 from app.routes.rips_routes import bp_rips
 from app.routes.notascredito_routes import bp_notascredito
 
+# Importando los Blueprints RDA
+from app.routes.rda_routes import bp_rda
+
 #BluePrints Pendientes
 """ from app.routes.prevaloraciones_routes import prevaloraciones_blueprint
 
@@ -91,6 +94,8 @@ app.register_blueprint(bp_fuentes)
 app.register_blueprint(bp_rips)
 app.register_blueprint(bp_notascredito)
 
+# Registro Blueprints RDA
+app.register_blueprint(bp_rda)
 
 #Blueprints Pendientes
 """ app.register_blueprint(prevaloraciones_blueprint) """
