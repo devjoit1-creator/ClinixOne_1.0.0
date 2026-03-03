@@ -78,4 +78,18 @@
         DERIVADO A SERVICIO SOCIAL
     {% endif %}
 </p>
+<p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Remitido a: </strong> {{ epicrisis.26 }}</p>
+<br>
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <img src="data:image/png;base64,{{ firma }}" alt="firma-medico" style="width: 180px; height: 64px;">
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>{{ medico.1 }}</strong></p>
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>{{ medico.2 }}</strong></p>
+                <p style="text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: xx-small;"><strong>Doc.: {{ medico.3 }}, R.M.: {{ medico.4 }}</strong></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}
