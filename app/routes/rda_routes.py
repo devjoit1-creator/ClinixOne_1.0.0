@@ -1,7 +1,12 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, render_template, request, jsonify
 import requests
 
 bp_rda = Blueprint('rda', __name__)
+
+#Ruta Ventana Parametros API RDA
+@bp_rda.get('/transmisionRDA')
+def transmisionRDA():
+    return render_template('temp_rda/parametros.html')
 
 @bp_rda.post('/enviar_rda_paciente')
 def enviar_rda_paciente():
