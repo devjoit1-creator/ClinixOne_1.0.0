@@ -8,8 +8,8 @@ def enviar_rda_paciente():
     try:
         endpoint = "https://sandbox.ihcecol.gov.co/ihce"
         headers = {
-            "Authorization": "Bearer 3d4b3d76-b910-426c-bd8f-bd964e3e1b53",
-            "Ocp-Apim-Subscription-Key": "9ffb7a49797e459bab116c6f2029cae6",
+            "Authorization": "",
+            "Ocp-Apim-Subscription-Key": "",
             "Content-Type": "application/fhir+json"
         }
 
