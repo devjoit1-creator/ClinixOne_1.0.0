@@ -16,7 +16,7 @@
             </a>
         </p>
         <p class="control">
-            <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Información" data-target="#">
+            <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Información" data-target="modalInfoRDA">
                 <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/info.png') }}" alt="icon"></i></span>
             </a>
         </p>
@@ -41,8 +41,35 @@
     </div>
 </div>
 
+<!-- Modal Informacion -->
+<div id="modalInfoRDA" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Información</h5>
+            <p style="text-align: justify; font-size: x-small;">
+                Para la Parametrización y Transmisión de Interoperabilidad de la Historia Clinica Electronica IHCE. Se deben solicitar las respectivas llaves
+                al Ministerio de Salud y Protección Social MSPS. A través de la plataforma SISPRO-IHCE cumpliendo los respectivos criterios.
+            </p>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
 {% endblock %}
 
 {% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            Swal.fire({
+                title: "Notificación!",
+                text: "{{ message }}",
+                icon: "{{ category }}"
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
 {% endblock %}
