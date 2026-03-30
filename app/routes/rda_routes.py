@@ -8,6 +8,11 @@ bp_rda = Blueprint('rda', __name__)
 def transmisionRDA():
     return render_template('temp_rda/parametros.html')
 
+#Ruta Ventana Nuevo Parametro Transmisión RDA
+@bp_rda.get('/add_parametro')
+def add_parametro():
+    return render_template('temp_rda/add_parametro.html')
+
 @bp_rda.post('/enviar_rda_paciente')
 def enviar_rda_paciente():
     try:

@@ -1,0 +1,77 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+
+{% endblock %}
+{% block title %} Nuevos Parametros RDA {% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nuevo Parametro API RDA</h5>
+<div class="container">
+    <form id="form_addparametrorda" action="#" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Complete la información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="ambiente" class="label is-small"><strong style="color: red;">*</strong> Ambiente:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <span class="select">
+                                    <select name="ambiente" id="ambiente" required>
+                                        <option value=""></option>
+                                        <option value="PREPRODUCCION">PREPRODUCCIÓN</option>
+                                        <option value="PRODUCCION">PRODUCCIÓN</option>
+                                    </select>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="button" class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a onclick="confirmacion()" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<!-- Modo Cancelar -->
+<script>
+    const confirmacion = () => {
+        Swal.fire({
+            title: "Estas Seguro(a)?",
+            text: "Los cambios no se guardarán!",
+            icon: "question",
+            confirmButtonText: "Si, Cancelar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Continuar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `{{ url_for('rda.transmisionRDA') }}`
+            }
+        })
+    }
+</script>
+{% endblock %}

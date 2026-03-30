@@ -3,14 +3,14 @@
 {% block css %}
 
 {% endblock %}
-{% block title %} Transmisión RDA {% endblock %}
+{% block title %} Parametrización RDA {% endblock %}
 
 {% block content %}
 <h5 class="title is-5">Parametrización API RDA</h5>
 <div class="container">
     <div class="field is-grouped">
         <p class="control">
-            <a href="#" class="button is-small is-info">
+            <a href="{{ url_for('rda.add_parametro') }}" class="button is-small is-info">
                 <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
                 <span>Nuevos Parametros</span>
             </a>
