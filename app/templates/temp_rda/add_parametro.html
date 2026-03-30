@@ -8,7 +8,7 @@
 {% block content %}
 <h5 class="title is-5">Nuevo Parametro API RDA</h5>
 <div class="container">
-    <form id="form_addparametrorda" action="#" method="post">
+    <form id="form_addparametrorda" action="{{ url_for('rda.f_addparametro') }}" method="post">
         <div class="card">
             <header class="card-header">
                 <p class="card-header-title">Complete la información</p>
@@ -17,7 +17,7 @@
                 <div class="content">
                     <div class="field is-horizontal">
                         <div class="field-label">
-                            <label for="ambiente" class="label is-small"><strong style="color: red;">*</strong> Ambiente:</label>
+                            <label for="ambiente" class="label"><strong style="color: red;">*</strong> Ambiente:</label>
                         </div>
                         <div class="field-body">
                             <div class="field">
@@ -31,12 +31,42 @@
                             </div>
                         </div>
                     </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="tenantid" class="label"><strong style="color: red;">*</strong> Tenant ID:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <input type="text" name="tenantid" id="tenantid" class="input" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="scope" class="label"><strong style="color: red;">*</strong> Scope:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <input type="text" name="scope" id="scope" class="input" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label for="subskey" class="label"><strong style="color: red;">*</strong> APIMsubskey:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <input type="text" name="subskey" id="subskey" class="input" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="field is-grouped is-grouped-centered">
             <p class="control">
-                <button type="button" class="button is-normal is-success">
+                <button type="submit" class="button is-normal is-success">
                     <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
                     <span>Guardar</span>
                 </button>
@@ -53,7 +83,7 @@
 {% endblock %}
 
 {% block scripts %}
-
+<script src="{{ url_for('static', filename='js/rda/add_parametro.js') }}"></script>
 <!-- Modo Cancelar -->
 <script>
     const confirmacion = () => {

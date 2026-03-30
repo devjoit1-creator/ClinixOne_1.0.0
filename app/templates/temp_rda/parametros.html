@@ -30,10 +30,27 @@
                 <!-- Tabla Registros RDA -->
                 <table id="tablaParametrosRDA" class="table is-striped" style="width: 100%;">
                     <thead>
-
+                        <tr>
+                            <th scope="col" style="width: 10%;">ID</th>
+                            <th scope="col" style="width: 50%;">Ambiente</th>
+                            <th scope="col" style="width: 30%;">Acciones</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        
+                        {% for parametro in parametros %}
+                        <tr>
+                            <td class="valor_idparametro" style="width: 10%;">{{ parametro.id }}</td>
+                            <td style="width: 50%;">{{ parametro.ambiente }}</td>
+                            <td style="width: 30%;">
+                                <a href="#" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                </a>
+                                <a onclick="confirmacion()" class="enlace_eliminar button is-small is-danger has-tooltip-bottom" data-tooltip="Eliminar" style="padding: 0em 1.0em;">
+                                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/basura.png') }}" alt="icon"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -72,4 +89,33 @@
     {% endif %}
 {% endwith %}
 
+<script>
+    const confirmacion = (id_parametro) => {
+        Swal.fire({
+            title: "Esta Seguro?",
+            text: "Esta acción no se puede revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, Eliminar!",
+            confirmButtonColor: "#48c78e",
+            cancelButtonText: "No, Cancelar",
+            cancelButtonColor: "#f14668",
+            showCancelButton: true,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/drop_parametro/${id_parametro}`
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $('#tablaParametrosRDA').off('click', '.enlace_eliminar').on('click', '.enlace_eliminar', function(event){
+            event.preventDefault();
+            const fila = $(this).closest('tr');
+            let id_parametro = fila.find('.valor_idparametro').text();
+            confirmacion(id_parametro);
+        })
+    })
+</script>
 {% endblock %}
