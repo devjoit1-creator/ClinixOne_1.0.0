@@ -20,7 +20,19 @@ def listar_parametrosrda():
         raise ex
 
     finally:
-        conn.close()        
+        conn.close()
+
+def listar_parametrosrda_prueba():
+    parametro = None
+    conn = db.connection()
+    query =  """ SELECT tenantid, subskey FROM parametros_rda WHERE id_parametro = 1 """
+    with conn.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor.fetchone()
+        parametro = {'tenantid': result, 'subskey': result}
+
+    conn.close
+    return parametro        
 
 #Metodo Insert Nuevo Parametro RDA
 def insert_parametrorda(ambiente, tenantid, scope, subskey):

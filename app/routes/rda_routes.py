@@ -56,28 +56,142 @@ def drop_parametro(id):
 @bp_rda.post('/enviar_rda_paciente')
 def enviar_rda_paciente():
     try:
+        parametro = rda_service.listar_parametrosrda_prueba()
+        tenantid = str(parametro['tenantid'])
+        subskey = str(parametro['subskey'])
         endpoint = "https://sandbox.ihcecol.gov.co/ihce"
         headers = {
-            "Authorization": "",
-            "Ocp-Apim-Subscription-Key": "",
+            "Authorization": f"Bearer {tenantid}",
+            "Ocp-Apim-Subscription-Key": subskey,
             "Content-Type": "application/fhir+json"
         }
 
-        payload = {
+        json = {
             "resourceType": "Bundle",
             "type": "document",
-            "entry": [{
-               "resource":  "Patient",
-               "identifier": [
+            "timestamp": "2026-03-06T15:38:00-05:00",
+            "entry": [
+                {
+                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130001",
+                "resource": {
+                    "resourceType": "Composition",
+                    "id": "RDA-2026-001",
+                    "status": "final",
+                    "type": {
+                    "coding": [
+                        {
+                        "system": "http://loinc.org",
+                        "code": "11488-4",
+                        "display": "Consultation Note"
+                        }
+                    ],
+                    "text": "Resumen Digital de Atención (RDA)"
+                    },
+                    "subject": { "reference": "Patient/CC-1140839950" },
+                    "date": "2026-03-06T15:38:00-05:00",
+                    "author": [
                     {
-                        "system": "https://registro.nacional/id",
-                        "value": "800123456"
+                        "reference": "Practitioner/CC-72428280",
+                        "display": "Darwin Garcia"
                     }
-                ]
-            }]
-        }
+                    ],
+                    "title": "Resumen de Atención Médica",
+                    "custodian": { "reference": "Organization/NIT-800123456" },
+                    "section": [
+                    {
+                        "title": "Motivo de consulta",
+                        "code": {
+                        "coding": [{ "system": "http://loinc.org", "code": "46239-0" }]
+                        },
+                        "text": {
+                        "status": "generated",
+                        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Paciente refiere dolor abdominal agudo...</div>"
+                        }
+                    },
+                    {
+                        "title": "Diagnósticos",
+                        "entry": [{ "reference": "Condition/diag-001" }]
+                    }
+                    ]
+                }
+                },
+                {
+                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130002",
+                "resource": {
+                    "resourceType": "Patient",
+                    "id": "CC-1140839950",
+                    "identifier": [
+                    {
+                        "use": "official",
+                        "type": {
+                        "coding": [
+                            {
+                            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                            "code": "CC"
+                            }
+                        ]
+                        },
+                        "system": "https://www.sispro.gov.co/get-identificacion-paciente",
+                        "value": "1140839950"
+                    }
+                    ],
+                    "name": [{ "family": "Orozco", "given": ["Julio", "Manuel"] }],
+                    "gender": "male",
+                    "birthDate": "1991-04-20",
+                    "address": [{ "city": "Barranquilla", "country": "CO" }]
+                }
+                },
+                {
+                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130003",
+                "resource": {
+                    "resourceType": "Organization",
+                    "id": "NIT-901001375",
+                    "identifier": [
+                    {
+                        "system": "https://www.sispro.gov.co/get-identificacion-ips",
+                        "value": "901001375"
+                    }
+                    ],
+                    "name": "PROSPERIDAD IPS S.A.S."
+                }
+                },
+                {
+                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130004",
+                "resource": {
+                    "resourceType": "Condition",
+                    "id": "diag-001",
+                    "clinicalStatus": {
+                    "coding": [
+                        {
+                        "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                        "code": "active"
+                        }
+                    ]
+                    },
+                    "verificationStatus": {
+                    "coding": [
+                        {
+                        "system": "http://terminology.hl7.org/CodeSystem/condition-verif",
+                        "code": "confirmed"
+                        }
+                    ]
+                    },
+                    "code": {
+                    "coding": [
+                        {
+                        "system": "http://hl7.org/fhir/sid/icd-10",
+                        "code": "K358",
+                        "display": "Apendicitis aguda"
+                        }
+                    ]
+                    },
+                    "subject": { "reference": "Patient/CC-1140839950" }
+                }
+                }
+            ]
+            }
 
-        respuesta = requests.post(endpoint, headers=headers, json=payload)
+        respuesta = requests.post(endpoint, headers=headers, json=json)
 
         return jsonify({
             "estado": respuesta.status_code,

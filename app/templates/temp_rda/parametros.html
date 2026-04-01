@@ -20,6 +20,13 @@
                 <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/info.png') }}" alt="icon"></i></span>
             </a>
         </p>
+        <p class="control">
+            <form action="{{ url_for('rda.enviar_rda_paciente') }}" method="post">
+                <button type="submit" class="button is-small is-warning has-tooltip-bottom" data-tooltip="Prueba Envío RDA">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/enviar.png') }}" alt="icon"></i></span>
+                </button>
+            </form>
+        </p>
     </div>
     <div class="card">
         <header class="card-header">
