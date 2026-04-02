@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, flash, redirect, url_for
+from flask import Blueprint, render_template, request, jsonify, flash, redirect, url_for, json
 from app.services import rda_service
 import mysql.connector.errors as error
 import requests
@@ -21,11 +21,13 @@ def add_parametro():
 def f_addparametro():
     try:
         ambiente = request.form["ambiente"]
+        clientid = request.form["clientid"]
+        clientsecret = request.form["clientsecret"]
         tenantid = request.form["tenantid"]
         scope = request.form["scope"]
         subskey = request.form["subskey"]
 
-        rda_service.insert_parametrorda(ambiente, tenantid, scope, subskey)
+        rda_service.insert_parametrorda(ambiente, clientid, clientsecret, tenantid, scope, subskey)
         flash("Ambiente para transmisión de RDA Guardado Exitosamente", "success")
         return redirect(url_for('rda.transmisionRDA'))
     
@@ -56,17 +58,52 @@ def drop_parametro(id):
 @bp_rda.post('/enviar_rda_paciente')
 def enviar_rda_paciente():
     try:
-        parametro = rda_service.listar_parametrosrda_prueba()
-        tenantid = str(parametro['tenantid'])
-        subskey = str(parametro['subskey'])
-        endpoint = "https://sandbox.ihcecol.gov.co/ihce"
-        headers = {
-            "Authorization": f"Bearer {tenantid}",
+        #Obtener datos de parametro
+        parametros = rda_service.listar_parametrosrda_prueba()
+
+        #Parametros Consumo API IHCE
+        clientid = str(parametros[0])
+        clientsecret = str(parametros[1])
+        tenantid = str(parametros[2])
+        scope = str(parametros[3])
+        subskey = str(parametros[4])
+
+        #API IHCE Obtener Token
+        ep_token = f"https://login.microsoftonline.com/{tenantid}/oauth2/v2.0/token"
+        headers_token = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+
+        body_token = {
+            "grant_type": "client_credentials",
+            "client_id": clientid,
+            "client_secret": clientsecret,
+            "scope": scope
+        }
+ 
+        respuesta_token = requests.post(url=ep_token, headers=headers_token, data=body_token)
+        if respuesta_token.status_code != 200:
+            return jsonify({
+                "Error": "Error al obtener token",
+                "Detalle": respuesta_token.text
+            }), respuesta_token.status_code
+        
+        #Parametros Consumo Envio RDA
+        data = respuesta_token.json()    
+        token = data.get('access_token')
+        if not token:
+            return jsonify({"Error": "No se obtuvo Token"}), 500
+        
+
+        #API IHCE Envio RDA
+        ep_envio = "https://vulcano.ihcecol.gov.co/api/Composition/$enviar-rda-paciente"
+        headers_envio = {
+            "Authorization": f"Bearer {token}",
             "Ocp-Apim-Subscription-Key": subskey,
             "Content-Type": "application/fhir+json"
         }
 
-        json = {
+        payload = {
             "resourceType": "Bundle",
             "type": "document",
             "timestamp": "2026-03-06T15:38:00-05:00",
@@ -96,7 +133,7 @@ def enviar_rda_paciente():
                     }
                     ],
                     "title": "Resumen de Atención Médica",
-                    "custodian": { "reference": "Organization/NIT-800123456" },
+                    "custodian": { "reference": "Organization/NIT-901001375" },
                     "section": [
                     {
                         "title": "Motivo de consulta",
@@ -139,6 +176,20 @@ def enviar_rda_paciente():
                     "gender": "male",
                     "birthDate": "1991-04-20",
                     "address": [{ "city": "Barranquilla", "country": "CO" }]
+                }
+                },
+                {
+                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130005",
+                "resource": {
+                    "resourceType": "Practitioner",
+                    "id": "CC-72428280",
+                    "identifier": [
+                    {
+                        "system": "https://www.sispro.gov.co/get-identificacion-talento-humano",
+                        "value": "72428280"
+                    }
+                    ],
+                    "name": [{ "family": "Garcia", "given": ["Darwin"] }]
                 }
                 },
                 {
@@ -191,13 +242,17 @@ def enviar_rda_paciente():
             ]
             }
 
-        respuesta = requests.post(endpoint, headers=headers, json=json)
-
-        return jsonify({
-            "estado": respuesta.status_code,
-            "respuesta": respuesta.json()
-        })
+        respuesta_envio = requests.post(url=ep_envio, headers=headers_envio, json=payload, timeout=30)
+        try:
+            respuesta_final = respuesta_envio.json()
+        except Exception:
+            respuesta_final = respuesta_envio.text    
     
+        return jsonify({
+            "estado": respuesta_envio.status_code,
+            "resultado": respuesta_final
+        }), respuesta_envio.status_code
+
     except requests.exceptions.RequestException as error:
         return jsonify({"Error": f"Error en la solicitud externa: {str(error)}"}), 500
     

@@ -25,20 +25,20 @@ def listar_parametrosrda():
 def listar_parametrosrda_prueba():
     parametro = None
     conn = db.connection()
-    query =  """ SELECT tenantid, subskey FROM parametros_rda WHERE id_parametro = 1 """
+    query =  """ SELECT clientid, clientsecret, tenantid, scope, subskey FROM parametros_rda WHERE id_parametro = 1 """
     with conn.cursor() as cursor:
         cursor.execute(query)
         result = cursor.fetchone()
-        parametro = {'tenantid': result, 'subskey': result}
+        parametro = result
 
     conn.close
     return parametro        
 
 #Metodo Insert Nuevo Parametro RDA
-def insert_parametrorda(ambiente, tenantid, scope, subskey):
+def insert_parametrorda(ambiente, clientid, clientsecret, tenantid, scope, subskey):
     conn = db.connection()
-    query = """ INSERT INTO parametros_rda (ambiente, tenantid, scope, subskey) VALUES (%s, %s, %s, %s) """
-    params = (ambiente, tenantid, scope, subskey)
+    query = """ INSERT INTO parametros_rda (ambiente, clientid, clientsecret, tenantid, scope, subskey) VALUES (%s, %s, %s, %s, %s, %s) """
+    params = (ambiente, clientid, clientsecret, tenantid, scope, subskey)
     try: 
         with conn.cursor() as cursor:
             cursor.execute(query, params)
@@ -54,10 +54,10 @@ def insert_parametrorda(ambiente, tenantid, scope, subskey):
         conn.close()
 
 #Metodo Update Parametro RDA
-def update_parametrorda(ambiente, tenantid, scope, subskey, id):
+def update_parametrorda(ambiente, clientid, clientsecret, tenantid, scope, subskey, id):
     conn = db.connection()
-    query = """ UPDATE parametros_rda SET ambiente = %s, tenantid = %s, scope = %s, subskey = %s WHERE id_parametro = %s """
-    params = (ambiente, tenantid, scope, subskey, id)
+    query = """ UPDATE parametros_rda SET ambiente = %s, clientid = %s, clientsecret= %s,  tenantid = %s, scope = %s, subskey = %s WHERE id_parametro = %s """
+    params = (ambiente, clientid, clientsecret, tenantid, scope, subskey, id)
     try: 
         with conn.cursor() as cursor:
             cursor.execute(query, params)

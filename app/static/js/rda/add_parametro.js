@@ -1,5 +1,7 @@
 /* Constantes */
 const $ambiente = document.getElementById("ambiente");
+const $clientid = document.getElementById("clientid");
+const $clientsecret = document.getElementById("clientsecret");
 const $tenantid = document.getElementById("tenantid");
 const $scope = document.getElementById("scope");
 const $subskey = document.getElementById("subskey");
@@ -8,10 +10,12 @@ const $form_addparametrorda = document.getElementById("form_addparametrorda");
 /* Validar Formulario */
 $form_addparametrorda.addEventListener("submit", (e) => {
     let ambiente = $ambiente.value;
+    let clientid = $clientid.value;
+    let clientsecret = $clientsecret.value;
     let tenantid = $tenantid.value;
     let scope = $scope.value;
     let subskey = $subskey.value;
-    if(!ambiente || !tenantid || !scope || !subskey){
+    if(!ambiente || !clientid || !clientsecret || !tenantid || !scope || !subskey){
         e.preventDefault();
         Swal.fire({
             title: "Advertencia!",
