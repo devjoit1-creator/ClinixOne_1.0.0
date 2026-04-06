@@ -96,23 +96,30 @@ def enviar_rda_paciente():
         
 
         #API IHCE Envio RDA
-        ep_envio = "https://vulcano.ihcecol.gov.co/api/Composition/$enviar-rda-paciente"
+        #https://sandbox.ihcecol.gov.co/ihce/Composition/$enviar-rda-paciente
+        #https://vulcano.ihcecol.gov.co/api/Composition/$enviar-rda-paciente
+        ep_envio = "https://sandbox.ihcecol.gov.co/ihce/Composition/$enviar-rda-paciente"
         headers_envio = {
             "Authorization": f"Bearer {token}",
             "Ocp-Apim-Subscription-Key": subskey,
-            "Content-Type": "application/fhir+json"
+            "Content-Type": "application/fhir+json",
+            "Accept": "application/fhir+json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         }
 
         payload = {
             "resourceType": "Bundle",
             "type": "document",
-            "timestamp": "2026-03-06T15:38:00-05:00",
             "entry": [
                 {
-                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130001",
                 "resource": {
                     "resourceType": "Composition",
                     "id": "RDA-2026-001",
+                    "meta": {
+                    "profile": [
+                        "https://fhir.minsalud.gov.co/rda/StructureDefinition/CompositionPatientStatementRDA"
+                    ]
+                    },
                     "status": "final",
                     "type": {
                     "coding": [
@@ -125,13 +132,8 @@ def enviar_rda_paciente():
                     "text": "Resumen Digital de Atención (RDA)"
                     },
                     "subject": { "reference": "Patient/CC-1140839950" },
-                    "date": "2026-03-06T15:38:00-05:00",
-                    "author": [
-                    {
-                        "reference": "Practitioner/CC-72428280",
-                        "display": "Darwin Garcia"
-                    }
-                    ],
+                    "date": "2026-04-06T10:30:00-05:00",
+                    "author": [{ "reference": "Practitioner/CC-72428280" }],
                     "title": "Resumen de Atención Médica",
                     "custodian": { "reference": "Organization/NIT-901001375" },
                     "section": [
@@ -139,10 +141,6 @@ def enviar_rda_paciente():
                         "title": "Motivo de consulta",
                         "code": {
                         "coding": [{ "system": "http://loinc.org", "code": "46239-0" }]
-                        },
-                        "text": {
-                        "status": "generated",
-                        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Paciente refiere dolor abdominal agudo...</div>"
                         }
                     },
                     {
@@ -153,7 +151,6 @@ def enviar_rda_paciente():
                 }
                 },
                 {
-                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130002",
                 "resource": {
                     "resourceType": "Patient",
                     "id": "CC-1140839950",
@@ -174,12 +171,10 @@ def enviar_rda_paciente():
                     ],
                     "name": [{ "family": "Orozco", "given": ["Julio", "Manuel"] }],
                     "gender": "male",
-                    "birthDate": "1991-04-20",
-                    "address": [{ "city": "Barranquilla", "country": "CO" }]
+                    "birthDate": "1991-04-20"
                 }
                 },
                 {
-                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130005",
                 "resource": {
                     "resourceType": "Practitioner",
                     "id": "CC-72428280",
@@ -193,7 +188,6 @@ def enviar_rda_paciente():
                 }
                 },
                 {
-                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130003",
                 "resource": {
                     "resourceType": "Organization",
                     "id": "NIT-901001375",
@@ -207,7 +201,6 @@ def enviar_rda_paciente():
                 }
                 },
                 {
-                "fullUrl": "urn:uuid:64536675-7461-4649-807c-974242130004",
                 "resource": {
                     "resourceType": "Condition",
                     "id": "diag-001",
@@ -216,14 +209,6 @@ def enviar_rda_paciente():
                         {
                         "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
                         "code": "active"
-                        }
-                    ]
-                    },
-                    "verificationStatus": {
-                    "coding": [
-                        {
-                        "system": "http://terminology.hl7.org/CodeSystem/condition-verif",
-                        "code": "confirmed"
                         }
                     ]
                     },
@@ -241,6 +226,7 @@ def enviar_rda_paciente():
                 }
             ]
             }
+
 
         respuesta_envio = requests.post(url=ep_envio, headers=headers_envio, json=payload, timeout=30)
         try:
