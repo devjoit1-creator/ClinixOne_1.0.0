@@ -131,11 +131,11 @@ def enviar_rda_paciente():
                     ],
                     "text": "Resumen Digital de Atención (RDA)"
                     },
-                    "subject": { "reference": "Patient/CC-1140839950" },
+                    "subject": { "reference": "#CC-1140839950" },
                     "date": "2026-04-06T10:30:00-05:00",
-                    "author": [{ "reference": "Practitioner/CC-72428280" }],
+                    "author": [{ "reference": "#CC-72428280" }],
                     "title": "Resumen de Atención Médica",
-                    "custodian": { "reference": "Organization/NIT-901001375" },
+                    "custodian": { "reference": "#0875802031" },
                     "section": [
                     {
                         "title": "Motivo de consulta",
@@ -154,6 +154,11 @@ def enviar_rda_paciente():
                 "resource": {
                     "resourceType": "Patient",
                     "id": "CC-1140839950",
+                    "meta": {
+                    "profile": [
+                        "https://fhir.minsalud.gov.co/rda/StructureDefinition/PatientRDA"
+                    ]
+                    },
                     "identifier": [
                     {
                         "use": "official",
@@ -190,11 +195,11 @@ def enviar_rda_paciente():
                 {
                 "resource": {
                     "resourceType": "Organization",
-                    "id": "NIT-901001375",
+                    "id": "0875802031",
                     "identifier": [
                     {
                         "system": "https://www.sispro.gov.co/get-identificacion-ips",
-                        "value": "901001375"
+                        "value": "0875802031"
                     }
                     ],
                     "name": "PROSPERIDAD IPS S.A.S."
@@ -204,6 +209,11 @@ def enviar_rda_paciente():
                 "resource": {
                     "resourceType": "Condition",
                     "id": "diag-001",
+                    "meta": {
+                    "profile": [
+                        "https://fhir.minsalud.gov.co/rda/StructureDefinition/ConditionRDA"
+                    ]
+                    },
                     "clinicalStatus": {
                     "coding": [
                         {
@@ -225,7 +235,7 @@ def enviar_rda_paciente():
                 }
                 }
             ]
-            }
+        }
 
 
         respuesta_envio = requests.post(url=ep_envio, headers=headers_envio, json=payload, timeout=30)
