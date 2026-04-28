@@ -109,12 +109,12 @@ def enviar_rda_paciente():
 
         payload = {
             "resourceType": "Bundle",
+            "language": "es-CO",
             "type": "document",
             "entry": [
                 {
                 "resource": {
                     "resourceType": "Composition",
-                    "id": "RDA-2026-001",
                     "meta": {
                     "profile": [
                         "https://fhir.minsalud.gov.co/rda/StructureDefinition/CompositionPatientStatementRDA"
@@ -124,28 +124,27 @@ def enviar_rda_paciente():
                     "type": {
                     "coding": [
                         {
-                        "system": "http://loinc.org",
-                        "code": "11488-4",
-                        "display": "Consultation Note"
+                            "system": "http://loinc.org",
+                            "code": "102089-0",
+                            "display": "FHIR resource patient medical record"
                         }
-                    ],
-                    "text": "Resumen Digital de Atención (RDA)"
+                    ]
                     },
                     "subject": { "reference": "#CC-1140839950" },
                     "date": "2026-04-06T10:30:00-05:00",
                     "author": [{ "reference": "#CC-72428280" }],
-                    "title": "Resumen de Atención Médica",
+                    "title": "Resumen Digital de Atención en Salud - RDA de antecedentes manifestados por el paciente",
                     "custodian": { "reference": "#0875802031" },
                     "section": [
                     {
                         "title": "Motivo de consulta",
                         "code": {
-                        "coding": [{ "system": "http://loinc.org", "code": "46239-0" }]
+                            "coding": [{ "system": "http://loinc.org", "code": "46239-0" }]
                         }
                     },
                     {
                         "title": "Diagnósticos",
-                        "entry": [{ "reference": "Condition/diag-001" }]
+                        "entry": [{ "reference": "#Condition-0" }]
                     }
                     ]
                 }
@@ -165,8 +164,8 @@ def enviar_rda_paciente():
                         "type": {
                         "coding": [
                             {
-                            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
-                            "code": "CC"
+                                "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                "code": "CC"
                             }
                         ]
                         },
@@ -208,10 +207,10 @@ def enviar_rda_paciente():
                 {
                 "resource": {
                     "resourceType": "Condition",
-                    "id": "diag-001",
+                    "id": "Condition-0",
                     "meta": {
                     "profile": [
-                        "https://fhir.minsalud.gov.co/rda/StructureDefinition/ConditionRDA"
+                        "https://fhir.minsalud.gov.co/rda/StructureDefinition/ConditionStatementRDA"
                     ]
                     },
                     "clinicalStatus": {
@@ -225,18 +224,17 @@ def enviar_rda_paciente():
                     "code": {
                     "coding": [
                         {
-                        "system": "http://hl7.org/fhir/sid/icd-10",
-                        "code": "K358",
-                        "display": "Apendicitis aguda"
+                            "system": "http://hl7.org/fhir/sid/icd-10",
+                            "code": "K358",
+                            "display": "Apendicitis aguda"
                         }
                     ]
                     },
-                    "subject": { "reference": "Patient/CC-1140839950" }
+                    "subject": { "reference": "#CC-1140839950" }
                 }
                 }
             ]
         }
-
 
         respuesta_envio = requests.post(url=ep_envio, headers=headers_envio, json=payload, timeout=30)
         try:

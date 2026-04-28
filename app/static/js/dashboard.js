@@ -4,6 +4,7 @@ const $menu1 = document.getElementById("toogle-list-1");
 const $menu2 = document.getElementById("toogle-list-2");
 const $menu3 = document.getElementById("toogle-list-3");
 const $menu4 = document.getElementById("toogle-list-4");
+const $menu5 = document.getElementById("toogle-list-5");
 
 const activarPerfil = () => {
     let perfil = $profile.value;
@@ -12,10 +13,15 @@ const activarPerfil = () => {
         $menu2.classList.remove('is-hidden');
         $menu3.classList.remove('is-hidden');
         $menu4.classList.remove('is-hidden');
+        $menu5.classList.remove('is-hidden');
     }else if (perfil === "2"){
         $menu3.classList.remove('is-hidden');
     }else if (perfil === "3"){
         $menu2.classList.remove('is-hidden');
+    }else if (perfil === "4"){
+        $menu4.classList.remove('is-hidden');
+    }else if (perfil === "5"){
+        $menu5.classList.remove('is-hidden');
     }
 }
 

@@ -16,6 +16,7 @@ from app.routes.administradoras_routes import bp_administradoras
 from app.routes.medico_routes import bp_medicos
 from app.routes.habitaciones_routes import bp_habitaciones
 from app.routes.resfacturacion_routes import bp_resfacturacion
+from app.routes.rda_routes import bp_rda
 
 # Importando los Blueprints Gestión Medica
 from app.routes.paciente_routes import bp_pacientes
@@ -41,8 +42,9 @@ from app.routes.fuentes_routes import bp_fuentes
 from app.routes.rips_routes import bp_rips
 from app.routes.notascredito_routes import bp_notascredito
 
-# Importando los Blueprints RDA
-from app.routes.rda_routes import bp_rda
+# Importando los Blueprints Farmacia
+from app.routes.bodegas_routes import bp_bodegas
+
 
 #BluePrints Pendientes
 """ from app.routes.prevaloraciones_routes import prevaloraciones_blueprint
@@ -69,6 +71,7 @@ app.register_blueprint(bp_administradoras)
 app.register_blueprint(bp_medicos)
 app.register_blueprint(bp_habitaciones)
 app.register_blueprint(bp_resfacturacion)
+app.register_blueprint(bp_rda)
 
 # Registro Blueprints Gestión Medica
 app.register_blueprint(bp_pacientes)
@@ -94,8 +97,8 @@ app.register_blueprint(bp_fuentes)
 app.register_blueprint(bp_rips)
 app.register_blueprint(bp_notascredito)
 
-# Registro Blueprints RDA
-app.register_blueprint(bp_rda)
+# Registro Blueprints Farmacia
+app.register_blueprint(bp_bodegas)
 
 #Blueprints Pendientes
 """ app.register_blueprint(prevaloraciones_blueprint) """
