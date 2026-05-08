@@ -44,6 +44,7 @@ from app.routes.notascredito_routes import bp_notascredito
 
 # Importando los Blueprints Farmacia
 from app.routes.bodegas_routes import bp_bodegas
+from app.routes.referencias_routes import bp_referencias
 
 
 #BluePrints Pendientes
@@ -99,6 +100,7 @@ app.register_blueprint(bp_notascredito)
 
 # Registro Blueprints Farmacia
 app.register_blueprint(bp_bodegas)
+app.register_blueprint(bp_referencias)
 
 #Blueprints Pendientes
 """ app.register_blueprint(prevaloraciones_blueprint) """
