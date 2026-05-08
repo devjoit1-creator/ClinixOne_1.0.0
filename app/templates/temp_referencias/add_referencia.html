@@ -1,0 +1,31 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+    .inter-scrollable-section {
+        height: 50vh;
+        overflow-y: scroll;
+        padding: 0rem 0rem;
+    }
+</style>
+{% endblock %}
+{% block title %} Nueva Referencia {% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva Referencia</h5>
+<div class="container">
+    
+    <div class="field is-grouped is-grouped-centered">
+        <p class="control">
+            <a id="btn_cancelar" class="button is-normal is-danger">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                <span>Cancelar</span>
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/referencias/add_referencia.js') }}"></script>
+{% endblock %}
