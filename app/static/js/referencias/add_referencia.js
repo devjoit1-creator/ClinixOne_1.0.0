@@ -1,5 +1,28 @@
 /* Constantes */
+const $cod_referencia = document.getElementById("cod_referencia");
+const $nom_referencia = document.getElementById("nom_referencia");
+const $principio_activo = document.getElementById("principio_activo");
+const $nom_comercial_ref = document.getElementById("nom_comercial_ref");
+const $unidad_medida = document.getElementById("unidad_medida");
 const $btn_cancelar = document.getElementById("btn_cancelar");
+const $form_addreferencia = document.getElementById("form_addreferencia");
+
+/* Uppercase */
+$nom_referencia.addEventListener("keyup", () => {
+    $nom_referencia.value = $nom_referencia.value.toUpperCase();
+});
+
+$principio_activo.addEventListener("keyup", () => {
+    $principio_activo.value = $principio_activo.value.toUpperCase();
+});
+
+$nom_comercial_ref.addEventListener("keyup", () => {
+    $nom_comercial_ref.value = $nom_comercial_ref.value.toUpperCase();
+});
+
+$unidad_medida.addEventListener("keyup", () => {
+    $unidad_medida.value = $unidad_medida.value.toUpperCase();
+});
 
 /* Modo Cancelar */
 $btn_cancelar.addEventListener("click", (e) => {

@@ -14,15 +14,59 @@
 {% block content %}
 <h5 class="title is-5">Nueva Referencia</h5>
 <div class="container">
-    
-    <div class="field is-grouped is-grouped-centered">
-        <p class="control">
-            <a id="btn_cancelar" class="button is-normal is-danger">
-                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
-                <span>Cancelar</span>
-            </a>
-        </p>
-    </div>
+    <form id="form_addreferencia" action="#" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Ingrese la información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="cod_referencia" class="label is-small">Codigo Referencia <strong style="color: red;">*</strong></label>
+                                <input type="text" name="cod_referencia" id="cod_referencia" class="input is-small" required>
+                            </div>
+                            <div class="field">
+                                <label for="nom_referencia" class="label is-small">Nombre Interno Referencia <strong style="color: red;">*</strong></label>
+                                <input type="text" name="nom_referencia" id="nom_referencia" class="input is-small" required>
+                            </div>
+                            <div class="field">
+                                <label for="principio_activo" class="label is-small">Principio Activo <strong style="color: red;">*</strong></label>
+                                <input type="text" name="principio_activo" id="principio_activo" class="input is-small" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field">
+                                <label for="nom_comercial_ref" class="label is-small">Nombre Comercial (Si aplica)</label>
+                                <input type="text" name="nom_comercial_ref" id="nom_comercial_ref" class="input is-small">
+                            </div>
+                            <div class="field">
+                                <label for="unidad_medida" class="label is-small">Und. Medida (Ej.: MG/ML) <strong style="color: red;">*</strong></label>
+                                <input type="text" name="unidad_medida" id="unidad_medida" class="input is-small" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="button" class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a id="btn_cancelar" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
 </div>
 {% endblock %}
 
