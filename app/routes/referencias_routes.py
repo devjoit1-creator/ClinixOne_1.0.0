@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from app.services import formas_farmihce_service
 import mysql.connector.errors as error
 
 bp_referencias = Blueprint('referencias', __name__)
@@ -11,4 +12,5 @@ def referencias():
 #Ruta Ventana Nueva Referencia
 @bp_referencias.get('/add_referencia')
 def add_referencia():
-    return render_template('temp_referencias/add_referencia.html')
+    formas = formas_farmihce_service.listar_formas_ihce()
+    return render_template('temp_referencias/add_referencia.html', formas = formas)

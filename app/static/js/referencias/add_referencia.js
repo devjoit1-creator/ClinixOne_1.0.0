@@ -4,6 +4,10 @@ const $nom_referencia = document.getElementById("nom_referencia");
 const $principio_activo = document.getElementById("principio_activo");
 const $nom_comercial_ref = document.getElementById("nom_comercial_ref");
 const $unidad_medida = document.getElementById("unidad_medida");
+const $concentracion = document.getElementById("concentracion");
+const $forma_farm = document.getElementById("forma_farm");
+const $laboratorio = document.getElementById("laboratorio");
+const $presentacion = document.getElementById("presentacion");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 const $form_addreferencia = document.getElementById("form_addreferencia");
 
@@ -23,6 +27,22 @@ $nom_comercial_ref.addEventListener("keyup", () => {
 $unidad_medida.addEventListener("keyup", () => {
     $unidad_medida.value = $unidad_medida.value.toUpperCase();
 });
+
+$concentracion.addEventListener("keyup", () => {
+    $concentracion.value = $concentracion.value.toUpperCase();
+});
+
+$forma_farm.addEventListener("keyup", () => {
+    $forma_farm.value = $forma_farm.value.toUpperCase();
+});
+
+$laboratorio.addEventListener("keyup", () => {
+    $laboratorio.value = $laboratorio.value.toUpperCase();
+});
+
+$presentacion.addEventListener("keyup", () => {
+    $presentacion.value = $presentacion.value.toUpperCase();
+})
 
 /* Modo Cancelar */
 $btn_cancelar.addEventListener("click", (e) => {

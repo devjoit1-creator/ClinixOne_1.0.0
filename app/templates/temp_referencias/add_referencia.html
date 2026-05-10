@@ -21,34 +21,81 @@
             </header>
             <div class="card-content">
                 <div class="content">
-                    <div class="field is-horizontal">
-                        <div class="field-body">
-                            <div class="field">
-                                <label for="cod_referencia" class="label is-small">Codigo Referencia <strong style="color: red;">*</strong></label>
-                                <input type="text" name="cod_referencia" id="cod_referencia" class="input is-small" required>
-                            </div>
-                            <div class="field">
-                                <label for="nom_referencia" class="label is-small">Nombre Interno Referencia <strong style="color: red;">*</strong></label>
-                                <input type="text" name="nom_referencia" id="nom_referencia" class="input is-small" required>
-                            </div>
-                            <div class="field">
-                                <label for="principio_activo" class="label is-small">Principio Activo <strong style="color: red;">*</strong></label>
-                                <input type="text" name="principio_activo" id="principio_activo" class="input is-small" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field is-horizontal">
-                        <div class="field-body">
-                            <div class="field">
-                                <label for="nom_comercial_ref" class="label is-small">Nombre Comercial (Si aplica)</label>
-                                <input type="text" name="nom_comercial_ref" id="nom_comercial_ref" class="input is-small">
-                            </div>
-                            <div class="field">
-                                <label for="unidad_medida" class="label is-small">Und. Medida (Ej.: MG/ML) <strong style="color: red;">*</strong></label>
-                                <input type="text" name="unidad_medida" id="unidad_medida" class="input is-small" required>
+                    <section class="inter-scrollable-section">
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="cod_referencia" class="label is-small">Codigo Referencia <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="cod_referencia" id="cod_referencia" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="nom_referencia" class="label is-small">Nombre Interno Referencia <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="nom_referencia" id="nom_referencia" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="principio_activo" class="label is-small">Principio Activo <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="principio_activo" id="principio_activo" class="input is-small" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="nom_comercial_ref" class="label is-small">Nombre Comercial (Si aplica)</label>
+                                    <input type="text" name="nom_comercial_ref" id="nom_comercial_ref" class="input is-small">
+                                </div>
+                                <div class="field">
+                                    <label for="unidad_medida" class="label is-small">Und. Medida (Ej.: MG/ML) <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="unidad_medida" id="unidad_medida" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="concentracion" class="label is-small">Concentración <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="concentracion" id="concentracion" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="forma_farm" class="label is-small">Forma Farmaceutica <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="forma_farm" id="forma_farm" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="forma_farm_ihce" class="label is-small">Forma Farmaceutica IHCE <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="forma_farm_ihce" id="forma_farm_ihce" required>
+                                            <option value=""></option>
+                                            {% for forma in formas %}
+                                            <option value="{{ forma.codigo }}">{{ forma.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="laboratorio" class="label is-small">Laboratorio <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="laboratorio" id="laboratorio" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="presentacion" class="label is-small">Presentación (Ej.: CJ * 50) <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="presentacion" id="presentacion" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="grupo_referencia" class="label is-small">Grupo al que pertenece <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="grupo_referencia" id="grupo_referencia" required>
+                                            <option value=""></option>
+                                            <option value="MA">MATERIALES E INSUMOS</option>
+                                            <option value="MB">MEDICAMENTOS ANTIBIOTICOS</option>
+                                            <option value="MD">MEDICAMENTOS</option>
+                                            <option value="MQ">MEDICAMENTOS NO POS</option>
+                                            <option value="MS">MEDICAMENTOS DE CONTROL ESPECIAL</option>
+                                            <option value="OX">OXIGENO</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
