@@ -22,6 +22,7 @@
             <div class="card-content">
                 <div class="content">
                     <section class="inter-scrollable-section">
+                        <h6 class="title is-6">Datos Generales</h6>
                         <div class="field is-horizontal">
                             <div class="field-body">
                                 <div class="field">
@@ -92,6 +93,44 @@
                                             <option value="OX">OXIGENO</option>
                                         </select>
                                     </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="registro_invima" class="label is-small">Registro Sanitario INVIMA <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="registro_invima" id="registro_invima" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="tipo_referencia" class="label is-small">Tipo <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="tipo_referencia" id="tipo_referencia">
+                                            <option value=""></option>
+                                            <option value="01">MEDICAMENTO CON USO CON REGISTRO SANITARIO</option>
+                                            <option value="02">MEDICAMENTO CON USO COMO VITAL NO DISPONIBLE DEFINIDO POR EL INVIMA</option>
+                                            <option value="03">PREPARACION MAGISTRAL</option>
+                                            <option value="04">MEDICAMENTO CON USO NO INCLUIDO EN EL REGISTRO SANITARIO</option>
+                                            <option value="05">MEDICAMENTO CON AUTORIZACION SANITARIA DE USO DE EMERGENCIA ASUE</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="field">
+                                    <label for="regulado" class="label is-small">Regulado <strong style="color: red;">*</strong></label>
+                                    <div class="control">
+                                        <label class="radio">
+                                            <input type="radio" id="regulado" name="regulado" required/>
+                                            Sí
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" id="regulado" name="regulado" required/>
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="serie_referencia" class="label is-small">Serie</label>
+                                    <input type="text" name="serie_referencia" id="serie_referencia" class="input is-small">
                                 </div>
                             </div>
                         </div>

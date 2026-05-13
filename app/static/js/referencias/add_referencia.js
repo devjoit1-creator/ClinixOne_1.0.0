@@ -8,6 +8,8 @@ const $concentracion = document.getElementById("concentracion");
 const $forma_farm = document.getElementById("forma_farm");
 const $laboratorio = document.getElementById("laboratorio");
 const $presentacion = document.getElementById("presentacion");
+const $registro_invima = document.getElementById("registro_invima");
+const $serie_referencia = document.getElementById("serie_referencia");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 const $form_addreferencia = document.getElementById("form_addreferencia");
 
@@ -42,6 +44,14 @@ $laboratorio.addEventListener("keyup", () => {
 
 $presentacion.addEventListener("keyup", () => {
     $presentacion.value = $presentacion.value.toUpperCase();
+});
+
+$registro_invima.addEventListener("keyup", () => {
+    $registro_invima.value = $registro_invima.value.toUpperCase();
+});
+
+$serie_referencia.addEventListener("keyup", () => {
+    $serie_referencia.value = $serie_referencia.value.toUpperCase();
 })
 
 /* Modo Cancelar */
