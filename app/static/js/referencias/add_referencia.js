@@ -10,6 +10,10 @@ const $laboratorio = document.getElementById("laboratorio");
 const $presentacion = document.getElementById("presentacion");
 const $registro_invima = document.getElementById("registro_invima");
 const $serie_referencia = document.getElementById("serie_referencia");
+const $expediente_sanitario = document.getElementById("expediente_sanitario");
+const $consecutivo_exp = document.getElementById("consecutivo_exp");
+const $codigo_cum = document.getElementById("codigo_cum");
+const $codigo_rips = document.getElementById("codigo_rips");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 const $form_addreferencia = document.getElementById("form_addreferencia");
 
@@ -52,7 +56,18 @@ $registro_invima.addEventListener("keyup", () => {
 
 $serie_referencia.addEventListener("keyup", () => {
     $serie_referencia.value = $serie_referencia.value.toUpperCase();
-})
+});
+
+/* Diligenciamento COD CUM Y COD RIPS */
+$expediente_sanitario.addEventListener("input", () => {
+    $codigo_cum.value = $expediente_sanitario.value;
+    $codigo_rips.value = $expediente_sanitario.value;
+});
+
+$consecutivo_exp.addEventListener("input", () => {
+    $codigo_cum.value = $expediente_sanitario.value + "-" + $consecutivo_exp.value;
+    $codigo_rips.value = $expediente_sanitario.value + "-" + $consecutivo_exp.value;
+});
 
 /* Modo Cancelar */
 $btn_cancelar.addEventListener("click", (e) => {

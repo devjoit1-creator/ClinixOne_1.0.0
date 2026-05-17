@@ -13,6 +13,26 @@
 
 {% block content %}
 <h5 class="title is-5">Nueva Referencia</h5>
+<div class="field is-grouped">
+    <p class="control">
+        <a id="invima_link" class="button is-small is-primary">
+            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/info.png') }}" alt="icon"></i></span>
+            <span>Consulta INVIMA</span>
+        </a>
+        <script>
+            let invima_link = document.getElementById("invima_link");
+            invima_link.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.open(
+                    invima_link.href = `https://consultaregistro.invima.gov.co/Consultas/consultas/consreg_encabcum.jsp`,
+                    'mywin',
+                    'left=450%,top=60,position=fixed,width=800,height=800,toolbar=1,resizable=0,centerscreen=yes'
+                )
+                return false;
+            })
+        </script>
+    </p>
+</div>
 <div class="container">
     <form id="form_addreferencia" action="#" method="post">
         <div class="card">
@@ -22,6 +42,7 @@
             <div class="card-content">
                 <div class="content">
                     <section class="inter-scrollable-section">
+                        <!-- Datos Generales medicamento y/o dispositivo -->
                         <h6 class="title is-6">Datos Generales</h6>
                         <div class="field is-horizontal">
                             <div class="field-body">
@@ -131,6 +152,71 @@
                                 <div class="field">
                                     <label for="serie_referencia" class="label is-small">Serie</label>
                                     <input type="text" name="serie_referencia" id="serie_referencia" class="input is-small">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control is-expanded">
+                                        <label for="expediente_sanitario" class="label is-small">Expediente San. <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="expediente_sanitario" id="expediente_sanitario" class="input is-small" required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="consecutivo_exp" class="label is-small">Consecutivo <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="consecutivo_exp" id="consecutivo_exp" class="input is-small" required>
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <label for="codigo_atc" class="label is-small">Código ATC <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="codigo_atc" id="codigo_atc" class="input is-small" required>
+                                </div>
+                                <div class="field">
+                                    <label for="codigo_cum" class="label is-small">Código CUM <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="codigo_cum" id="codigo_cum" class="input is-small" readonly required>
+                                </div>
+                                <div class="field">
+                                    <label for="codigo_rips" class="label is-small">Código RIPS <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="codigo_rips" id="codigo_rips" class="input is-small" readonly required>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Datos de Operación -->
+                        <h6 class="title is-6">Datos de Operación</h6>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="stock_minimo" class="label is-small">Stock Minimo <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="stock_minimo" id="stock_minimo" class="input is-small" min="1" required>
+                                </div>
+                                <div class="field">
+                                    <label for="stock_maximo" class="label is-small">Stock Maximo <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="stock_maximo" id="stock_maximo" class="input is-small" max="50000" required>
+                                </div>
+                                <div class="field">
+                                    <label for="dispensacion_minima" class="label is-small">Dispensación Minima <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="dispensacion_minima" id="dispensacion_minima" class="input is-small" min="1" required>
+                                </div>
+                                <div class="field">
+                                    <label for="dispensacion_maxima" class="label is-small">Dispensación Maxima <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="dispensacion_maxima" id="dispensacion_maxima" class="input is-small" max="500" required>
+                                </div>
+                                <div class="field">
+                                    <label for="cantidad" class="label is-small">Cantidad (Default: 1) <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="cantidad" id="cantidad" class="input is-small" min="1" max="1" value="1" readonly required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="iva" class="label is-small">% IVA <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="iva" id="iva" class="input is-small" min="0" value="0" required>
+                                </div>
+                                <div class="field">
+                                    <label for="descuento" class="label is-small">% Descuento <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="descuento" id="descuento" class="input is-small" min="0" value="0" required>
                                 </div>
                             </div>
                         </div>
