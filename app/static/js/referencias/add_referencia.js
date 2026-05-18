@@ -89,3 +89,15 @@ $btn_cancelar.addEventListener("click", (e) => {
         }
     });
 });
+
+/* Validar Formulario */
+$form_addreferencia.addEventListener("submit", () => {
+    
+    /* Loading */
+    Swal.fire({
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => { Swal.showLoading() }
+    });
+});

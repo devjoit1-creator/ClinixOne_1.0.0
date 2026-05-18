@@ -34,7 +34,7 @@
     </p>
 </div>
 <div class="container">
-    <form id="form_addreferencia" action="#" method="post">
+    <form id="form_addreferencia" action="{{ url_for('referencias.f_addReferencia') }}" method="post">
         <div class="card">
             <header class="card-header">
                 <p class="card-header-title">Ingrese la información</p>
@@ -140,11 +140,11 @@
                                     <label for="regulado" class="label is-small">Regulado <strong style="color: red;">*</strong></label>
                                     <div class="control">
                                         <label class="radio">
-                                            <input type="radio" id="regulado" name="regulado" required/>
+                                            <input type="radio" id="regulado" name="regulado" value="SI" required/>
                                             Sí
                                         </label>
                                         <label class="radio">
-                                            <input type="radio" id="regulado" name="regulado" required/>
+                                            <input type="radio" id="regulado" name="regulado" value="NO" required/>
                                             No
                                         </label>
                                     </div>
@@ -226,7 +226,7 @@
         </div>
         <div class="field is-grouped is-grouped-centered">
             <p class="control">
-                <button type="button" class="button is-normal is-success">
+                <button type="submit" class="button is-normal is-success">
                     <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
                     <span>Guardar</span>
                 </button>
