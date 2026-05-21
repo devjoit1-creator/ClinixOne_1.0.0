@@ -1,0 +1,104 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+    .inter-scrollable-section {
+        height: 50vh;
+        overflow-y: scroll;
+        padding: 0rem 0rem;
+    }
+</style>
+{% endblock %}
+{% block title %} Entradas de Farmacia {% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Entradas de Farmacia</h5>
+<div class="container">
+    <div class="field is-grouped">
+        <p class="control">
+            <a href="#" class="button is-small is-info">
+                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/añadir.png') }}" alt="icon"></i></span>
+                <span>Nueva Entrada</span>
+            </a>
+        </p>
+    </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">Registros</p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <div class="field">
+                    <div class="control">
+                        <label class="radio" style="font-size: small;">
+                            <input type="radio" id="busquedaNumero" name="toogle" value="active" checked/>
+                            Busqueda por No. Entrada
+                        </label>
+                        <label class="radio" style="font-size: small;">
+                            <input type="radio" id="busquedaFecha" name="toogle" />
+                            Busqueda por Rango de Fecha
+                        </label>
+                    </div>
+                </div>
+                <div id="containerBusquedaEntradaNumero" class="container is-active">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <label for="numeroEntrada" class="label is-small">No. Entrada: </label>
+                        </p>
+                        <p class="control">
+                            <input type="number" name="numeroEntrada" id="numeroEntrada" class="input is-small">
+                        </p>
+                        <p class="control">
+                            <a id="btn_buscarEntradaNumero" class="button is-small is-info has-tooltip-bottom" data-tooltip="Buscar">
+                                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div id="containerBusquedaEntradaFecha" class="container is-hidden">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <label for="fechaInicio" class="label is-small">Fecha Inicio</label>
+                            <input type="date" name="fechaInicio" id="fechaInicio" class="input is-small">
+                        </p>
+                        <p class="control">
+                            <label for="fechaFin" class="label is-small">Fecha Fin</label>
+                            <input type="date" name="fechaFin" id="fechaFin" class="input is-small">
+                        </p>
+                        <p class="control">
+                            <label class="label is-small" style="color: white;">.</label>
+                            <a id="btn_buscarEntradaFecha" class="button is-small is-info has-tooltip-bottom" data-tooltip="Buscar">
+                                <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <section class="inter-scrollable-section">
+                    <table id="tablaEntradasFarmacia" class="table is-striped" style="width: 100%;">
+                        
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            Swal.fire({
+                title: "Notificación",
+                text: "{{ message }}",
+                icon: "{{ category }}"
+            });
+        </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<script src="{{ url_for('static', filename='js/entradas_farmacia/entradas_farmacia.js') }}"></script>
+{% endblock %}
