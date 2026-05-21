@@ -30,7 +30,30 @@
             <div class="content">
                 <section class="inter-scrollable-section">
                     <table id="tablaReferencias" class="table is-striped" style="width: 100%;">
-                        
+                        <thead>
+                            <tr>
+                                <th scope="col" style="font-size: small;">Codigo</th>
+                                <th scope="col" style="font-size: small;">Nombre</th>
+                                <th scope="col" style="font-size: small;">Cod. Principio</th>
+                                <th scope="col" style="font-size: small;">Principio Activo</th>
+                                <th scope="col" style="font-size: small;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for referencia in referencias %}
+                            <tr>
+                                <td class="valor_codigo" style="font-size: small;">{{ referencia.codigo }}</td>
+                                <td style="font-size: small;">{{ referencia.nombre }}</td>
+                                <td style="font-size: small;">{{ referencia.codprin }}</td>
+                                <td style="font-size: small;">{{ referencia.principio }}</td>
+                                <td>
+                                    <a href="{{ url_for('referencias.edit_referencia', codigo = referencia.codigo )}}" class="button is-small is-primary has-tooltip-bottom" data-tooltip="Editar" style="padding: 0em 1.0em;">
+                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/editar.png') }}" alt="icon"></i></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </section>
             </div>
@@ -53,5 +76,6 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
+
 
 {% endblock %}

@@ -1,0 +1,249 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+    .inter-scrollable-section {
+        height: 50vh;
+        overflow-y: scroll;
+        padding: 0rem 0rem;
+    }
+</style>
+{% endblock %}
+{% block title %} Nueva Referencia {% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva Referencia</h5>
+<div class="field is-grouped">
+    <p class="control">
+        <a id="invima_link" class="button is-small is-primary">
+            <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/info.png') }}" alt="icon"></i></span>
+            <span>Consulta INVIMA</span>
+        </a>
+        <script>
+            let invima_link = document.getElementById("invima_link");
+            invima_link.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.open(
+                    invima_link.href = `https://consultaregistro.invima.gov.co/Consultas/consultas/consreg_encabcum.jsp`,
+                    'mywin',
+                    'left=450%,top=60,position=fixed,width=800,height=800,toolbar=1,resizable=0,centerscreen=yes'
+                )
+                return false;
+            })
+        </script>
+    </p>
+</div>
+<div class="container">
+    <form id="form_updatereferencia" action="{{ url_for('referencias.f_updateReferencia') }}" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Ingrese la información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <section class="inter-scrollable-section">
+                        <!-- Datos Generales medicamento y/o dispositivo -->
+                        <h6 class="title is-6">Datos Generales</h6>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="cod_referencia" class="label is-small">Codigo Referencia <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="cod_referencia" id="cod_referencia" class="input is-small" value="{{ referencia.0 }}" readonly required>
+                                </div>
+                                <div class="field">
+                                    <label for="nom_referencia" class="label is-small">Nombre Interno Referencia <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="nom_referencia" id="nom_referencia" class="input is-small" value="{{ referencia.1 }}" required>
+                                </div>
+                                <div class="field" style="width: 2%;">
+                                    <label for="cod_principio" class="label is-small">Cod. Prin. Activo</label>
+                                    <input type="text" name="cod_principio" id="cod_principio" class="input is-small" value="{{ referencia.2 }}">
+                                </div>
+                                <div class="field">
+                                    <label for="principio_activo" class="label is-small">Principio Activo</label>
+                                    <input type="text" name="principio_activo" id="principio_activo" class="input is-small" value="{{ referencia.3 }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="nom_comercial_ref" class="label is-small">Nombre Comercial (Si aplica)</label>
+                                    <input type="text" name="nom_comercial_ref" id="nom_comercial_ref" class="input is-small" value="{{ referencia.4 }}">
+                                </div>
+                                <div class="field">
+                                    <label for="unidad_medida" class="label is-small">Und. Medida (Ej.: MG/ML) <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="unidad_medida" id="unidad_medida" class="input is-small" value="{{ referencia.5 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="concentracion" class="label is-small">Concentración <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="concentracion" id="concentracion" class="input is-small" value="{{ referencia.6 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="forma_farm" class="label is-small">Forma Farmaceutica <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="forma_farm" id="forma_farm" class="input is-small" value="{{ referencia.7 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="forma_farm_ihce" class="label is-small">Forma Farmaceutica IHCE <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="forma_farm_ihce" id="forma_farm_ihce" required>
+                                            {% for forma in formas %}
+                                            <option value="{{ forma.codigo }}" {% if forma.codigo == referencia[8] %} selected {% endif %}>{{ forma.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="laboratorio" class="label is-small">Laboratorio </label>
+                                    <input type="text" name="laboratorio" id="laboratorio" class="input is-small" value="{{ referencia.9 }}">
+                                </div>
+                                <div class="field">
+                                    <label for="presentacion" class="label is-small">Presentación (Ej.: CJ * 50) <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="presentacion" id="presentacion" class="input is-small" value="{{ referencia.10 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="grupo_referencia" class="label is-small">Grupo al que pertenece <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="grupo_referencia" id="grupo_referencia" required>
+                                            <option value="MA" {% if referencia[11] == 'MA' %} selected {% endif %}>MATERIALES E INSUMOS</option>
+                                            <option value="MB" {% if referencia[11] == 'MB' %} selected {% endif %}>MEDICAMENTOS ANTIBIOTICOS</option>
+                                            <option value="MD" {% if referencia[11] == 'MD' %} selected {% endif %}>MEDICAMENTOS</option>
+                                            <option value="MQ" {% if referencia[11] == 'MQ' %} selected {% endif %}>MEDICAMENTOS NO POS</option>
+                                            <option value="MS" {% if referencia[11] == 'MS' %} selected {% endif %}>MEDICAMENTOS DE CONTROL ESPECIAL</option>
+                                            <option value="OX" {% if referencia[11] == 'OX' %} selected {% endif %}>OXIGENO</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="registro_invima" class="label is-small">Registro Sanitario INVIMA <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="registro_invima" id="registro_invima" class="input is-small" value="{{ referencia.12 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="tipo_referencia" class="label is-small">Tipo <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="tipo_referencia" id="tipo_referencia">
+                                            <option value=""></option>
+                                            <option value="01" {% if referencia[13] == '01' %} selected {% endif %}>MEDICAMENTO CON USO CON REGISTRO SANITARIO</option>
+                                            <option value="02" {% if referencia[13] == '02' %} selected {% endif %}>MEDICAMENTO CON USO COMO VITAL NO DISPONIBLE DEFINIDO POR EL INVIMA</option>
+                                            <option value="03" {% if referencia[13] == '03' %} selected {% endif %}>PREPARACION MAGISTRAL</option>
+                                            <option value="04" {% if referencia[13] == '04' %} selected {% endif %}>MEDICAMENTO CON USO NO INCLUIDO EN EL REGISTRO SANITARIO</option>
+                                            <option value="05" {% if referencia[13] == '05' %} selected {% endif %}>MEDICAMENTO CON AUTORIZACION SANITARIA DE USO DE EMERGENCIA ASUE</option>
+                                        </select>
+                                    </span>
+                                </div>
+                                <div class="field">
+                                    <label for="regulado" class="label is-small">Regulado <strong style="color: red;">*</strong></label>
+                                    <div class="control">
+                                        <label class="radio">
+                                            <input type="radio" id="regulado" name="regulado" value="SI" {% if referencia[14] == 'SI' %} checked {% endif %} required/>
+                                            Sí
+                                        </label>
+                                        <label class="radio">
+                                            <input type="radio" id="regulado" name="regulado" value="NO" {% if referencia[14] == 'NO' %} checked {% endif %} required/>
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="serie_referencia" class="label is-small">Serie</label>
+                                    <input type="text" name="serie_referencia" id="serie_referencia" class="input is-small" value="{{ referencia.15 }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field has-addons">
+                                    <p class="control is-expanded">
+                                        <label for="expediente_sanitario" class="label is-small">Expediente San. <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="expediente_sanitario" id="expediente_sanitario" class="input is-small" value="{{ referencia.16 }}" required>
+                                    </p>
+                                    <p class="control is-expanded">
+                                        <label for="consecutivo_exp" class="label is-small">Consecutivo <strong style="color: red;">*</strong></label>
+                                        <input type="text" name="consecutivo_exp" id="consecutivo_exp" class="input is-small" value="{{ referencia.17 }}" required>
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <label for="codigo_atc" class="label is-small">Código ATC <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="codigo_atc" id="codigo_atc" class="input is-small" value="{{ referencia.18 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="codigo_cum" class="label is-small">Código CUM <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="codigo_cum" id="codigo_cum" class="input is-small" value="{{ referencia.19 }}" readonly required>
+                                </div>
+                                <div class="field">
+                                    <label for="codigo_rips" class="label is-small">Código RIPS <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="codigo_rips" id="codigo_rips" class="input is-small" value="{{ referencia.20 }}" readonly required>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- Datos de Operación -->
+                        <h6 class="title is-6">Datos de Operación</h6>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="stock_minimo" class="label is-small">Stock Minimo <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="stock_minimo" id="stock_minimo" class="input is-small" min="1" value="{{ referencia.21 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="stock_maximo" class="label is-small">Stock Maximo <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="stock_maximo" id="stock_maximo" class="input is-small" max="50000" value="{{ referencia.22 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="dispensacion_minima" class="label is-small">Dispensación Minima <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="dispensacion_minima" id="dispensacion_minima" class="input is-small" min="1" value="{{ referencia.23 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="dispensacion_maxima" class="label is-small">Dispensación Maxima <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="dispensacion_maxima" id="dispensacion_maxima" class="input is-small" max="500" value="{{ referencia.24 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="cantidad" class="label is-small">Cantidad (Default: 1) <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="cantidad" id="cantidad" class="input is-small" min="1" max="1" value="{{ referencia.25 }}" readonly required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label for="iva" class="label is-small">% IVA <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="iva" id="iva" class="input is-small" min="0" value="{{ referencia.26 }}" required>
+                                </div>
+                                <div class="field">
+                                    <label for="descuento" class="label is-small">% Descuento <strong style="color: red;">*</strong></label>
+                                    <input type="number" name="descuento" id="descuento" class="input is-small" min="0" value="{{ referencia.27 }}" required>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="submit" class="button is-normal is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/actualizar.png') }}" alt="icon"></i></span>
+                    <span>Actualizar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a id="btn_cancelar" class="button is-normal is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/referencias/edit_referencia.js') }}"></script>
+{% endblock %}
