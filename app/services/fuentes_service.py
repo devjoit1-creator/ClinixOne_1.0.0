@@ -58,4 +58,17 @@ def listar_fuente_nc():
             fuentes_nc.append({'cod_fuente': row[0], 'prefijo': row[1]})
 
     conn.close()
-    return fuentes_nc        
+    return fuentes_nc
+
+def listar_fuente_ef():
+    fuentes_ef = []
+    conn = db.connection()
+    query = " SELECT cod_fuente, prefijo FROM fuentes_contables WHERE nom_fuente LIKE 'ENTRADA DE ALMACEN%' "
+    with conn.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        for row in result:
+            fuentes_ef.append({'cod_fuente': row[0], 'prefijo': row[1]})
+
+    conn.close()
+    return fuentes_ef

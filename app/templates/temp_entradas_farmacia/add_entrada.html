@@ -1,0 +1,82 @@
+{% extends 'menu.html' %}
+
+{% block css %}
+<style>
+    .inter-scrollable-section {
+        height: 45vh;
+        overflow-y: scroll;
+        padding: 0rem 0rem;
+    }
+</style>
+{% endblock %}
+{% block title %} Nueva Entrada de Farmacia {% endblock %}
+
+{% block content %}
+<h5 class="title is-5">Nueva Entrada de Farmacia</h5>
+<div class="container">
+    <form id="form_addEntradaFarm" action="#" method="post">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Ingrese la información</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <label for="cod_fuente" class="label is-small">Fte.</label>
+                                        <span class="select is-small">
+                                        <select name="cod_fuente" id="cod_fuente" required>
+                                            {% for fuente in fuentes %}
+                                            <option value="{{ fuente.cod_fuente }}">{{ fuente.prefijo }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </span>
+                                </p>
+                                <p class="control">
+                                    <label for="nro_entrada" class="label is-small">Nro. Entrada</label>
+                                    <input type="number" name="numero" id="numero" class="input is-small" value="{{ consecutivo.0 }}" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="fecha_entrada" class="label is-small">Fecha Entrada <strong style="color: red;">*</strong></label>
+                                    <input type="date" name="fecha_entrada" id="fecha_entrada" class="input is-small" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="hora_entrada" class="label is-small">Hora Entrada <strong style="color: red;">*</strong></label>
+                                    <input type="time" name="hora_entrada" id="hora_entrada" class="input is-small" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label for="fecha_vencimiento" class="label is-small">Fecha Vencimiento <strong style="color: red;">*</strong></label>
+                                    <input type="date" name="fecha_vencimiento" id="fecha_vencimiento" class="input is-small" readonly required>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="inter-scrollable-section">
+                        
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+                <button type="button" class="button is-small is-success">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
+                    <span>Guardar</span>
+                </button>
+            </p>
+            <p class="control">
+                <a id="btn_cancelar" class="button is-small is-danger">
+                    <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/cancelar.png') }}" alt="icon"></i></span>
+                    <span>Cancelar</span>
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/entradas_farmacia/add_entrada.js') }}"></script>
+{% endblock %}

@@ -39,4 +39,17 @@ def listar_consecutivo_atencion():
         consecutivo = result
 
     conn.close()
-    return consecutivo    
+    return consecutivo
+
+#Metodo para obtener el consecutivo de fuente entrada de almacen
+def listar_consecutivo_ef():
+    consecutivo = None
+    conn = db.connection()
+    query = """ SELECT consecutivo FROM fuentes_contables WHERE cod_fuente = 7 """
+    with conn.cursor() as cursor:
+        cursor.execute(query)
+        result = cursor.fetchone()
+        consecutivo = result
+
+    conn.close()
+    return consecutivo
