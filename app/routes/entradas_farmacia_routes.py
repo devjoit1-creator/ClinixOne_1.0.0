@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.services import fuentes_service, consecutivo_service, bodegas_service, entradas_farmacia_service
+from app.services import fuentes_service, consecutivo_service, bodegas_service, terceros_service, entradas_farmacia_service
 import mysql.connector.errors as error
 
 #Blueprint
@@ -16,4 +16,5 @@ def add_entrada():
     fuentes = fuentes_service.listar_fuente_ef()
     consecutivo = consecutivo_service.listar_consecutivo_ef()
     bodegas = bodegas_service.listar_bodegas()
-    return render_template('temp_entradas_farmacia/add_entrada.html', fuentes = fuentes, consecutivo = consecutivo, bodegas = bodegas)
+    terceros = terceros_service.listar_terceros()
+    return render_template('temp_entradas_farmacia/add_entrada.html', fuentes = fuentes, consecutivo = consecutivo, bodegas = bodegas, terceros = terceros)

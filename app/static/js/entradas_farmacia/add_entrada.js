@@ -1,6 +1,9 @@
 // Constantes
 const $fecha_entrada = document.getElementById("fecha_entrada");
 const $hora_entrada = document.getElementById("hora_entrada");
+const $cod_tercero = document.getElementById("cod_tercero");
+const $nom_tercero = document.getElementById("nom_tercero");
+const $tablaBusquedaTercerosEntradaFarm = document.getElementById("tablaBusquedaTercerosEntradaFarm");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 const $fecha_vencimiento = document.getElementById("fecha_vencimiento");
 
@@ -64,3 +67,23 @@ $btn_cancelar.addEventListener("click", (e) => {
         }
     });
 });
+
+/* Seleccionar Datos de tabla terceros */
+$tablaBusquedaTercerosEntradaFarm.addEventListener("click", (e) => {
+    e.preventDefault();
+    let data = e.target.parentElement.children;
+    $cod_tercero.value = data[0].innerText;
+    $nom_tercero.value = data[1].innerText;
+    closeAllModals();
+});
+
+/*  Cerrar Modals */
+function closeModal($el) {
+    $el.classList.remove('is-active');
+}
+
+function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+    closeModal($modal);
+    });
+}

@@ -50,6 +50,68 @@
                                     <label for="fecha_vencimiento" class="label is-small">Fecha Vencimiento <strong style="color: red;">*</strong></label>
                                     <input type="date" name="fecha_vencimiento" id="fecha_vencimiento" class="input is-small" readonly required>
                                 </p>
+                                <p class="control">
+                                    <label for="concepto" class="label is-small">Concepto Entrada <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="concepto" id="concepto" required>
+                                            <option value=""></option>
+                                            <option value="COMPRA CONTADO">COMPRA DE CONTADO</option>
+                                            <option value="COMPRA CREDITO">COMPRA A CREDITO</option>
+                                            <option value="AJUSTE INVENTARIO">AJUSTE DE INVENTARIO</option>
+                                            <option value="INVENTARIO FISICO">INVENTARIO FISICO</option>
+                                        </select>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    <label for="cod_tercero" class="label is-small">Tercero/Proveedor <strong style="color: red;">*</strong></label>
+                                    <input type="text" name="cod_tercero" id="cod_tercero" class="input is-small" readonly required>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="nom_tercero" class="label is-small" style="color: white;">.</label>
+                                    <input type="text" name="nom_tercero" id="nom_tercero" class="input is-small" readonly required>
+                                </p>
+                                <p class="control">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Tercero" data-target="modal-busquedaTercerosEntradaFarm">
+                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/buscar.png') }}" alt="icon"></i></span>
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <label for="prefijo_remision" class="label is-small">Prefijo Remisión</label>
+                                    <input type="text" name="prefijo_remision" id="prefijo_remision" class="input is-small">
+                                </p>
+                                <p class="control">
+                                    <label for="nro_remision" class="label is-small">No. Remisión</label>
+                                    <input type="text" name="nro_remision" id="nro_remision" class="input is-small">
+                                </p>
+                                <p class="control">
+                                    <label for="bodega" class="label is-small">Bodega <strong style="color: red;">*</strong></label>
+                                    <span class="select is-small">
+                                        <select name="bodega" id="bodega" required>
+                                            <option value=""></option>
+                                            {% for bodega in bodegas %}
+                                            <option value="{{ bodega.ID }}">{{ bodega.nombre }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
+                                <p class="control">
+                                    
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -74,6 +136,33 @@
             </p>
         </div>
     </form>
+</div>
+
+<!-- Modal Para seleccionar Terceros -->
+<div id="modal-busquedaTercerosEntradaFarm" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Tercero/Proveedor</h5>
+            <table id="tablaBusquedaTercerosEntradaFarm" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="font-size: small; width: 20%;">Codigo Tercero</th>
+                        <th scope="col" style="font-size: small; width: 80%;">Nombre Tercero</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tercero in terceros %}
+                    <tr>
+                        <td style="font-size: small; width: 20%;">{{ tercero.identificacion }}</td>
+                        <td style="font-size: small; width: 80%;">{{ tercero.nom_tercero }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large"></button>
 </div>
 {% endblock %}
 
