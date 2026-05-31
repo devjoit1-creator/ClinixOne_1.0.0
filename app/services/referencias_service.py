@@ -121,3 +121,25 @@ def listar_referencia_codigo(cod_referencia):
 
     finally: 
         conn.close()
+
+#Metodo Listar referencias busqueda Entrada de Almacen
+def listar_referencias_entrada():
+    referencias = []
+    conn = db.connection()
+    query = """ SELECT cod_referencia, nom_referencia, registro_invima FROM referencias """
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(query)
+            result = cursor.fetchall()
+            for row in result:
+                referencias.append({'codigo': row[0], 'nombre': row[1], 'invima': row[2]})
+
+        return referencias
+    
+    except Exception as ex:
+        print(f"Se presentó un error inesperado: {ex}")
+        conn.rollback()
+        raise
+
+    finally:
+        conn.close()

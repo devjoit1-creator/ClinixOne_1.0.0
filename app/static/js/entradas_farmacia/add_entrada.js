@@ -4,6 +4,10 @@ const $hora_entrada = document.getElementById("hora_entrada");
 const $cod_tercero = document.getElementById("cod_tercero");
 const $nom_tercero = document.getElementById("nom_tercero");
 const $tablaBusquedaTercerosEntradaFarm = document.getElementById("tablaBusquedaTercerosEntradaFarm");
+const $cod_referencia = document.getElementById("cod_referencia");
+const $nom_referencia = document.getElementById("nom_referencia");
+const $registro_invima = document.getElementById("registro_invima");
+const $tablaBusquedaMedicamentosEntradaFarm = document.getElementById("tablaBusquedaMedicamentosEntradaFarm");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 const $fecha_vencimiento = document.getElementById("fecha_vencimiento");
 
@@ -74,6 +78,16 @@ $tablaBusquedaTercerosEntradaFarm.addEventListener("click", (e) => {
     let data = e.target.parentElement.children;
     $cod_tercero.value = data[0].innerText;
     $nom_tercero.value = data[1].innerText;
+    closeAllModals();
+});
+
+/* Seleccionar Datos de tabla Medicamentos */
+$tablaBusquedaMedicamentosEntradaFarm.addEventListener("click", (e) => {
+    e.preventDefault();
+    let data = e.target.parentElement.children;
+    $cod_referencia.value = data[0].innerText;
+    $nom_referencia.value = data[1].innerText;
+    $registro_invima.value = data[2].innerText;
     closeAllModals();
 });
 

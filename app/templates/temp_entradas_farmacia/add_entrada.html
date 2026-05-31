@@ -110,7 +110,22 @@
                         <div class="field-body">
                             <div class="field has-addons">
                                 <p class="control">
-                                    
+                                    <label for="cod_referencia" class="label is-small">Codigo</label>
+                                    <input type="text" name="cod_referencia" id="cod_referencia" class="input is-small" readonly>
+                                </p>
+                                <p class="control is-expanded">
+                                    <label for="nom_referencia" class="label is-small">Descripción</label>
+                                    <input type="text" name="nom_referencia" id="nom_referencia" class="input is-small" readonly>
+                                </p>
+                                <p class="control">
+                                    <label for="registro_invima" class="label is-small">Reg. Invima</label>
+                                    <input type="text" name="registro_invima" id="registro_invima" class="input is-small" readonly>
+                                </p>
+                                <p class="control">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Medicamento" data-target="modal-busquedaMedicamentosEntradaFarm">
+                                        <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/medicamentos.png')}}" alt="icon"></i></span>
+                                    </a>
                                 </p>
                             </div>
                         </div>
@@ -156,6 +171,35 @@
                     <tr>
                         <td style="font-size: small; width: 20%;">{{ tercero.identificacion }}</td>
                         <td style="font-size: small; width: 80%;">{{ tercero.nom_tercero }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button class="modal-close is-large"></button>
+</div>
+
+<!-- Modal para seleccionar medicamentos -->
+<div id="modal-busquedaMedicamentosEntradaFarm" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <h5 class="title is-5">Busqueda de Medicamentos</h5>
+            <table id="tablaBusquedaMedicamentosEntradaFarm" class="table is-striped is-hoverable" style="width: 100%; cursor: pointer;">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 10%; font-size: small;">Cod.</th>
+                        <th scope="col" style="width: 30%; font-size: small;">Medicamento</th>
+                        <th scope="col" style="width: 25%; font-size: small;">Reg. Invima</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for referencia in referencias %}
+                    <tr>
+                        <td style="width: 10%; font-size: small;">{{ referencia.codigo }}</td>
+                        <td style="width: 30%; font-size: small;">{{ referencia.nombre }}</td>
+                        <td style="width: 25%; font-size: small;">{{ referencia.invima }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
