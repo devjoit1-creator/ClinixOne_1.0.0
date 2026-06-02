@@ -8,6 +8,8 @@ const $cod_referencia = document.getElementById("cod_referencia");
 const $nom_referencia = document.getElementById("nom_referencia");
 const $registro_invima = document.getElementById("registro_invima");
 const $tablaBusquedaMedicamentosEntradaFarm = document.getElementById("tablaBusquedaMedicamentosEntradaFarm");
+const $cantidad = document.getElementById("cantidad");
+const $vlr_unitario = document.getElementById("vlr_unitario");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 const $fecha_vencimiento = document.getElementById("fecha_vencimiento");
 
