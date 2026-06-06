@@ -4,12 +4,19 @@ const $hora_entrada = document.getElementById("hora_entrada");
 const $cod_tercero = document.getElementById("cod_tercero");
 const $nom_tercero = document.getElementById("nom_tercero");
 const $tablaBusquedaTercerosEntradaFarm = document.getElementById("tablaBusquedaTercerosEntradaFarm");
+const $bodega = document.getElementById("bodega");
 const $cod_referencia = document.getElementById("cod_referencia");
 const $nom_referencia = document.getElementById("nom_referencia");
 const $registro_invima = document.getElementById("registro_invima");
 const $tablaBusquedaMedicamentosEntradaFarm = document.getElementById("tablaBusquedaMedicamentosEntradaFarm");
+const $prefijo_remision = document.getElementById("prefijo_remision");
+const $lote = document.getElementById("lote");
 const $cantidad = document.getElementById("cantidad");
 const $vlr_unitario = document.getElementById("vlr_unitario");
+const $vlr_subtotal = document.getElementById("vlr_subtotal");
+const $btn_agregar = document.getElementById("btn_agregar");
+const $btn_remover = document.getElementById("btn_remover");
+const $tablaEntradasFarm = document.getElementById("tablaEntradasFarm");
 const $btn_cancelar = document.getElementById("btn_cancelar");
 const $fecha_vencimiento = document.getElementById("fecha_vencimiento");
 
@@ -53,6 +60,15 @@ document.addEventListener("DOMContentLoaded", () => {
     $hora_entrada.value = `${hora}:${minutos}`;
 });
 
+// Uppercase
+$prefijo_remision.addEventListener("keyup", () => {
+    $prefijo_remision.value = $prefijo_remision.value.toUpperCase();
+});
+
+$lote.addEventListener("keyup", () => {
+    $lote.value = $lote.value.toUpperCase();
+});
+
 // Modo Cancelar
 $btn_cancelar.addEventListener("click", (e) => {
     e.preventDefault();
@@ -92,6 +108,52 @@ $tablaBusquedaMedicamentosEntradaFarm.addEventListener("click", (e) => {
     $registro_invima.value = data[2].innerText;
     closeAllModals();
 });
+
+// Calcular subtotal por cantidad del medicamento a entrar
+$cantidad.addEventListener("input", () => {
+    $vlr_subtotal.value = Number($cantidad.value) * Number($vlr_unitario.value);
+});
+
+$vlr_unitario.addEventListener("input", () => {
+    $vlr_subtotal.value = Number($cantidad.value) * Number($vlr_unitario.value);
+});
+
+// Agregar medicamentos a tabla orden entrada
+$btn_agregar.addEventListener("click", (e) => {
+    e.preventDefault();
+    let bodega = $bodega.value;
+    let cod_ref = $cod_referencia.value;
+    let nom_ref = $nom_referencia.value;
+    if(cod_ref === "" && nom_ref === ""){
+        Swal.fire({
+            title: "Advertencia!",
+            text: "Debe seleccionar un medicamento",
+            icon: "warning"
+        });
+        return;
+    };
+
+    $tablaEntradasFarm.insertRow(-1).innerHTML = 
+    `<td style="width: 2%; font-size: x-small;">${bodega}</td>
+     <td style="width: 10%; font-size: x-small;">${cod_ref}</td>
+     <td style="width: 20%; font-size: x-small;">${nom_ref}</td>`
+
+});
+
+$btn_remover.addEventListener("click", (e) => {
+    e.preventDefault();
+    let rowCount = $tablaEntradasFarm.rows.length;
+    if(rowCount <= 1){
+        Swal.fire({
+            title: "Advertencia!",
+            text: "No hay medicamentos cargados",
+            icon: "warning"
+        });
+        return;
+    };
+
+    $tablaEntradasFarm.deleteRow(rowCount - 1)
+})
 
 /*  Cerrar Modals */
 function closeModal($el) {

@@ -12,12 +12,11 @@
 {% block title %} Nueva Entrada de Farmacia {% endblock %}
 
 {% block content %}
-<h5 class="title is-5">Nueva Entrada de Farmacia</h5>
 <div class="container">
     <form id="form_addEntradaFarm" action="#" method="post">
         <div class="card">
             <header class="card-header">
-                <p class="card-header-title">Ingrese la información</p>
+                <p class="card-header-title">Nueva Entrada de Farmacia - Ingrese la información</p>
             </header>
             <div class="card-content">
                 <div class="content">
@@ -92,6 +91,13 @@
                                     <label for="nro_remision" class="label is-small">No. Remisión</label>
                                     <input type="text" name="nro_remision" id="nro_remision" class="input is-small">
                                 </p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field has-addons">
                                 <p class="control">
                                     <label for="bodega" class="label is-small">Bodega <strong style="color: red;">*</strong></label>
                                     <span class="select is-small">
@@ -103,12 +109,6 @@
                                         </select>
                                     </span>
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field is-horizontal">
-                        <div class="field-body">
-                            <div class="field has-addons">
                                 <p class="control">
                                     <label for="cod_referencia" class="label is-small">Codigo</label>
                                     <input type="text" name="cod_referencia" id="cod_referencia" class="input is-small" readonly>
@@ -126,28 +126,96 @@
                                     <a class="button is-small is-primary has-tooltip-bottom js-modal-trigger" data-tooltip="Buscar Medicamento" data-target="modal-busquedaMedicamentosEntradaFarm">
                                         <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/medicamentos.png')}}" alt="icon"></i></span>
                                     </a>
-                                </p>
-                                <p class="control">
+                                </p> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                 <p class="control" style="width: 10%;">
                                     <label for="lote" class="label is-small">Lote</label>
                                     <input type="text" name="lote" id="lote" class="input is-small">
                                 </p>
-                                <p class="control">
+                                <p class="control" style="width: 10%;">
                                     <label for="cantidad" class="label is-small">Cant. Ing.</label>
                                     <input type="number" name="cantidad" id="cantidad" class="input is-small" min="1">
                                 </p>
-                                <p class="control">
+                                <p class="control" style="width: 10%;">
                                     <label for="vlr_unitario" class="label is-small">Vlr. unitario</label>
                                     <input type="number" name="vlr_unitario" id="vlr_unitario" class="input is-small">
                                 </p>
-                                <p class="control">
+                                <p class="control" style="width: 10%;">
                                     <label for="vlr_subtotal" class="label is-small">Subtotal. Unit.</label>
-                                    <input type="number" name="vlr_subtotal" id="vlr_subtotal" class="input is-small">
+                                    <input type="number" name="vlr_subtotal" id="vlr_subtotal" class="input is-small" readonly>
+                                </p>
+                                <p class="control">
+                                    <label for="ref_vencimiento" class="label is-small">Vencimiento</label>
+                                    <input type="date" name="ref_vencimiento" id="ref_vencimiento" class="input is-small">
+                                </p>
+                                <p class="control" style="width: 10%;">
+                                    <label for="temperatura" class="label is-small">Temp. °C</label>
+                                    <input type="number" name="temperatura" id="temperatura" class="input is-small">
+                                </p>
+                                <p class="control">
+                                    <label for="riesgo" class="label is-small">Clasif. Riesgo</label>
+                                    <span class="select is-small">
+                                        <select name="riesgo" id="riesgo">
+                                            <option value=""></option>
+                                            <option value="Riesgo I">Riesgo I</option>
+                                            <option value="Riesgo II">Riesgo II</option>
+                                            <option value="Riesgo III">Riesgo III</option>
+                                            <option value="Riesgo IV">Riesgo IV</option>
+                                        </select>
+                                    </span>
+                                </p>
+                                <p class="control">
+                                    <label for="condicion" class="label is-small">Condición</label>
+                                    <span class="select is-small">
+                                        <select name="condicion" id="condicion">
+                                            <option value=""></option>
+                                            <option value="Buen estado">Buen estado</option>
+                                            <option value="Mal estado">Mal estado</option>
+                                        </select>
+                                    </span>
+                                </p>
+                                <p class="control">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <a id="btn_agregar" class="button is-small is-primary">
+                                        <span class="icon is-small"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span>Agregar</span>
+                                    </a>
+                                </p>
+                                <p class="control">
+                                    <label class="label is-small" style="color: white;">.</label>
+                                    <a id="btn_remover" class="button is-small is-danger">
+                                        <span class="icon is-small"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                        <span>Remover</span>
+                                    </a>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <section class="inter-scrollable-section">
-                        
+                        <input type="hidden" name="data" id="data">
+                        <table id="tablaEntradasFarm" class="table is-striped" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 2%; font-size: x-small;">Bod.</th>
+                                    <th scope="col" style="width: 10%; font-size: x-small;">Cod.</th>
+                                    <th scope="col" style="width: 20%; font-size: x-small;">Descr.</th>
+                                    <th scope="col" style="width: 10%; font-size: x-small;">Reg. Invima</th>
+                                    <th scope="col" style="width: 5%; font-size: x-small;">Lote</th>
+                                    <th scope="col" style="width: 2%; font-size: x-small;">Cant.</th>
+                                    <th scope="col" style="width: 3%; font-size: x-small;">Vlr. Unit.</th>
+                                    <th scope="col" style="width: 3%; font-size: x-small;">Total</th>
+                                    <th scope="col" style="width: 5%; font-size: x-small;">Vence</th>
+                                    <th scope="col" style="width: 2%; font-size: x-small;">Temp. °C</th>
+                                    <th scope="col" style="width: 5%; font-size: x-small;">Riesgo</th>
+                                    <th scope="col" style="width: 5%; font-size: x-small;">Condición</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </section>
                 </div>
             </div>
