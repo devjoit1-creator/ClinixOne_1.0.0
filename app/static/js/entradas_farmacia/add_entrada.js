@@ -221,10 +221,10 @@ $form_addEntradaFarm.addEventListener("submit", (e) => {
     };
 
     let data = '';
-    for (let i = 1; i < rowCount; i++) {
+    for (let i = 1; i < $tablaEntradasFarm.rows.length; i++) {
         const celdas = $tablaEntradasFarm.rows[i].cells;
         if(celdas.length >= 12){
-            data += celdas[0].textContent + '-' + celdas[1].textContent + '-' + celdas[2].textContent + '-' + celdas[3].textContent + '-' + celdas[4].textContent + '-' + celdas[5].textContent + '-' + celdas[6].textContent + '-' + celdas[7].textContent + '-' + celdas[8].textContent + '-' + celdas[9].textContent + '-' + celdas[10].textContent + '-' + celdas[11].textContent +';'; 
+            data += celdas[0].textContent + '|' + celdas[1].textContent + '|' + celdas[2].textContent + '|' + celdas[3].textContent + '|' + celdas[4].textContent + '|' + celdas[5].textContent + '|' + celdas[6].textContent + '|' + celdas[7].textContent + '|' + celdas[8].textContent + '|' + celdas[9].textContent + '|' + celdas[10].textContent + '|' + celdas[11].textContent +';'; 
         };
     };
     document.getElementById('data').value = data;

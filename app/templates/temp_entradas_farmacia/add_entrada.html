@@ -13,13 +13,14 @@
 
 {% block content %}
 <div class="container">
-    <form id="form_addEntradaFarm" action="#" method="post">
+    <form id="form_addEntradaFarm" action="{{ url_for('entradasFarmacia.f_addEntrada') }}" method="post">
         <div class="card">
             <header class="card-header">
                 <p class="card-header-title">Nueva Entrada de Farmacia - Ingrese la información</p>
             </header>
             <div class="card-content">
                 <div class="content">
+                    <input type="text" name="usuario" id="usuario" value="{{ session['name'] }}"  hidden>
                     <div class="field is-horizontal">
                         <div class="field-body">
                             <div class="field is-grouped">
@@ -35,7 +36,7 @@
                                 </p>
                                 <p class="control">
                                     <label for="nro_entrada" class="label is-small">Nro. Entrada</label>
-                                    <input type="number" name="numero" id="numero" class="input is-small" value="{{ consecutivo.0 }}" readonly required>
+                                    <input type="number" name="nro_entrada" id="nro_entrada" class="input is-small" value="{{ consecutivo.0 }}" readonly required>
                                 </p>
                                 <p class="control">
                                     <label for="fecha_entrada" class="label is-small">Fecha Entrada <strong style="color: red;">*</strong></label>
@@ -101,7 +102,7 @@
                                 <p class="control">
                                     <label for="bodega" class="label is-small">Bodega <strong style="color: red;">*</strong></label>
                                     <span class="select is-small">
-                                        <select name="bodega" id="bodega" required>
+                                        <select name="bodega" id="bodega">
                                             <option value=""></option>
                                             {% for bodega in bodegas %}
                                             <option value="{{ bodega.ID }}">{{ bodega.nombre }}</option>
@@ -236,7 +237,7 @@
         </div>
         <div class="field is-grouped is-grouped-centered">
             <p class="control">
-                <button type="button" class="button is-small is-success">
+                <button type="submit" class="button is-small is-success">
                     <span class="icon is-small"><i aria-hidden="true"><img src="{{ url_for('static', filename='img/icons/guardar.png') }}" alt="icon"></i></span>
                     <span>Guardar</span>
                 </button>
