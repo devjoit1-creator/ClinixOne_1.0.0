@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.services import fuentes_service, consecutivo_service, bodegas_service, terceros_service, referencias_service, entradas_farmacia_service
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from app.services import fuentes_service, consecutivo_service, bodegas_service, terceros_service, referencias_service, entradas_farmacia_service, kardex_service
 import mysql.connector.errors as error
 
 #Blueprint
@@ -9,6 +9,24 @@ bp_entradasFarmacia = Blueprint("entradasFarmacia", __name__)
 @bp_entradasFarmacia.get('/entradas_farmacia')
 def entradas_farmacia():
     return render_template('temp_entradas_farmacia/entradas_farmacia.html')
+
+#Ruta AJAX para obtener las entrada de farmacia por numero
+@bp_entradasFarmacia.post('/getEntradaFarmaciaNumero')
+def getEntradaFarmaciaNumero():
+    try:
+        data = request.json()
+        nro_entrada = data.get("numero")
+        entradas = entradas_farmacia_service.listar_entrada_numero(nro_entrada)
+        if entradas:
+            return jsonify(entradas)
+        else:
+            return jsonify({"Error": "No se encontraron registros asociados"}), 400
+        
+    except error.Error as e:
+        return jsonify({"Error": f"{e.msg}"}), 500
+    
+    except Exception as ex:
+        return jsonify({"Error": f"{ex}"}), 500
 
 #Ruta Ventana Nueva Entrada de Farmacia
 @bp_entradasFarmacia.get('/add_entrada')
@@ -23,7 +41,7 @@ def add_entrada():
 #Ruta Metodo guardar nueva entrada de farmacia
 @bp_entradasFarmacia.post('/f_addEntrada')
 def f_addEntrada():
-    #try:
+    try:
         cod_fuente = request.form["cod_fuente"]
         nro_entrada = request.form["nro_entrada"]
         fecha_entrada = request.form["fecha_entrada"]
@@ -36,6 +54,7 @@ def f_addEntrada():
         nro_remision = request.form["nro_remision"]
         valor_neto = request.form["total"]
         usuario = request.form["usuario"]
+        movimiento = request.form["movimiento"]
 
         entradas_farmacia_service.insert_entrada(cod_fuente, nro_entrada, fecha_entrada, hora_entrada, fecha_vencimiento, concepto, cod_tercero,
                                                  nom_tercero, prefijo_remision, nro_remision, valor_neto, usuario)
@@ -62,15 +81,18 @@ def f_addEntrada():
 
                 entradas_farmacia_service.insert_detalle_entrada(bodega_fila, cod_referencia_fila, nom_referencia_fila, registro_invima_fila, lote_fila,
                                                                  cantidad_fila, vlr_unitario_fila, vlr_subtotal_fila, ref_vencimiento_fila, temperatura_fila, riesgo_fila, condicion_fila, numero_ent)
+                
+                kardex_service.insert_entrada_kardex(movimiento, cod_fuente, nro_entrada, fecha_entrada, 
+                                                     bodega_fila, cod_referencia_fila, nom_referencia_fila, cantidad_fila)
 
         flash(f"Entrada de Farmacia No. {nro_entrada} Generada Exitosamente", "success")
         return redirect(url_for('entradasFarmacia.entradas_farmacia'))
     
-    #except error.Error as e:
-        #flash(f"Se presentó un error ineperado: {e.msg}", "error")
-        #return redirect(url_for('entradasFarmacia.entradas_farmacia'))
+    except error.Error as e:
+        flash(f"Se presentó un error ineperado: {e.msg}", "error")
+        return redirect(url_for('entradasFarmacia.entradas_farmacia'))
     
-    #except Exception as ex:
-        #flash(f"Se presentó un error ineperado: {ex}", "error")
-        #return redirect(url_for('entradasFarmacia.entradas_farmacia'))
+    except Exception as ex:
+        flash(f"Se presentó un error ineperado: {ex}", "error")
+        return redirect(url_for('entradasFarmacia.entradas_farmacia'))
 
